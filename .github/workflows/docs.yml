@@ -42,5 +42,5 @@ jobs:
           repo: vuepress/vuepress.github.io
           target_branch: main
           build_dir: docs/.vuepress/dist
-        env:
-          GH_PAT: ${{ secrets.GH_PAGES_TOKEN }}
+#        env:
+#          GH_PAT: ${{ secrets.GH_PAGES_TOKEN }}
