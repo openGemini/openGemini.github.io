@@ -1,3 +1,6 @@
+.idea
+.vscode
+
 # VuePress files
 docs/.vuepress/.temp/
 docs/.vuepress/.cache/

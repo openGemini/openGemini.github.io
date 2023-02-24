@@ -37,10 +37,11 @@ jobs:
         run: pnpm docs:release
 
       - name: Deploy to GitHub Pages
-        uses: crazy-max/ghaction-github-pages@v2.2.0
+        if: success()
+        uses: crazy-max/ghaction-github-pages@v3
         with:
-          repo: shilinlee/docs.io
-          target_branch: main
+          target_branch: gh-pages
           build_dir: docs/.vuepress/dist
+          keep_history: true
         env:
-          GH_PAT: ${{ secrets.GH_PAGES_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
