@@ -30,12 +30,12 @@ export default defineUserConfig({
   locales: {
     '/': {
       lang: 'en-US',
-      title: '',
+      title: 'openGemini',
         description: 'openGemini docs site',
     },
     '/zh/': {
       lang: 'zh-CN',
-      title: '',
+      title: 'openGemini',
       description: 'openGemini 统一文档站点',
     },
   },
