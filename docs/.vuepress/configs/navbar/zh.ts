@@ -7,11 +7,11 @@ export const navbarZh: NavbarConfig = [
     children: [
       {
         text: '更新日志',
-        link: 'https://github.com/openGemini/openGemini',
+        link: 'https://github.com/openGemini/openGemini/releases/tag/v1.0.0',
       },
       {
         text: 'v0.2.0',
-        link: 'https://github.com/openGemini/openGemini',
+        link: 'https://github.com/openGemini/openGemini/releases/tag/v0.2.0',
       },
     ],
   },

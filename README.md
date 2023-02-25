@@ -13,7 +13,7 @@ openGemini的文档
 
 ## Documentation
 
-https://shilinlee.github.io
+https://opengemini.github.io
 
 ## Contribution
 

@@ -28,15 +28,15 @@ export default defineUserConfig({
 
   // site-level locales config
   locales: {
-    //    '/': {
-    //      lang: 'en-US',
-    //      title: 'VuePress',
-    //      description: 'Vue-powered Static Site Generator',
-    //    },
+    '/': {
+      lang: 'en-US',
+      title: '',
+        description: 'openGemini docs site',
+    },
     '/zh/': {
       lang: 'zh-CN',
-      title: 'openGemini',
-      description: 'openGemini',
+      title: '',
+      description: 'openGemini 统一文档站点',
     },
   },
 
@@ -47,7 +47,7 @@ export default defineUserConfig({
   // configure default theme
   theme: defaultTheme({
     logo: '/images/hero.png',
-    repo: 'vuepress/vuepress-next',
+    repo: 'openGemini/openGemini',
     docsDir: 'docs',
 
     // theme-level locales config

@@ -1,7 +1,7 @@
 ---
 home: true
 title: Home
-heroImage: /images/hero.png
+heroImage: /images/logo.png
 actions:
   - text: Get Started
     link: /guide/getting-started.html
@@ -22,63 +22,6 @@ features:
     details: Flexible plugin API, allowing plugins to provide lots of plug-and-play features for your site.
   - title: Bundlers
     details: Default bundler is Vite, while Webpack is also supported. Choose the one you like!
-footer: MIT Licensed | Copyright © 2018-present Evan You
+footer: Copyright @2022 OpenGemini-All Rights Reserved.
 ---
 
-### As Easy as 1, 2, 3
-
-<CodeGroup>
-  <CodeGroupItem title="PNPM" active>
-
-```bash
-# install in your project
-pnpm add -D vuepress@next @vuepress/client@next vue
-
-# create a markdown file
-echo '# Hello VuePress' > README.md
-
-# start writing
-pnpm vuepress dev
-
-# build to static files
-pnpm vuepress build
-```
-
-  </CodeGroupItem>
-
-  <CodeGroupItem title="YARN">
-
-```bash
-# install in your project
-yarn add -D vuepress@next
-
-# create a markdown file
-echo '# Hello VuePress' > README.md
-
-# start writing
-yarn vuepress dev
-
-# build to static files
-yarn vuepress build
-```
-
-  </CodeGroupItem>
-
-  <CodeGroupItem title="NPM">
-  
-```bash
-# install in your project
-npm install -D vuepress@next
-
-# create a markdown file
-echo '# Hello VuePress' > README.md
-
-# start writing
-npx vuepress dev
-
-# build to static files
-npx vuepress build
-```
-
-  </CodeGroupItem>
-</CodeGroup>
