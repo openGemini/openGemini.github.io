@@ -6,6 +6,7 @@ import { docsearchPlugin } from '@vuepress/plugin-docsearch'
 import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
 import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
 import { shikiPlugin } from '@vuepress/plugin-shiki'
+import { tocPlugin } from '@vuepress/plugin-toc'
 import { defaultTheme } from '@vuepress/theme-default'
 import { getDirname, path } from '@vuepress/utils'
 import {
@@ -176,6 +177,12 @@ export default defineUserConfig({
     }),
     registerComponentsPlugin({
       componentsDir: path.resolve(__dirname, './components'),
+    }),
+    tocPlugin({
+      componentName: 'Toc',
+      defaultPropsOptions: {
+          
+      },
     }),
     // only enable shiki plugin in production mode
     isProd ? shikiPlugin({ theme: 'dark-plus' }) : [],

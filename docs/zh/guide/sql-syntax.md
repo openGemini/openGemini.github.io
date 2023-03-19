@@ -1,13 +1,29 @@
-# SQL 语法
+# SQL 参考
 
-## 数据保留策略
+::: tip 参考
+ClickHouse 参考： https://clickhouse.com/docs/zh/sql-reference
 
-## 时间线管理
+InfluxData 参考： https://docs.influxdata.com/influxdb/v1.8/
+:::
 
-## 数据表管理
+## SQL 语句
 
-## 分片管理
+- [SELECT](./sql/select)
 
-## 数据查询
+- [INSERT](./sql/insert)
 
-## 内置函数
+- [CREATE](./sql/create)
+
+## 函数
+
+- [Function](./sql/func)
+
+<!-- ## 时间线管理 -->
+
+<!-- ## 数据表管理 -->
+
+<!-- ## 分片管理 -->
+
+<!-- ## 数据查询 -->
+
+<!-- ## 内置函数 -->
