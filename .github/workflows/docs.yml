@@ -42,6 +42,6 @@ jobs:
         with:
           target_branch: gh-pages
           build_dir: docs/.vuepress/dist
-          keep_history: true
+          keep_history: false
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
