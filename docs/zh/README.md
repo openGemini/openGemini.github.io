@@ -5,10 +5,10 @@ heroImage: /images/logo.png
 tagline: "openGemini 统一文档站点"
 actions:
   - text: 快速上手
-    link: /zh/guide/getting-started.html
+    link: /zh/guide/install_standalone
     type: primary
   - text: 项目简介
-    link: /zh/guide/
+    link: /zh/guide/introduction
     type: secondary
 features:
   - title: 安装

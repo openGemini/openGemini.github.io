@@ -15,4 +15,13 @@ export const navbarZh: NavbarConfig = [
       },
     ],
   },
+  {
+    text: `文档架构`,
+    children: [
+      {
+        text: '文档架构',
+        link: 'openGemini-docs.html',
+      },
+      ],
+  },
 ]

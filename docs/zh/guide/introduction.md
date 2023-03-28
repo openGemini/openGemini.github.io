@@ -1,3 +1,5 @@
+[[toc]]
+
 # 关于openGemini
 
 ## openGemini简介
