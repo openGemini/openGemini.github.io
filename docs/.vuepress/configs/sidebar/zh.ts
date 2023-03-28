@@ -25,7 +25,8 @@ export const sidebarZh: SidebarConfig = {
       text: 'GeminiQL',
       collapsible: true,
       children: [
-        '/zh/guide/sql-syntax.md',
+        '/zh/guide/geminiql/sample_data.md',
+        '/zh/guide/geminiql/sql-syntax.md',
         ],
     },
     {
