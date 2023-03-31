@@ -1,5 +1,6 @@
 .idea
 .vscode
+.fleet
 
 # VuePress files
 docs/.vuepress/.temp/
