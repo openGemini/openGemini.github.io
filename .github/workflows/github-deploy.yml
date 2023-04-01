@@ -21,6 +21,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: remove docs
+        run: |-
+          rm -rf docs
+
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
