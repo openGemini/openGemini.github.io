@@ -14,12 +14,17 @@ jobs:
 
     env:
       DOCS_GA_ID: G-CTB8FQ7VMW
-      NODE_VERSION: '16'
+      NODE_VERSION: '18'
 
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
+      - name: Restore Build Result
+        uses: actions/download-artifact@v3
+        with:
+          name: build-result
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -33,11 +38,12 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build documentation site
-        run: pnpm docs:build
+      - name: Docs build
+        env:
+          NODE_OPTIONS: --max_old_space_size=8192
+        run: |-
+          pnpm run docs:build
+          > src/.vuepress/dist/.nojekyll
 
       - name: Deploy to GitHub Pages
         if: success()
