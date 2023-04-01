@@ -21,11 +21,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Restore Build Result
-        uses: actions/download-artifact@v3
-        with:
-          name: build-result
-
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
