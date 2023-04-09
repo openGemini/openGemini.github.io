@@ -10,69 +10,253 @@ openGemini 配置项解释
 
 ## [common]
 
-### meta-join
+**common**是ts-sql、ts-store、ts-meta公共的配置项。
 
-- SQL / STOR和META通信的地址
-- 默认值：无，必填
-- SQL / STOR和META的通信是采用RPC通信。
+### meta-join <Badge text="必填" type="danger" />
+
+- 类型: `[]string`
+- 默认值: `无`
+
+- SQL / STOR和META的RPC通信地址。
 
 ### ha-enable
 
-- 基于共享存储的HA开关
-- 默认：false
-- 目前仅支持共享存储可设置为true
+- 类型: `bool`
+- 默认值: `false`
 
-### executor-memory-size-limit = "0"
-### executor-memory-wait-time = "0s"
-### pprof-enabled = false
-### cpu-num = 0
-### memory-size = "0"
-### ignore-empty-tag = false
-### report-enable = true
-### enable-tag-array = false
+- 基于共享存储的HA开关，目前仅支持共享存储可设置为true。
+- 生产环境不建议开启。
+
+### executor-memory-size-limit
+
+- 类型: `string | toml.Size`
+- 默认值: `0`
+
+- 执行内存大小限制，比如 `256GB`，`0`表示不限制。
+
+### executor-memory-wait-time
+
+- 类型: `string | toml.Duration`
+- 默认值: `0s`
+
+- 执行内存等待时间，比如 `120s`，`0s`表示不限制。
+
+### pprof-enabled
+
+- 类型: `bool`
+- 默认值: `false`
+
+- 是否开启go pprof服务，监控内存、CPU、goroutine等信息。
+
+### cpu-num <Badge text="建议" type="tip" />
+
+- 类型: `int`
+- 默认值: `0`
+
+- 可使用的cpu核心数，`0`表示自动获取，docker环境中建议手动设置。
+
+### memory-size
+
+- 类型: `string | toml.Size`
+- 默认值: `0`
+
+- 可使用的内存大小，比如：`256GB`，`0`表示不限制。
+
+### ignore-empty-tag
+
+- 类型: ` bool`
+- 默认值: `false`
+
+- 是否忽略空tag。
+
+### report-enable
+
+- 类型: ` bool`
+- 默认值: `true`
+
+- 是否上报遥测数据到openGemini服务器。
+
+### enable-tag-array
+
+- 类型: ` bool`
+- 默认值: `false`
+
+- 写入是否支持tag数组。
 
 ## [meta]
 
-### bind-address = "{{addr}}:8088"
+**meta**是ts-meta专属配置。
 
-### http-bind-address = "{{addr}}:8091"
+### bind-address <Badge text="必填" type="danger" />
 
-### rpc-bind-address = "{{addr}}:8092"
+- 类型: `string`
+- 默认值: `无`
 
-### dir = "/"
+- meta提供服务的地址，比如：`127.0.0.1:8088`。
 
-### expand-shards-enable = false
+### http-bind-address <Badge text="必填" type="danger" />
 
-  ### retention-autocreate = true
-  ### election-timeout = "1s"
+- 类型: `string`
+- 默认值: `无`
 
-- 是不是应该是`election-timeout`
+- meta提供HTTP服务的地址，比如：`127.0.0.1:8091`。可外部访问。
 
-  ### heartbeat-timeout = "1s"
-  ### leader-lease-timeout = "500ms"
-  ### commit-timeout = "50ms"
-  ### cluster-tracing = true
-  ### logging-enabled = true
-  ### lease-duration = "1m0s"
-  ### meta-version = 2
-  ### split-row-threshold = 10000
-  ### imbalance-factor = 0.3
-  ### auth-enabled = false
-  ### https-enabled = false
-  ### https-certificate = ""
-  ### https-private-key = ""
-  ### ptnum-pernode = 1
+### rpc-bind-address <Badge text="必填" type="danger" />
+
+- 类型: `string`
+- 默认值: `无`
+
+- meta提供RPC服务的地址，比如：`127.0.0.1:8092`。仅内部通信使用。
+
+### dir <Badge text="必填" type="danger" />
+
+- 类型: `string`
+- 默认值: `无`
+
+- meta数据保存目录。
+
+### expand-shards-enable
+
+- 类型: `bool`
+- 默认值: `false`
+
+- 是否扩大shards。
+
+  ### retention-autocreate
+
+- 类型: `bool`
+- 默认值: `true`
+
+- 是否自动创建retention policy。
+
+  ### election-timeout
+
+- 类型: `string | toml.Duration`
+
+- 默认值: `1s`
+- 选主超时时间。
+
+### heartbeat-timeout
+
+- 类型: `string | toml.Duration`
+- 默认值: `1s`
+- 心跳超时时间。
+
+### leader-lease-timeout
+
+- 类型: `string | toml.Duration`
+- 默认值: 60s`
+- leader租赁超时时间。
+
+### commit-timeout
+
+- 类型: `string | toml.Duration`
+- 默认值: `50ms`
+- 事件提交超时时间。
+
+### cluster-tracing
+
+- 类型: ` bool`
+- 默认值: `true`
+
+- 是否记录trace日志。
+
+### logging-enabled
+
+- deprecated
+
+### lease-duration
+
+- 类型: `string | toml.Duration`
+- 默认值: `1m`
+- 租赁期限。
+
+### meta-version
+
+- 类型: `int`
+- 默认值: `2`
+- meta版本。
+
+### split-row-threshold
+
+- 类型: `int`
+- 默认值: `10000`
+- row最大行数分裂阈值。
+
+### imbalance-factor = 0.3
+
+- 类型: `float`
+- 默认值: `0.3`
+- 不平衡因子。
+
+### auth-enabled
+
+- 类型: ` bool`
+- 默认值: `false`
+
+- 是否开启鉴权。
+
+### https-enabled
+
+- 类型: ` bool`
+- 默认值: `false`
+
+- 是否开启HTTPS。
+
+### https-certificate
+
+- 类型: ` string`
+- 默认值: ``
+
+- 开启HTTPS后，证书路径。
+
+### https-private-key
+
+- 类型: ` string`
+- 默认值: ``
+
+- 开启HTTPS后，私钥路径。
+
+### ptnum-pernode
+
+- 类型: ` int`
+- 默认值: `1`
+
+- 每个store节点的PT的数量。 
 
 ## [coordinator]
-  ### write-timeout = "120s"
-  ### shard-writer-timeout = "30s"
-  ### shard-mapper-timeout = "10s"
-  ### max-remote-write-connections = 100
-  ### max-remote-read-connections = 100
-  ### shard-tier = "warm"
-  ### rp-limit = 100
-  ### force-broadcast-query = false
-  ### time-range-limit = ["72h", "24h"]
+
+ts-sql的配置，用于和ts-store通信相关。
+
+### write-timeout
+
+- 类型: `string | toml.Duration`
+- 默认值: `120s`
+- 数据写入超时时间。
+
+### shard-writer-timeout
+
+- 类型: `string | toml.Duration`
+- 默认值: `30s`
+- 数据写入shard内超时时间。
+
+### shard-mapper-timeout = "10s"
+
+
+
+
+### max-remote-write-connections = 100
+
+### max-remote-read-connections = 100
+
+### shard-tier = "warm"
+
+### rp-limit = 100
+
+### force-broadcast-query = false
+
+### time-range-limit = ["72h", "24h"]
+
 
 ## [http]
 
