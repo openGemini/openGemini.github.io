@@ -2,6 +2,7 @@ import { sidebar } from "vuepress-theme-hope";
 
 export const zhSidebar = sidebar({
   '/zh/': [
+    "",
     {
       text: "用户指南",
       prefix: "guide/",
@@ -9,6 +10,12 @@ export const zhSidebar = sidebar({
         "introduction/",
         "quick_start/",
         "geminiql/",
+        "write/",
+        "manage/",
+        "platforms/",
+        "reference/",
+        "versions/",
+        "troubleshoot/",
         ],
     },
  ],
