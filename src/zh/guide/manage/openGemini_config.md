@@ -122,7 +122,7 @@ openGemini 配置项解释
 
 - 是否扩大shards。
 
-  ### retention-autocreate
+### retention-autocreate
 
 - 类型: `bool`
 - 默认值: `true`
@@ -440,7 +440,7 @@ deprecated
 - 默认值: `false`
 - 是否并发回放WAL。
 
-  ### wal-replay-async
+### wal-replay-async
 
 - 类型: `bool`
 - 默认值: `false`
@@ -518,7 +518,7 @@ deprecated
 - 默认值: `64m`
 - 打快照吞吐量。
 
-?### snapshot-throughput-burst
+### snapshot-throughput-burst
 
 - 类型: `string | toml.Size`
 - 默认值: `64m`
@@ -590,7 +590,7 @@ deprecated
 - 默认值: `0`
 - 时间线并发度最大限制。`0`表述不限制。
 
-  ### max-shards-parallelism-num
+### max-shards-parallelism-num
 
 - 类型: `int`
 - 默认值: `0`
@@ -602,13 +602,13 @@ deprecated
 - 默认值: `0`
 - chunk reader阈值。`0`表述不限制。
 
-  ### min-chunk-reader-concurrency
+### min-chunk-reader-concurrency
 
 - 类型: `int`
 - 默认值: `0`
 - 最小chunk reader并发度。`0`表述不限制。
 
-  ### min-shards-concurrency
+### min-shards-concurrency
 
 - 类型: `int`
 - 默认值: `0`
@@ -650,7 +650,7 @@ retention policy配置。
 
 将采样配置。
 
-  ### enable = true
+### enable = true
 
 - 类型: `bool`
 - 默认值: `true`
@@ -887,12 +887,12 @@ spdy专用配置。
 castor专用配置。
 
 ### enabled = false
-### pyworker-addr = ["127.0.0.1:6666"]  # format: ip:port
-### connect-pool-size = 30  # connection pool to pyworker
+### pyworker-addr = ["127.0.0.1:6666"]
+### connect-pool-size = 30
 ### result-wait-timeout = 10  # unit: second
+
 ## [castor.detect]
 ### algorithm
-
 ['BatchDIFFERENTIATEAD','DIFFERENTIATEAD','IncrementalAD','ThresholdAD','ValueChangeAD']
 
 ### config_filename = ['detect_base']
