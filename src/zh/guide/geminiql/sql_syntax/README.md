@@ -1,8 +1,8 @@
 ---
 title: SQL语法
 index: false
-order: 2
+dir:
+    order: 1
 ---
-
 
 <AutoCatalog />
