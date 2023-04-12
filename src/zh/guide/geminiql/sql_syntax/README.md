@@ -2,7 +2,7 @@
 title: SQL语法
 index: false
 dir:
-    order: 1
+    order: 2
 ---
 
 <AutoCatalog />

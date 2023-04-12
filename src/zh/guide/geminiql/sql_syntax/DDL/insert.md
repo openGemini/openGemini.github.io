@@ -1,6 +1,11 @@
 ---
-title: INSERT
-order: 2
+order: 0
 ---
 
-## INSERT
+# INSERT
+
+
+## 语法
+
+
+## 例子
