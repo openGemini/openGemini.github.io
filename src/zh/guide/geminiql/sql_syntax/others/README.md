@@ -3,9 +3,8 @@ title: 其他
 index: false
 dir:
     order: 4
+    link: true
 ---
 
 
-## 目录
-
-- [he](dd.md)
+<AutoCatalog />

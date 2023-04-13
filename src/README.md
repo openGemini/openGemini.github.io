@@ -22,7 +22,7 @@ features:
     link: https://github.com/openGemini/openGemini/releases
 
 copyright: false
-footer: Copyright @2022 OpenGemini-All Rights Reserved.
+footer: Copyright @2023 OpenGemini-All Rights Reserved.
 ---
 
 

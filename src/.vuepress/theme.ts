@@ -6,8 +6,8 @@ export default hopeTheme({
   hostname: "https://shilinlee.github.io/docs",
 
   author: {
-    name: "Mr.openGemini",
-    url: "https://openGemini.com",
+    name: "openGemini",
+    url: "https://openGemini.org",
   },
 
   iconAssets: "iconfont",
