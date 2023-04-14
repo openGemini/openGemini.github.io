@@ -6,6 +6,8 @@ openGemini的文档
 
 https://shilinlee.github.io/docs/
 
+https://shilinlee.gitee.io/docs/
+
 ## 启动
 
 克隆代码仓库，并安装依赖：
