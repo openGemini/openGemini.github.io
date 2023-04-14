@@ -1,12 +1,8 @@
 ---
-title: 关于openGemini
+title: 介绍
 index: false
 dir:
     order: 1
 ---
 
-## 目录
-
-- [关于openGemini](introduction.md)
-
-- [动力](motivation.md)
+<AutoCatalog />
