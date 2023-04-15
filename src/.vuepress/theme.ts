@@ -69,6 +69,12 @@ export default hopeTheme({
 //      provider: "Waline",
 //    },
 
+//    copyCode: {
+//      fancy: true,
+//      duration: 1000,
+//    },
+    copyCode: false,
+
     // all features are enabled for demo, only preserve features you need here
     mdEnhance: {
       align: true,
