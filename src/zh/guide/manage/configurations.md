@@ -1,10 +1,9 @@
 ---
-title: openGemini配置项
 order: 1
 ---
 
 
-# openGemini配置项
+# 配置项
 
 openGemini 配置项解释
 

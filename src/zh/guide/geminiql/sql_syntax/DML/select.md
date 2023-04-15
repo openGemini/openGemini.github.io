@@ -45,7 +45,7 @@ SELECT COLUMN_CLAUSES FROM_CLAUSE
 
 ::: tip
 
-SELECT 语句不能包含聚合函数**和**非聚合函数、字段键或标签键。
+SELECT 语句不能同时包含==聚合函数==**和**==非聚合函数、field_key或tag_key==。
 
 :::
 

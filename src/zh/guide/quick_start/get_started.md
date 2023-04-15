@@ -10,7 +10,7 @@ order: 1
 
 ## 安装
 
-::: tabs#good
+::: tabs
 
 @tab Linux-x86
 
@@ -249,3 +249,10 @@ name: cpu_load
 Elapsed: 3.259995ms
 ```
 
+## 注意事项
+
+`ts-server`为openGemini的单机版二进制文件，可简单理解为`ts-server`由一个`ts-sql`、一个`ts-meta`和一个`ts-store`组成。 注意事项：
+
+1. 如果默认配置不能满足需求，需要使用配置文件`openGemini.singlenode.conf`启动，完整的配置项和含义参考[管理-配置项](../manage/configurations.md)章节。
+2. 默认配置文件中数据、日志等默认保存在`/tmp/openGemini`目录下，建议替换为其他目录，确保有足够的存储空间。如果使用的`scripts/install.sh`脚本启动，还需要对应修改脚本中的`/tmp/`目录。
+3. 如果启动过程中发现端口已占用，可以修改配置文件中的默认端口。所有端口用途请参考[管理-端口矩阵](../manage/ports.md)章节。

@@ -7,7 +7,7 @@ export default hopeTheme({
 
   author: {
     name: "openGemini",
-    url: "https://openGemini.org",
+    url: "http://www.opengemini.org/",
   },
 
   iconAssets: "iconfont",
