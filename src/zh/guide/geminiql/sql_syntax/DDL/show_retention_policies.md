@@ -12,7 +12,7 @@ order: 2
 SHOW RETENTION POLICIES [ON <database_name>]
 ```
 
-### 语法说明
+## 语法描述
 
 `ON <database_name>`是可选项。如果查询中没有包含`ON <database_name>`，您必须在CLI中使用`USE <database_name>`指定数据库，或者在openGemini API请求中使用参数`db`指定数据库。
 

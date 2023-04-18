@@ -12,9 +12,9 @@ order: 1
 SHOW DATABASES
 ```
 
-### 示例
+## 示例
 
-#### 运行 `SHOW DATABASES` 查询语句
+### 运行 `SHOW DATABASES` 查询语句
 
 ```sql
 >>> SHOW DATABASES
