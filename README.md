@@ -2,37 +2,30 @@
 
 openGemini的文档
 
-## Documentation
+## 在线 Documentation
 
 https://shilinlee.github.io/docs/
 
 https://shilinlee.gitee.io/docs/
 
-## 启动
+## 环境准备
 
-克隆代码仓库，并安装依赖：
+先安装nodejs
+
+再安装pnpm:
+https://pnpm.io/zh/cli/install
+
+参考：https://theme-hope.vuejs.press/zh/cookbook/tutorial/env.html#node-js
+
+
+## 克隆代码仓库，并安装依赖：
 
 ```
-pnpm install
+pnpm install --frozen-lockfile
 ```
 
-构建源代码：
-
-```
-pnpm build
-```
-
-开始开发项目文档网站：
+## 预览项目文档网站：
 
 ```
 pnpm docs:dev
-```
-
-```
-下载所有依赖并更新pnpm-lock.json:
-https://pnpm.io/zh/cli/install
-pnpm install
-
-预览：
-yarn docs:dev
 ```
