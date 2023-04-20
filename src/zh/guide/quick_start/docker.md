@@ -39,6 +39,6 @@ order: 2
    docker rm opengemini
    ```
 
-6. 更新用法请参考：
+6. 更多用法请参考：
 
    [docker hub官网](https://hub.docker.com/r/opengeminidb/opengemini-server)

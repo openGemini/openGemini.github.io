@@ -3,10 +3,6 @@
 .fleet
 
 # VuePress files
-docs/.vuepress/.temp/
-docs/.vuepress/.cache/
-docs/.vuepress/dist/
-
 src/.vuepress/.temp/
 src/.vuepress/.cache/
 src/.vuepress/dist/

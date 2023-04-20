@@ -11,4 +11,4 @@ string
 
 ### Fields
 
-int64  string float64 bool
+int64 string float64 bool
