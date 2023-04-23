@@ -17,8 +17,6 @@ SHOW FIELD KEYS [ON <database_name>] [FROM <measurement_name>]
 
 `FROM`子句也是可选的。请查阅DML章节获得关于[`FROM`子句](../DML/select.md)的介绍。
 
-> **注意：**在不同的shard，field的数据类型可以不同。如果您的field中有多个数据类型，那么`SHOW FIELD KEYS`按以下顺序返回不同类型的数据：float，integer，string，boolean。
-
 ## 示例
 
 ### 运行带有`ON`子句的`SHOW FIELD KEYS`查询
@@ -63,7 +61,7 @@ degrees             float
 
 使用`USE <database_name>`指定数据库：
 
-```bash
+```sql
 > USE NOAA_water_database
 Using database NOAA_water_database
 
@@ -198,24 +196,3 @@ water_level         float
 ```
 
 该查询返回数据库`NOAA_water_database`中measurement `h2o_feet`里的fields key以及对应的field value的数据类型。
-
-## SHOW FIELD KEYS的常见问题
-### SHOW FIELD KEYS和field的类型差异
-在同一个shard，field value的数据类型不能发生变化，但是在不同的shard，field的数据类型可以不同。`SHOW FIELD KEYS`遍历每个shard返回与field key相关联的所有数据类型。
-
-**示例**
-field `all_the_types`中存储了四个不同的数据类型：
-```bash
-> SHOW FIELD KEYS
-
-name: mymeas
-fieldKey        fieldType
---------        ---------
-all_the_types   integer
-all_the_types   float
-all_the_types   string
-all_the_types   boolean
-```
-
-**注意**：`SHOW FIELD KEYS`处理field的类型差异与`SELECT`语句不一样。
-

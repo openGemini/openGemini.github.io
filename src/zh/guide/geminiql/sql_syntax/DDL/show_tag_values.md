@@ -9,7 +9,7 @@ order: 6
 ## 语法
 
 ```sql
-SHOW TAG VALUES [ON <database_name>][FROM_clause] WITH KEY [ [<operator> "<tag_key>" | <regular_expression>] | [IN ("<tag_key1>","<tag_key2")]] [WHERE <tag_key> <operator> ['<tag_value>' | <regular_expression>]] [LIMIT_clause] [OFFSET_clause]
+SHOW TAG VALUES [ON <database_name>] [FROM_CLAUSE] WITH KEY [ [<operator> "<tag_key>" | <regular_expression>] | [IN ("<tag_key1>","<tag_key2")]] [WHERE <tag_key> <operator> ['<tag_value>' | <regular_expression>]] [LIMIT_CLAUSE] [OFFSET_CLAUSE]
 ```
 
 ## 语法描述
@@ -57,7 +57,7 @@ randtag   3
 
 使用`USE <database_name>`指定数据库：
 
-```bash
+```sql
 > USE NOAA_water_database
 Using database NOAA_water_database
 

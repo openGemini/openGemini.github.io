@@ -13,9 +13,8 @@ DROP DATABASE <database_name>
 ```
 
 删除数据库`NOAA_water_database`：
-```bash
+```sql
 > DROP DATABASE "NOAA_water_database"
->
 ```
 
-成功的`DROP DATABASE`命令不返回任何结果。如果删除不存在的数据库，InfluxDB也不会返回错误。
+成功的`DROP DATABASE`命令不返回任何结果。如果删除不存在的数据库，openGemini也不会返回错误。
