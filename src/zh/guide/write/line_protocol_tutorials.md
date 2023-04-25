@@ -67,7 +67,7 @@ weather,location=us-midwest temperature=82 1465839830100400200
 weather,location=us-midwest,season=summer temperature=82 1465839830100400200
 ```
 
-为了获得最佳性能，您应该在将**<tag_key>**排序后再发送到数据库。 排序函数参考 [Go bytes.Compare](http://golang.org/pkg/bytes/#Compare).
+为了获得最佳性能，您应该在将<**tag_key**>排序后再发送到数据库。 排序函数参考 [Go bytes.Compare](http://golang.org/pkg/bytes/#Compare).
 
 ### 空格 I
 

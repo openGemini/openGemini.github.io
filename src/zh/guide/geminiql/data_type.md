@@ -5,10 +5,19 @@ order: 5
 
 # 数据类型
 
-### Tags
+
+## Measurement
 
 string
 
-### Fields
+## Tags
+
+string
+
+## Fields
 
 int64 string float64 bool
+
+## Timestamp
+
+int64
