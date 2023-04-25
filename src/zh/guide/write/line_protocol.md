@@ -159,8 +159,6 @@ time				                        value
 2016-06-14T20:36:21.836131014Z	 200
 ```
 
-如果您在line protocol中重复引用measurement值，对此有任何疑问 measurement 要求在 ` FROM `子句
-
 ### 特殊字符
 
 您必须使用反斜杠字符\来转义下列特殊字符：
