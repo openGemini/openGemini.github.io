@@ -10,12 +10,13 @@ openGemini 历史版本发布声明如下：
 
 ## 1.0
 
-- [7.0.0-DMR](https://docs.pingcap.com/zh/tidb/dev/release-7.0.0): 2023-03-30
+- [v1.0.1](https://github.com/openGemini/openGemini/releases/tag/v1.0.1): 2023-03-30
+- [v1.0.0](https://github.com/openGemini/openGemini/releases/tag/v1.0.0): 2023-02-24
 
 ## 0.2
 
-- [6.6.0-DMR](https://docs.pingcap.com/zh/tidb/dev/release-6.6.0): 2023-02-20
+- [0.2.0](https://github.com/openGemini/openGemini/releases/tag/v0.2.0): 2022-12-07
 
 ## 0.1
 
-- [6.6.0-DMR](https://docs.pingcap.com/zh/tidb/dev/release-6.6.0): 2023-02-20
+- [0.1.0](https://github.com/openGemini/openGemini/releases/tag/v0.1.0): 2022-09-29

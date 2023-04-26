@@ -115,19 +115,19 @@ SELECT 10 / ("A" + "B" + "C") FROM "mult"
 
 与常数进行模运算
 
-```
+```sql
 SELECT "B" % 2 FROM "modulo"
 ```
-```
+```sql
 SELECT "B" FROM "modulo" WHERE "B" % 2 = 0
 ```
 
 对两个field进行模运算
 
-```
+```sql
 SELECT "A" % "B" FROM "modulo"
 ```
-```
+```sql
 SELECT "A" FROM "modulo" WHERE "A" % "B" = 0
 ```
 

@@ -212,7 +212,7 @@ weather,location=us-midwest temperature=82
   例:
 
   ```sql
-  > >>> INSERT weather,location=us-midwest temperature='toowarm'
+  >>> INSERT weather,location=us-midwest temperature='toowarm'
   ERR: {"error":"cannot parse field value for \"temperature\": invalid field value"}
   ```
 
