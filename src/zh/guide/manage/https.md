@@ -47,15 +47,13 @@ HTTP/1.1 200 Connection established
 HTTP/1.1 204 No Content
 Content-Type: application/json
 Request-Id: 5073446b-e2b7-11ed-8002-72ef6a841b9c
-X-Influxdb-Build: 
-X-Influxdb-Version: 
 X-Request-Id: 5073446b-e2b7-11ed-8002-72ef6a841b9c
 Date: Mon, 24 Apr 2023 15:47:27 GMT
 ```
 
 以上命令会发送一个 HTTPS 请求到 openGemini，并返回一个 `204` 响应。如果您得到了响应，则表示 HTTPS 已成功启用。请注意，由于我们使用的是自签名证书，因此您需要使用 `-k` 参数来跳过证书验证。
 
-**也可通过使用CLI工具连接到Influxdb来验证HTTPS是否正常工作**：
+**也可通过使用CLI工具连接到openGemini来验证HTTPS是否正常工作**：
 
 ```bash
 ts-cli -ssl -host <domain_name>.com

@@ -6,7 +6,7 @@ order: 1
 
 # 示例数据
 
-为了进一步学习InfluxQL，本节将提供示例数据供您下载，并教您如何将数据导入数据库。数据探索、Schema探索和InfluxQL函数等章节都会引用到这些示例数据。
+为了进一步学习GeminiQL，本节将提供示例数据供您下载，并教您如何将数据导入数据库。数据探索、Schema探索和GeminiQL函数等章节都会引用到这些示例数据。
 
 ```
 https://s3.amazonaws.com/noaa.water-database/NOAA_data.txt

@@ -35,7 +35,7 @@ SELECT COLUMN_CLAUSES FROM_CLAUSE [WHERE_CLAUSE] GROUP BY time(<time_interval>),
 
 **time(time_interval)**
 
-`GROUP BY time()`子句中的`time_interval`（时间间隔）是一个持续时间（duration），决定了InfluxDB按多大的时间间隔将查询结果进行分组。例如，当`time_interval`为`5m`时，那么在`WHERE`子句中指定的时间范围内，将查询结果按5分钟进行分组。
+`GROUP BY time()`子句中的`time_interval`（时间间隔）是一个持续时间（duration），决定了openGemini按多大的时间间隔将查询结果进行分组。例如，当`time_interval`为`5m`时，那么在`WHERE`子句中指定的时间范围内，将查询结果按5分钟进行分组。
 
 **fill()**
 
