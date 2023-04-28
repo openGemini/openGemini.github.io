@@ -21,9 +21,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: test
-        run: echo 123
-
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
