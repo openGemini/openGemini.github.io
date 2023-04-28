@@ -17,15 +17,13 @@ on:
 
 jobs:
   github_pages:
-    if: github.event.pull_request.merged == true
+#    if: github.event.pull_request.merged == true
 
     runs-on: ubuntu-latest
 
     env:
       DOCS_GA_ID: G-CTB8FQ7VMW
       NODE_VERSION: '18'
-      # GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
-      GITHUB_TOKEN: ${{ secrets.TEST }}
 
     steps:
       - uses: actions/checkout@v3
@@ -33,7 +31,7 @@ jobs:
           fetch-depth: 0
 
       - name: test
-        run: echo ${{ env.GITHUB_TOKEN }}
+        run: echo 123
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
