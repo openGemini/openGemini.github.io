@@ -24,15 +24,15 @@ jobs:
     env:
       DOCS_GA_ID: G-CTB8FQ7VMW
       NODE_VERSION: '18'
+      GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
 
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: remove docs
-        run: |-
-          rm -rf docs
+      - name: test
+        run: echo ${{ env.GITHUB_TOKEN }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
