@@ -1,6 +1,11 @@
 name: github pages deploy
 
 on:
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - '**/__tests__/**'
   push:
     branches:
       - main
