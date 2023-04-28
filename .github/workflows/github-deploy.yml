@@ -4,8 +4,8 @@ on:
   pull_request:
 #    types:
 #      - closed
-    branches:
-      - main
+#    branches:
+#      - main
     paths-ignore:
       - '**/__tests__/**'
   push:
