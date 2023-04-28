@@ -8,6 +8,8 @@ order: 1
 
 line protocol 是一种基于文本的格式，用于将points 写入 openGemini
 
+> 采用InfluxDB相同的line protocol
+
 ## line protocol语法
 
 ```

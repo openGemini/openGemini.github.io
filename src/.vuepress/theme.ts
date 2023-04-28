@@ -14,9 +14,9 @@ export default hopeTheme({
 
     iconAssets: "iconfont",
 
-    logo: "/logo.png",
+    logo: "images/logo.png", // 首页左上角	
 
-    repo: "openGemini/docs",
+    repo: "openGemini/openGemini.github.io",
 
     docsDir: "/src",
 

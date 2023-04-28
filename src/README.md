@@ -2,7 +2,7 @@
 home: true
 title: 首页
 icon: home
-heroImage: /images/logo.png
+heroImage: images/logo.png
 heroText: openGemini Docs
 tagline: openGemini 统一文档站点
 actions:

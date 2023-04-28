@@ -366,7 +366,7 @@ Line procotol 接受GeminiQL 关键字作为标识符名称。
 
 `time`查询中不需要双引号。
 
-`time`不能是field key或tag key;  openGemini拒绝使用`time`作为tag key的写入，否则返回错误。使用`time`作为field key写入，openGemini将忽略`time`字段。·
+`time`不能是field key或tag key;  openGemini拒绝使用`time`作为tag key的写入，否则返回错误。使用`time`作为field key写入，openGemini将忽略`time`字段。
 
 ## 将数据写入openGemini
 
