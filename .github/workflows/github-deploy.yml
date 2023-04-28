@@ -1,13 +1,6 @@
 name: github pages deploy
 
 on:
-  pull_request:
-    types:
-      - closed
-    branches:
-      - main
-    paths-ignore:
-      - '**/__tests__/**'
   push:
     branches:
       - main
@@ -17,8 +10,6 @@ on:
 
 jobs:
   github_pages:
-    if: github.event.pull_request.merged == true
-
     runs-on: ubuntu-latest
 
     env:
