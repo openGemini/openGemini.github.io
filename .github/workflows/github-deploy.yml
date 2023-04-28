@@ -2,10 +2,10 @@ name: github pages deploy
 
 on:
   pull_request:
-    types:
-      - closed
-    branches:
-      - main
+#    types:
+#      - closed
+#    branches:
+#      - main
     paths-ignore:
       - '**/__tests__/**'
   push:
@@ -17,7 +17,7 @@ on:
 
 jobs:
   github_pages:
-    if: github.event.pull_request.merged == true
+#    if: github.event.pull_request.merged == true
 
     runs-on: ubuntu-latest
 
@@ -33,39 +33,44 @@ jobs:
           fetch-depth: 0
 
       - name: test
-        run: echo ${{ env.GITHUB_TOKEN }}
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 7 # TODO: 8
-          run_install: true
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Docs build
-        env:
-          NODE_OPTIONS: --max_old_space_size=8192
         run: |-
-          pnpm run docs:build
-          > src/.vuepress/dist/.nojekyll
+          echo ${{ env.NODE_VERSION }}
+          echo ${{ env.GITHUB_TOKEN }}
+          echo 1234
+#        run: echo 1234
 
-      - name: Deploy to GitHub Pages
-        if: success()
-        uses: crazy-max/ghaction-github-pages@v3
-        with:
-          target_branch: gh-pages
-          build_dir: src/.vuepress/dist
-          keep_history: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
+#      - name: Install pnpm
+#        uses: pnpm/action-setup@v2
+#        with:
+#          version: 7 # TODO: 8
+#          run_install: true
+#
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: ${{ env.NODE_VERSION }}
+#          cache: pnpm
+#
+#      - name: Install dependencies
+#        run: pnpm install --frozen-lockfile
+#
+#      - name: Docs build
+#        env:
+#          NODE_OPTIONS: --max_old_space_size=8192
+#        run: |-
+#          pnpm run docs:build
+#          > src/.vuepress/dist/.nojekyll
+#
+#      - name: Deploy to GitHub Pages
+#        if: success()
+#        uses: crazy-max/ghaction-github-pages@v3
+#        with:
+#          target_branch: gh-pages
+#          build_dir: src/.vuepress/dist
+#          keep_history: false
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
+
 #  gitee_pages:
 #    runs-on: ubuntu-latest
 #    needs: github_pages
