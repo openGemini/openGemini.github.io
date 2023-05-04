@@ -50,6 +50,7 @@ jobs:
           target_branch: gh-pages
           build_dir: src/.vuepress/dist
           keep_history: false
+          fqdn: docs.opengemini.org
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
 
