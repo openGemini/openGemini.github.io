@@ -9,7 +9,8 @@ order: 3
 把openGemini集群的所有组件都部署在同一个节点上，这种集群部署方式我们称之为伪集群部署，目前社区提供了部署脚本install_cluster.sh。运行命令为： sh scripts/install_cluster.sh，执行该命令，在不修改配置文件的前提下，可直接在本地拉起一个openGemini集群，包括1个ts-sql、3个ts-meta和2个ts-store组件。但该集群仅在本地回环地址127.0.0.1上监听运行，可用于本地功能测试和学习，不能对外提供访问服务。
 若要让集群监听本机IP，让外部节点可以访问，配置上相对要复杂一点，虽然可行，但不推荐。同样以部署1个ts-sql、3个ts-meta和2个ts-store组成的集群为例。
 1.	分配端口
-所有节点均监听本机IP地址，如192.168.0.1，所以所有组件之间不能使用相同的端口，需重新分配。可以做如下分配（参考）：
+所有节点均监听本机IP地址，如192.168.0.1，所以所有组件之间不能使用相同的端口，需重新分配。可以做如下分配（参考）： 
+
 ![4](https://user-images.githubusercontent.com/49023462/200800373-65a3ac6c-f38d-46ed-86d6-8b8f21232d50.png)
 
 2.	配置文件修改
@@ -213,7 +214,7 @@ members = ["192.168.0.1:8010", "192.168.0.2:8010", "192.168.0.3:8010"]
 ```
 > nohup ts-store --config openGemini.conf -pidfile store.pid > store_extra.log 2>&1 &
 ```
-然后启动ts-store组件（命令示例）：
+最后启动ts-sql组件（命令示例）：
 ```
 > nohup ts-sql --config openGemini.conf -pidfile sql.pid > sql_extra.log 2>&1 &
 ```
