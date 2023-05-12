@@ -4,7 +4,7 @@ openGemini Documentation.
 
 ## environment
 
-- install [nodejs](https://nodejs.org/zh-cn)
+- install [nodejs](https://nodejs.org/en)
 
 - install pnpm:
 
