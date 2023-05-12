@@ -3,7 +3,7 @@ import {enNavbar, zhNavbar} from "./navbar/index.js";
 import {enSidebar, zhSidebar} from "./sidebar/index.js";
 
 export default hopeTheme({
-    hostname: "https://shilinlee.github.io/docs",
+    hostname: "https://openGemini.github.io",
 
     author: {
         name: "openGemini",
