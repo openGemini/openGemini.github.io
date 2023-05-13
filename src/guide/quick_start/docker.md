@@ -4,41 +4,41 @@ order: 2
 
 # Docker
 
-本节首先介绍如何通过 Docker 快速体验 openGemini，然后介绍如何在 Docker 环境下体验 openGemini 的写入和查询功能。如果你不熟悉 Docker，请使用[手动安装](./get_started.md)的方式快速体验。如果您希望为 openGemini 贡献代码或对内部技术实现感兴趣，请参考 [openGemini GitHub](https://github.com/openGemini/openGemini) 主页下载源码构建和安装。
+This section first introduces how to quickly experience openGemini through Docker, and then explains how to use openGemini for writing and querying in a Docker environment. If you are not familiar with Docker, you can use the [manual installation](./get_started.md) method to experience it quickly. If you are interested in contributing code to openGemini or are interested in its internal technical implementation, you can download the source code from the [openGemini GitHub](https://github.com/openGemini/openGemini) homepage for building and installation.
 
-## 使用 docker 体验
+## Experience with Docker
 
-1. 安装 [Docker](https://www.docker.com/products/docker-desktop/) 环境。
+1. Install the [Docker](https://www.docker.com/products/docker-desktop/) environment
 
-2. 使用最新的 openGemini 容器镜像：
+2. Use the latest openGemini container image:
 
    ```shell
    docker run -d --name opengemini opengeminidb/opengemini-server:latest
    ```
 
-   或者指定版本的容器镜像：
+   Or specify a version of the container image:
 
    ```shell
    docker run -d --name opengemini opengeminidb/opengemini-server:v1.0.1
    ```
 
-3. 使用openGemini cli 连接：
+3. Connect to openGemini cli:
 
    ```shell
    docker exec -it opengemini ts-cli
    ```
 
-4. 基本操作
+4. Basic operations
 
-   可以参考[手动安装章节的基本操作](./get_started.md#基本操作)
+   You can refer to the [basic operations in the manual installation section](./get_started.md#基本操作)
 
-5. 停止/删除容器
+5. Stop/Delete container
 
    ```shell
    docker stop opengemini
    docker rm opengemini
    ```
 
-6. 更多用法请参考：
+6. For more usage, please refer to:
 
-   [docker hub官网](https://hub.docker.com/r/opengeminidb/opengemini-server)
+   [Docker Hub Website](https://hub.docker.com/r/opengeminidb/opengemini-server)
