@@ -1,5 +1,5 @@
 ---
-title: 快速上手
+title: Quick Start
 index: false
 dir:
     order: 2

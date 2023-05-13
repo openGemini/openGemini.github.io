@@ -6,11 +6,11 @@ order: 1
 
 To build openGemini from source code, you need to install Go in your development environment first. If Go is not installed yet, you can follow the instructions in this document for installation.
 
-# Install Go 1.18
+## Install Go 1.18
 
 Currently, openGemini uses Go 1.18+ to compile the code. To install Go 1.18, go to [Go's download page](https://golang.org/dl/), choose version 1.18, and then follow the [installation instructions](https://golang.org/doc/install).
 
-# Manage the Go toolchain using gvm
+## Manage the Go toolchain using gvm
 
 If you are using Linux or MacOS, you can manage Go versions with [Go Version Manager (gvm)](https://github.com/moovweb/gvm) easily.
 
