@@ -2,112 +2,114 @@
 order: 1
 ---
 
-# 手动安装
+# Manually installation
 
-本指南介绍如何快速上手体验 openGemini时序数据库。对于非生产环境，你可以选择以下任意一种方式部署openGemini时序数据库。
+This section introduces how to quickly get started with the openGemini temporal database. For non-production environments, you can choose to deploy the openGemini temporal database by one of the following ways.
 
-本指南以单机部署为例，如需了解集群部署，请点击[集群部署](./deploy_cluster.md)查看详细步骤。
+This guide takes standalone deployment as an example. To learn about cluster deployment, please click on [deploy_cluster](./deploy_cluster.md) to view the details.
 
-## 安装
+## Installation
 
 ::: tabs
 
 @tab Linux-x86
 
-1. 可以到[GitHub Release](https://github.com/openGemini/openGemini/releases)页面复制最新版本链接
+1. Go to [GitHub Release](https://github.com/openGemini/openGemini/releases) to copy the link of the latest version.
 
-    > 请将 **`<version>`** 替换为下载的安装包版本
+    > Please replace **`<version>`** with the version of downloaded installation package.
 
     ```bash
     wget https://github.com/openGemini/openGemini/releases/download/v<version>/openGemini-<version>-linux-amd64.tar.gz
     ```
 
-     也可以通过手动下载对应的安装包。
+     Manually downloading the corresponding installation package is also OK.
 
-2. 进入到安装包所在目录，使用 `tar` 解压安装包；
+2. Move to the directory of the installation package, use `tar` to unzip.
 
    ```shell
    mkdir openGemini
    tar -zxvf openGemini-<version>-linux-amd64.tar.gz -C openGemini
    ```
 
-   `ts-server`就是单机版本的二进制，`openGemini.singlenode.conf`是适用于`ts-server`的配置文件。
+   `ts-server` is the the standalone version of binary system. 
+   `openGemini.singlenode.conf` is the configuration file which adapts to `ts-server`.
 
 @tab Linux-arm
 
-1. 可以到[GitHub Release](https://github.com/openGemini/openGemini/releases)页面复制最新版本链接
+1. Go to [GitHub Release](https://github.com/openGemini/openGemini/releases) to copy the link of the latest version.
 
-   > 请将 **`<version>`** 替换为下载的安装包版本
+   > Please replace **`<version>`** with the version of downloaded installation package.
 
    ```bash
    wget https://github.com/openGemini/openGemini/releases/download/v<version>/openGemini-<version>-linux-arm64.tar.gz
    ```
 
-    也可以通过手动下载对应的安装包。
+    Manually downloading the corresponding installation package is also OK.
 
-2. 进入到安装包所在目录，使用 `tar` 解压安装包；
+2. Move to the directory of the installation package, use `tar` to unzip.
 
    ```shell
    mkdir openGemini
    tar -zxvf openGemini-<version>-linux-arm64.tar.gz -C openGemini
    ```
 
-   `ts-server`就是单机版本的二进制，`openGemini.singlenode.conf`是适用于`ts-server`的配置文件。
+   `ts-server` is the the standalone version of binary system. 
+   `openGemini.singlenode.conf` is the configuration file which adapts to `ts-server`.
 
 @tab openEuler
 
-当前，openGemini 安装包仅添加到openEuler镜像源中，其他Linux操作系统正在进一步完善中
+Currently, the openGemini installation package is only added to the openEuler image source. Other Linux operating systems are further improving.
 
 ```bash
 yum install openGemini
 ```
 
-自动安装成功后，openGemini全部二进制存放位置为/usr/bin，配置文件存放位置为 /etc/openGemini
+After the automatic installation is successful, all binary files of openGemini are stored in /usr/bin, and configuration files are stored in /etc/openGemini
 
-@tab 源码编译
+@tab Source code compilation
 
-**编译环境信息**
+**Information of compiling environments**
 
 - [GO](https://go.dev/dl/) version v1.18+
 - [Python](https://www.python.org/downloads/) version v3.7+
 - [Git](https://git-scm.com/downloads)
 
-**GO环境变量设置**
+**GO environmental variable settings**
 
-打开 `~/.profile`配置文件，在文件末尾添加如下配置：
+Open `~/.profile` configuration file, add the following configuration at the end of the file:
 
 ```shell
-# 设置GOPATH(需自定义目录)
+# Set GOPATH (Need to customize directory)
 export GOPATH=/path/to/dir
-# 设置国内代理
+# Set domestic proxy
 export GOPROXY=https://goproxy.cn,direct
-# 开启go mod模式
+# Open go mod mode
 export GO111MODULE=on
 export GONOSUMDB=*
 export GOSUMDB=off
 ```
 
-**下载源码**
+**Download source code**
 
 ```shell
 git clone https://github.com/openGemini/openGemini.git
 ```
 
-**进入主目录**
+**Move to the main directory**
 
 ```shell
 cd openGemini
 ```
 
-**编译**
+**Compile**
 
 ```shell
 python3 build.py --clean
 ```
 
-编译成功后，二进制保存在`build`目录中。
+After successfully compiled, binary files are saved in the `build` directory。
 
-**运行单机版**
+**Run a standalone version**
 
 ```shell
 bash ./scripts/install.sh
@@ -115,9 +117,9 @@ bash ./scripts/install.sh
 
 :::
 
-## 启动
+## Start
 
-**进入 ts-server 所在文件夹后，执行**
+**Move to the directory where ts-server is saved, run**
 
 ```shell
 ./ts-server
@@ -125,13 +127,13 @@ bash ./scripts/install.sh
 
 ::: warning
 
-`v1.0.1`及以前版本，运行`ts-server`需要指定配置文件启动：
+If `v1.0.1` and version before, running `ts-server` equires specifying a configuration file to start:
 
 ```shell
 ./ts-server -config /path/to/openGemini.singlenode.conf
 ```
 
-如需后台启动：
+To start in the background:
 
 ```shell
 nohup ./ts-server > server_extra.log 2>&1 &
@@ -139,9 +141,9 @@ nohup ./ts-server > server_extra.log 2>&1 &
 
 :::
 
-## openGemini 命令行（ts-cli）
+## OpenGemini Command Line (ts-cli)
 
-为便于执行数据库（Database）的各种查询，openGemini 提供一命令行应用程序（以下简称为 openGemini CLI）ts-cli。要进入 openGemini 命令行，您只要进入`ts-cli`所在目录，在终端执行`ts-cli` 即可。
+To facilitate the execution of various queries in the database, openGemini provides a command-line application (hereinafter referred to as openGemini CLI) ts cli. To enter the openGemini command line, simply enter the directory where `ts-cli` is located and execute `ts-cli` in the terminal.
 
 ```sh
 ./ts-cli
@@ -149,13 +151,13 @@ nohup ./ts-server > server_extra.log 2>&1 &
 
 ::: tip
 
-默认连接127.0.0.1:8086，可通过以下命令连接其他主机：
+Connect to 127.0.0.1:8086 in default. Connect to other host by the following command:
 
 ```shell
 ./ts-cli -host 192.168.0.1 -port 8086
 ```
 
-更多用法请使用如下命令，自行探索：
+For more usage, please use the following command to explore on your own:
 
 ```shell
 ./ts-cli -h
@@ -163,21 +165,21 @@ nohup ./ts-server > server_extra.log 2>&1 &
 
 :::
 
-## 基本操作
+## Basic Operations
 
-**创建数据库**
+**Create a database**
 
 ```sql
 > create database db0
 ```
 
-**查看数据库**
+**Look up the database**
 
 ```sql
 > show databases
 ```
 
-运行效果
+Effects
 
 ```sql
 >>> create database db0
@@ -195,31 +197,31 @@ Elapsed: 2.178147ms
 >>>
 ```
 
-**使用数据库**
+**Use the database**
 
 ```sql
 > use db0
 ```
 
-**写数据**
+**Write in data**
 
 ```sql
 > insert cpu_load,host="server-01",region="west_cn" value=75.3
 ```
 
-**查看表**
+**Look up table**
 
 ```sql
 > show measurements
 ```
 
-**查询数据**
+**Look up data**
 
 ```sql
 > select * from cpu_load
 ```
 
-运行效果
+Effects
 
 ```sql
 >>> use db0
@@ -249,10 +251,10 @@ name: cpu_load
 Elapsed: 3.259995ms
 ```
 
-## 注意事项
+## Attention
 
-`ts-server`为openGemini的单机版二进制文件，可简单理解为`ts-server`由一个`ts-sql`、一个`ts-meta`和一个`ts-store`组成。 注意事项：
+`ts-server` is a standalone binary file of OpenGemini, which can be simply understood as `ts-server` consisted of a`ts-sql`,a`ts-meta` and a `ts-store`. Attention:
 
-1. 如果默认配置不能满足需求，需要使用配置文件`openGemini.singlenode.conf`启动，完整的配置项和含义参考[管理-配置项](../manage/configurations.md)章节。
-2. 默认配置文件中数据、日志等默认保存在`/tmp/openGemini`目录下，建议替换为其他目录，确保有足够的存储空间。如果使用的`scripts/install.sh`脚本启动，还需要对应修改脚本中的`/tmp/`目录。
-3. 如果启动过程中发现端口已占用，可以修改配置文件中的默认端口。所有端口用途请参考[管理-端口矩阵](../manage/ports.md)章节。
+1. If the default configuration cannot meet the requirements, configuration file `openGemini.singlenode.conf` is needed to start. For the complete configuration items and meanings, please refer to [Management - Configuration Items](../manage/configurations.md).
+2. The data and logs in the default configuration file are saved in `/tmp/openGemini` by default. It is recommended to replace them with another directory to ensure sufficient storage space. If you use `scripts/install.sh` to start, you also need to modify `/tmp/` in the script accordingly.
+3. If the port is found to be occupied during startup, the default port in the configuration file can be modified. Please refer to [Management Port Matrix ](../manage/ports.md)for all port purposes.
