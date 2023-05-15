@@ -182,9 +182,9 @@ time				                        value
   * 等号
   * 空格
 
-例如，\,转义逗号。
+例如，`\,`转义逗号。
 
-* 在测量中，您必须转义：
+* 在measurement中，您必须转义：
   * commas  
   * spaces
 
@@ -198,7 +198,7 @@ time				                        value
 > INSERT "measurement\ with\ quo⚡️es\ and\ emoji",tag\ key\ with\ sp🚀ces=tag\,value\,with"commas" field_k\ey="string field value, only \" need be esc🍭ped"
 ```
 
-系统会写一个测量点"measurement with quo⚡️es and emoji"，tag key 为tag key with sp🚀ces，tag values为`tag,value,with"commas"`，field key 为field_key,field value为`string field value, only " need be esc🍭ped`。
+系统会写一个point，它的measurement是`"measurement with quo⚡️es and emoji"`，tag key为`tag key with sp🚀ces`，tag values为`tag,value,with"commas"`，field key为`field_k\ey`，field value为`string field value, only " need be esc🍭ped`。
 
 ### 附加命名准则
 
