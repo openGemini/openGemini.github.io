@@ -210,7 +210,7 @@ openGemini line protocol接受GeminiQL 关键字和 标识符名称。 我们建
 
 ::: warning
 
-避免使用保留键`_field`和`_measurement`。如果将这些key作为标记或filed key 包括在内，则关联的point 将被丢弃。
+避免使用保留键`_field`和`_measurement`。如果将这些key作为标记或field key 包括在内，则关联的point 将被丢弃。
 
 :::
 
@@ -223,9 +223,9 @@ openGemini line protocol接受GeminiQL 关键字和 标识符名称。 我们建
 
 ### 重复 points
 
-Point由measurement 名称、tag set、filed get和timestamp组成的唯一标识 
+Point由measurement 名称、tag set、field set和timestamp组成的唯一标识 
 
-如果您将一个point 写入到一个具有与现有point 匹配的时间戳的序列中，则该field set 将成为新旧field get 的集合，而冲突则有保留新field set 。
+如果您将一个point 写入到一个具有与现有point 匹配的时间戳的序列中，则该field set 将成为新旧field set 的集合，而冲突则有保留新field set 。
 
  有关这种行为以及如何避免这种行为的完整示例，请参见 [openGemini如何处理重复点？](../troubleshoot)
 
