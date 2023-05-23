@@ -376,6 +376,12 @@ ts-sql专属配置。
 
 - 开启HTTPS后，私钥路径。
 
+### time_filter_protection
+
+- 类型: `bool`
+- 默认值: `false`
+- 是否开启查询保护,开启后查询条件必须有时间范围。
+
 ## [data]
 
 ts-store专属配置。
