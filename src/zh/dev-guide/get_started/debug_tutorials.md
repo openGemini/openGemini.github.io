@@ -11,21 +11,21 @@
    2.1 通过goland的菜单栏Tools–>Deployment–>Configuration来添加远程调试的配置
    2.2 创建一个SFTP协议的配置，如图
 
-   ![](../../../static/img/dev-guide/get_started/debug_tutorials/deployment_connection.png)
+   ![](../../../../static/img/dev-guide/get_started/debug_tutorials/deployment_connection.png)
 
    2.3 然后进入SSH configuration ， 如图输入SSH连接所需的信息，点击TEST CONNECTION后确定连接成功, 保存。
 
-   ![](../../../static/img/dev-guide/get_started/debug_tutorials/ssh_configuration.png)
+   ![](../../../../static/img/dev-guide/get_started/debug_tutorials/ssh_configuration.png)
 
    2.4 进入Mappings， 建立项目目录的映射
-   ![](../../../static/img/dev-guide/get_started/debug_tutorials/deployment_mappings.png)
+   ![](../../../../static/img/dev-guide/get_started/debug_tutorials/deployment_mappings.png)
    2.5 上传项目文件到WSL2 (用于同步项目内容如果已经上传过请忽略此步骤)<br>项目目录右键->Deployment- >上传项目到WSL2
 
 3. **Run/Debug的配置**
    3.1 进入goland的菜单栏Runs–>Configurations
    3.2 创建一个Go Remote , Host 填用WSL2的 eth0 ip, 保存。
 
-   ![](../../../static/img/dev-guide/get_started/debug_tutorials/go_remote.png)
+   ![](../../../../static/img/dev-guide/get_started/debug_tutorials/go_remote.png)
 
 ## WSL2侧操作
 
@@ -59,10 +59,10 @@
    如：
 
 2.1查询命令会调用serveQuery , 示例将断点打在serveQuery里面(handler.go的414行)
-![](../../../static/img/dev-guide/get_started/debug_tutorials/example_breakpoint.png)
+![](../../../../static/img/dev-guide/get_started/debug_tutorials/example_breakpoint.png)
 2.2 在openGemini命令行执行select * from h2o_feet on NOAA_water_database
-![](../../../static/img/dev-guide/get_started/debug_tutorials/example_statement.png)
+![](../../../../static/img/dev-guide/get_started/debug_tutorials/example_statement.png)
 2.3 程序运行到断点处暂停。
-![](../../../static/img/dev-guide/get_started/debug_tutorials/example_result.png)
+![](../../../../static/img/dev-guide/get_started/debug_tutorials/example_result.png)
 2.4 点击这里向后移动断点
-![](../../../static/img/dev-guide/get_started/debug_tutorials/next_point.png)
+![](../../../../static/img/dev-guide/get_started/debug_tutorials/next_point.png)
