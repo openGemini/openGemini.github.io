@@ -2,49 +2,47 @@
 order: 1
 ---
 
-# 关于
+# about
 
-## 简介
+## Introduction
 
-openGemini是[华为云数据库创新Lab](https://www.huaweicloud.com/lab/clouddb/home.html)自主设计、研发的一款面向全球开源的云原生分布式时序数据库，提供单机和分布式版本，具备卓越的读写性能和高效的数据分析能力，支持主流开发语言和多形态部署（如云、Docker、物理机等），存储分析一体化，易扩展。致力于解决物联网和运维监控等场景下海量时序数据的高效存储和分析，以进一步降低企业运营和运维成本，提升产品质量和生产效率。
+OpenGemini is a global open-source cloud-native distributed time series database designed and developed by [HUAWEI CLOUD Database Innovation Lab ](https://www.huaweicloud.com/lab/clouddb/home.html). It provides standalone and distributed versions with excellent read and write performance and efficient data analysis capabilities. Supports mainstream development languages and multi-form deployment (such as cloud, Docker, and physical machine), integrates storage and analysis, and is easy to expand. It is dedicated to efficiently storing and analyzing massive time series data in IoT and O&M monitoring scenarios to further reduce enterprise operation and O&M costs and improve product quality and production efficiency.
 
-## 五大核心特性
+## Five Core Features
 
-### 高性能
+### High Performance
 
-支持亿级时间线和PB级时序数据管理，每秒千万级数据写入和毫秒级查询响应，相比InfluxDB，简单查询性能提升2-5倍，复杂查询性能提升60倍
+Supports hundreds of millions of time lines and PB-level time series data management, tens of millions of data writes per second, and millisecond-level query response. Compared with InfluxDB, simple query performance is improved by 2 to 5 times, and complex query performance is improved by 60 times.
 
-### 分布式
+### Distributed
 
-采用MPP大规模并行处理分层架构，由ts-sql、ts-meta、ts-store三个组件组成，各组件可独立扩展，支持100+节点的大规模集群部署
+The MPP architecture is used. It consists of three components: ts-sql, ts-meta, and ts-store. Each component can be independently expanded and can be deployed in a large-scale cluster with more than 100 nodes.
 
-### 存储分析一体化
+### Integrated storage and analysis
 
-内置AI数据分析平台，提供了对时序数据的实时异常检测能力，实现了数据从存储到分析完整的闭环管理
+The built-in AI data analysis platform provides real-time anomaly detection capabilities for time series data and implements closed-loop management from data storage to data analysis.
 
-### 运维成本低
+### Low O&M cost
 
-提供260+项系统运行监控指标，快速提升问题解决的效率。部署过程中不依赖任何第三方组件和应用，极大降低了运维难度和成本
+More than 260 system running monitoring indicators are provided to quickly improve problem solving efficiency. The deployment does not depend on any third-party components or applications, greatly reducing O&M difficulties and costs.
 
-### 高数据压缩率
+### High data compression ratio
 
-采用列式存储方式，提供高效数据压缩算法，相同数据量下存储成本仅有关系型数据库的1/20，NoSQL的1/10。
+Column-based storage is used to provide efficient data compression algorithm. With the same data volume, the storage cost is only 1/20 of that of relational databases and 1/10 of that of NoSQL.
 
-## 典型应用场景
+## Typical Application Scenarios
 
-### 物联网（IoT）
+### Internet of Things (IoT)
 
-| <span style="display:inline-block;width:80pt">分类</span> | 子行业                                                       | 应用举例                                                     |
-| --------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| 工业物联网                                                | 智能制造、智慧能源、电力(水)、新能源(光伏、风电)、智慧矿山，农牧业 | 以智能制造为例, 设备管理：设备运行状态监控，预测性维护; 质量管理：故障预测和分析、质量追溯、工艺优化、质量在线监控; 能源管理：能耗分析、用电监测; 其他：BI/报表 |
-| 企业物联网                                                | 智慧城市、智慧消防、智慧楼宇、环境监测、智慧物流、智慧园区   | 以智慧楼宇为例, 设备管理：设备健康检查（空调、风机、电梯）、设备预测性维护、故障界定; 监控告警：异常检测、预测; 能源管理：用电监测，能耗分析预测; 环境监测：空气质量监测、室内温度监测 |
-| 消费物联网                                                | 智能汽车、智慧家居、智能穿戴、共享经济（共享单车、共享汽车、共享电动车）、智慧养老 | 以智能汽车为例,  车辆管理：车辆实时状态监控，车辆异常检测; 人车互动：运行位置查询、轨迹回放、驾驶行为查询; 产品创新优化：驾驶行为分析、车况分析 |
+| <span style="display:inline-block;width:80pt">categorize</span> | Sub-industry                                                 | Application Examples                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Industrial Internet of Things                                | Smart manufacturing, smart energy, electricity (water), new energy (photovoltaic and wind power), smart mines, agriculture and animal husbandry | Take smart manufacturing as an example. Equipment management: equipment running status monitoring and predictive maintenance; Quality management: fault prediction and analysis, quality tracing, process optimization, and online quality monitoring; Energy management: energy consumption analysis and power consumption monitoring; Others: BI/Report |
+| Enterprise IoT                                               | Smart City, Smart Fire Protection, Smart Building, Environmental Monitoring, Smart Logistics, and Smart Campus | Take smart buildings as an example. Device management: device health check (air conditioners, fans, and elevators), device predictive maintenance, and fault demarcation; Monitoring alarms: exception detection and prediction; Energy management: power consumption monitoring, energy consumption analysis and prediction; Environmental monitoring: air quality monitoring, indoor temperature monitoring |
+| Consumer Internet of Things                                  | Smart cars, smart homes, smart wearables, shared economy (sharing bicycles, shared cars, and shared electric vehicles), and smart old-age pension | Take smart cars as an example. Vehicle management: real-time vehicle status monitoring and vehicle abnormality detection; People-vehicle interaction: query of running positions, track playback, and driving behavior; Product innovation and optimization: driving behavior analysis, vehicle condition analysis |
 
-### 监控（DevOps）
+### Monitor（DevOps）
 
-| <span style="display:inline-block;width:80pt">分类</span> | 应用举例                                                     |
-| --------------------------------------------------------- | ------------------------------------------------------------ |
-| DevOps                                                    | 存储IT基础设施和应用的监控指标、调用链和日志，例如云服务、容器、微服务、物理服务器等，实现实时状态监控、异常检测和预测、根因分析、告警、统计分析。 |
-| 网络                                                      | 存储网络设备和系统的数据，例如上下行带宽、流量、应用APIs成功率、访问IP等等，实现网络性能实时洞察、错误实时告警、网络攻击检测等 |
-| 安全                                                      | 存储审计日志：对应用程序、数据库、虚拟机、操作系统、服务器、网络组件、存储等任何操作日志。可识别安全事件、监控策略违规、举证 |
-
+| <span style="display:inline-block;width:80pt">categorize</span> | Application Examples                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| DevOps                                                       | Stores monitoring metrics, call chains, and logs of IT infrastructure and applications, such as cloud services, containers, microservices, and physical servers. It implements real-time status monitoring, exception detection and prediction, root cause analysis, alarm reporting, and statistics analysis. |
+| Network                                                      | Stores network device and system data, such as uplink and downlink bandwidth, traffic, application API success rate, and access IP address. It implements real-time network performance insight, real-time error alarm, and network attack detection. |
