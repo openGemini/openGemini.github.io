@@ -1,17 +1,17 @@
 ---
-title: 监控
+title: Monitor
 order: 5
 ---
 
 
-# 监控
+# Monitor
+openGemini provides 260+ monitoring indicators to monitor various states of the cluster. 
+Below, we will introduce how to enable monitoring items and visualize this data with Grafana. 
+To demonstrate this, we will use the `install_cluster.sh` 
+and `install_monitor.sh` script files under the `scripts` directory to simulate cluster deployment on a single machine.
+## Kernel configuration file
 
-openGemini提供了260+监控指标，来监控集群的各种状态，下面将介绍如何开启监控项，并结合Grafana可视化这些数据。
-这里使用scripts文件下的install_cluster.sh和install_monitor.sh脚本文件在单机上模拟集群部署进行演示。
-
-## 内核配置文件
-
-ts-sql/ts-store/ts-meta, 开启监控的配置如下：
+Configure the following settings in openGemini.conf:
 
 ```editorconfig
 [monitor]
@@ -29,19 +29,22 @@ ts-sql/ts-store/ts-meta, 开启监控的配置如下：
   bind-address = "{{addr}}:8086"
 ```
 
-- pushers，表示监控指标的推送方式，目前支持http和file两种方式，可以使用`http|file`表示两种方式都使用
-- store-enable，表示是否开启monitor数据存储
-- store-database，表示监控指标保存到的database的名称
-- store-interval，表示保存数据的周期
-- store-path，在pushers中包含`file`时生效，表示监控指标保存的路径和文件名称模板
-- http-endpoint，表示监控指标通过http发送到的endpoint
+- `pushers`: represents the method of pushing monitoring indicators. Currently, two methods are supported: http and file. You can use http|file to indicate that both methods should be used.
+- `store-enable`: indicates whether to enable monitoring data storage.
+- `store-database`: specifies the name of the database where the monitoring indicators will be saved.
+- `store-interval`: specifies the interval for storing data.
+- `store-path`: only effective when file is included in pushers, specifies the path and file name template for saving the monitoring indicators.
+- `http-endpoint`: specifies the endpoint where the monitoring indicators will be sent via HTTP.
 
 ::: tip
-这里使用`127.0.0.1:8086`,端口与下面[http]中配置的一样，说明会将监控指标发送给在127.0.0.1:8086下暴露端口的openGemini数据库结点上
+
+127.0.0.1:8086 is used here, with the same port as configured in [http] below, 
+indicating that the monitoring indicators will be sent to the openGemini database node exposed on 127.0.0.1:8086.
 :::
 
-## ts-monitor 配置文件
-monitor的配置文件，在代码给的模板配置文件中已经有了详细的注释。
+## ts-monitor configuration file
+The configuration file for `monitor` has detailed comments in the provided template configuration file.
+
 ```editorconfig
 [monitor]
     # localhost ip
@@ -74,13 +77,15 @@ monitor的配置文件，在代码给的模板配置文件中已经有了详细�
 ```
 
 ## grafana
-1. 启动集群和ts-monitor
-    在OpenGemini的项目目录下输入如下命令
+1. Start the cluster and ts-monitor
+
+    - input the following command in the OpenGemini project directory:
     ```shell
     bash scripts/install_cluster.sh
     bash scripts/install_monitor.sh 
     ```
-    使用`ps`命令检验是否启动成功，应该能看到类似如下响应，启动了3个meta，3个store，1个sql和1个ts-monitor
+    - Use the `ps` command to check if the startup is successful. 
+   You should see a response similar to the following, indicating that 3 meta, 3 store, 1 sql, and 1 ts-monitor have been started:
     ```shell
     PID TTY          TIME CMD
     346114 pts/28   00:00:00 bash
@@ -95,12 +100,12 @@ monitor的配置文件，在代码给的模板配置文件中已经有了详细�
     382071 pts/28   00:00:00 ps
     ```
     
-2. grafana并查看监控数据
+2. Configure Grafana and view monitoring data
 
-   - 由于OpenGemini与influxdb的协议是一致，配置数据源时选择influxdb
+   - Since OpenGemini is the same as the protocol of influxdb, select influxdb when configuring the data source
    
    ![](../../../static/img/guide/manage/monitor/dbsource.png)
    
-   - 增加dashboard，增加或导入一些已经有json配置文件，即可在grafana中看到OpenGemini的监控数据
-
+   - Add dashboards, add or import some existing JSON configuration files, you can see OpenGemini monitoring data in grafana
+   
    ![](../../../static/img/guide/manage/monitor/dashboard.png)
