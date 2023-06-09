@@ -4,23 +4,23 @@ order: -1
 
 # INSERT
 
-`insert`表示写入数据，数据schema是[行协议](../../../write/line_protocol.md)。
+`insert` means write data, data schema is [row protocol](../../../write/line_protocol.md).
 
-## 语法
+## Syntax
 
 ```sql
 INSERT <line_protocol>
 ```
 
-## 例子
+## Examples
 
-### 写入一条数据
+### Write a data
 
 ```sql
 INSERT mst,location=China value=1.0
 ```
 
-### 查看Schema
+### View Schema
 
 ```sql
 >>> SHOW TAG KEYS FROM "mst"

@@ -4,20 +4,20 @@ order: 3
 
 # GROUP BY
 
-`GROUP BY`子句按用户指定的tag或者时间区间对查询结果进行分组。
+The `GROUP BY` clause groups query results by a user-specified tag or time interval.
 
-`GROUP BY`子句按以下方式对查询结果进行分组：
+The `GROUP BY` clause groups the query results in the following way:
 
-- 一个或多个指定的`tags`
-- 指定的时间间隔
+- One or more specified `tags`
+- Specified time interval
 
 ::: warning
 
-不能使用`GROUP BY`对`fields`进行分组
+You cannot use `GROUP BY` to group `fields`
 
 :::
 
-## 语法
+## Syntax
 
 ## GROUP BY tags
 
@@ -27,7 +27,7 @@ SELECT COLUMN_CLAUSES FROM_CLAUSE [WHERE_CLAUSE] GROUP BY [* | <tag_key>[,<tag_k
 
 ## GROUP BY time intervals
 
-`GROUP BY time()`按用户指定的时间间隔对查询结果进行分组。
+`GROUP BY time()` groups query results by user-specified time interval.
 
 ```sql
 SELECT COLUMN_CLAUSES FROM_CLAUSE [WHERE_CLAUSE] GROUP BY time(<time_interval>),[tag_key] [fill(<fill_option>)]
@@ -35,16 +35,16 @@ SELECT COLUMN_CLAUSES FROM_CLAUSE [WHERE_CLAUSE] GROUP BY time(<time_interval>),
 
 **time(time_interval)**
 
-`GROUP BY time()`子句中的`time_interval`（时间间隔）是一个持续时间（duration），决定了openGemini按多大的时间间隔将查询结果进行分组。例如，当`time_interval`为`5m`时，那么在`WHERE`子句中指定的时间范围内，将查询结果按5分钟进行分组。
+The `time_interval` in the `GROUP BY time()` clause is a duration that determines by what interval openGemini groups the query results. For example, when `time_interval` is `5m`, then the query results are grouped by 5 minutes within the time range specified in the `WHERE` clause.
 
 **fill()**
 
-`fill(<fill_option>)`是可选的，它会改变不含数据的时间间隔的返回值。
+`fill(<fill_option>)` is optional, it will change the return value of the interval without data.
 
 
-## 例子
+## Examples
 
-### 按单个tag对查询结果进行分组
+### Grouping of query results by individual tag
 
 ```sql
 >>> SELECT MEAN("water_level") FROM "h2o_feet" GROUP BY "location"
@@ -67,7 +67,7 @@ tags: location=santa_monica
 2 columns, 1 rows in set
 ```
 
-### 将查询结果按12分钟的时间间隔进行分组
+### Grouping query results by 12-minute intervals
 
 ```sql
 >>> SELECT COUNT("water_level") FROM "h2o_feet" WHERE time >= '2019-08-18T00:00:00Z' AND time <= '2019-08-18T00:30:00Z' GROUP BY time(12m)

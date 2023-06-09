@@ -1,22 +1,22 @@
 ---
-title: 示例数据
+title: Sample data
 order: 1
 ---
 
 
-# 示例数据
+# Sample data
 
-为了进一步学习GeminiQL，本节将提供示例数据供您下载，并教您如何将数据导入数据库。数据探索、Schema探索和GeminiQL函数等章节都会引用到这些示例数据。
+To further your learning of GeminiQL, this section will provide sample data for you to download and teach you how to import the data into the database. The sample data is referenced in the Data Exploration, Schema Exploration and GeminiQL Functions sections.
 
 ```
 https://s3.amazonaws.com/noaa.water-database/NOAA_data.txt
 ```
 
-## 导入数据：
+## Importing data：
 ```shell
 curl -G  https://s3.amazonaws.com/noaa.water-database/NOAA_data.txt > NOAA_data.txt
 
 ts-cli -import -path=NOAA_data.txt -host=127.0.0.1 -port=8086 -precision=s
 ```
 
-数据自动导入到 database: NOAA_water_database
+Data is automatically imported into the database: NOAA_water_database

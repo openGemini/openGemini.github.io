@@ -4,9 +4,9 @@ order: 2
 
 # WHERE
 
-`WHERE`子句根据field、tag、timestamp来过滤数据。
+The `WHERE` clause filters the data based on field, tag, and timestamp.
 
-## 语法
+## Syntax
 
 ```sql
 SELECT COLUMN_CLAUSES FROM_CLAUSE WHERE <CONDITION> [(AND|OR) <CONDITION> [...]]
@@ -18,17 +18,17 @@ SELECT COLUMN_CLAUSES FROM_CLAUSE WHERE <CONDITION> [(AND|OR) <CONDITION> [...]]
 tag_key <operator> ['tag_value']
 ```
 
-在`WHERE`子句中，请对`tag value`用单引号括起来。如果`tag value`没有使用引号或者使用了双引号，那么不会返回任何查询结果，在大多数情况下，也不会返回错误。
+In the `WHERE` clause, enclose `tag value` in single quotes. If `tag value` is not enclosed in quotes or if double quotes are used, then no query results will be returned, and in most cases, no errors will be returned.
 
-支持的 operator 有：
+Supported operators are:
 
-| 操作符 | 含义   |
+| Operators | Meaning   |
 | :----: | :----- |
-|  `=`   | 等于   |
-|  `<>`  | 不等于 |
-|  `!=`  | 不等于 |
+|  `=`   | equal to   |
+|  `<>`  | not equal to |
+|  `!=`  | not equal to |
 
-operator还支持：正则表达式。
+The operator also supports: regular expressions.
 
 ### Fields
 
@@ -36,31 +36,31 @@ operator还支持：正则表达式。
 field_key <operator> ['string' | boolean | float | integer]
 ```
 
-`WHERE`子句支持对`field value`进行比较，`field value`可以是字符串、布尔值、浮点数或者整数。
+The `WHERE` clause supports comparison of `field value`, which can be a string, a boolean, a floating point number or an integer.
 
-在`WHERE`子句中，请对字符串类型的`field value`用单引号括起来。如果字符串类型的field value没有使用引号或者使用了双引号，那么不会返回任何查询结果，在大多数情况下，也不会返回错误。
+In the `WHERE` clause, enclose the string type `field value` in single quotes. If the string type field value is not enclosed in quotes or is enclosed in double quotes, then no query results will be returned, and in most cases, no errors will be returned.
 
-支持的 operator 有：
+Supported operators are:
 
-| 操作符 | 含义     |
+| Operators | Meaning     |
 | :----: | :------- |
-|  `=`   | 等于     |
-|  `<>`  | 不等于   |
-|  `!=`  | 不等于   |
-|  `>`   | 大于     |
-|  `>=`  | 大于等于 |
-|  `<`   | 小于     |
-|  `<=`  | 小于等于 |
+|  `=`   | equal to     |
+|  `<>`  | not equal to   |
+|  `!=`  | not equal to   |
+|  `>`   | greater than     |
+|  `>=`  | greater than or equal to |
+|  `<`   | less than     |
+|  `<=`  | less than or equal to |
 
-operator还支持：算术运算和正则表达式。
+The operator also supports: arithmetic operations and regular expressions.
 
 ### Timestamp
 
-对于大多数`SELECT`语句，默认的时间范围是全部时间范围。对于带`GROUP BY time()`子句的`SELECT`语句，默认的时间范围是从**时间最小的数据的时间**`到`now()`。
+For most `SELECT` statements, the default time range is the full time range. For `SELECT` statements with the `GROUP BY time()` clause, the default time range is from **the time of the data with the smallest time** to `now()`.
 
-## 例子
+## Examples
 
-### 查询field value满足一定条件的数据
+### Query the data whose field value meets certain conditions
 
 ```sql
 >>> SELECT * FROM "h2o_feet" WHERE "water_level" > 8
@@ -77,9 +77,9 @@ name: h2o_feet
 4 columns, 1503 rows in set
 ```
 
-该查询返回`h2o_feet`中的数据，这些数据满足条件：field key `water_level`的值大于8。
+This query returns the data in `h2o_feet` that satisfy the condition: the value of field key `water_level` is greater than 8.
 
-### 查询field value和tag value都满足一定条件的数据
+### Query the data whose field value and tag value both meet certain conditions
 
 ```sql
 >>> SELECT "water_level" FROM "h2o_feet" WHERE "location" <> 'santa_monica' AND (water_level < -0.57 OR water_level > 9.95)
@@ -99,11 +99,11 @@ name: h2o_feet
 2 columns, 8 rows in set
 ```
 
-### 查询timestamp满足一定条件的数据
+### Query the data whose timestamp meets certain conditions
 
 ```sql
 >>> SELECT * FROM "h2o_feet" WHERE time > now() - 7d
 Elapsed: 1.062851ms
 ```
 
-没有满足过去7天内的数据。
+No data within the last 7 days was met.
