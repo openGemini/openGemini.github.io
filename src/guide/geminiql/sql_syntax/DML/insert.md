@@ -4,7 +4,7 @@ order: -1
 
 # INSERT
 
-`insert` means write data, data schema is [row protocol](../../../write/line_protocol.md).
+`insert` means write data, data schema is [line protocol](../../../write/line_protocol.md).
 
 ## Syntax
 
