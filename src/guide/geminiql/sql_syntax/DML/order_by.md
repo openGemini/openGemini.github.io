@@ -4,19 +4,19 @@ order: 4
 
 # ORDER BY
 
-openGemini 默认按递增的时间顺序返回结果。第一个返回的数据点，其时间戳是最早的，而最后一个返回的数据点，其时间戳是最新的。`ORDER BY time DESC`将默认的时间顺序调转，使得openGemini首先返回有最新时间戳的数据点，也就是说，按递减的时间顺序返回结果。
+openGemini returns results in incremental chronological order by default. The first data point returned has the earliest timestamp, while the last data point returned has the most recent timestamp. `ORDER BY time DESC` reverses the default chronological order so that openGemini returns the data point with the most recent timestamp first, i.e., returns results in decreasing chronological order.
 
-`ORDER BY` 子句仅支持对time排序。
+The `ORDER BY` clause only supports sorting on time.
 
-## 语法
+## Syntax
 
 ```sql
 SELECT COLUMN_CLAUSES FROM_CLAUSE [WHERE_CLAUSE] [GROUP_BY_CLAUSE] ORDER BY time [ASC|DESC]
 ```
 
-## 例子
+## Examples
 
-### 首先返回最新的点
+### First return the latest point
 
 ```sql
 >>> SELECT "water_level","location" FROM "h2o_feet" WHERE time >= '2019-08-18T00:00:00Z' AND time <= '2019-08-18T00:30:00Z' ORDER BY time DESC
@@ -40,7 +40,7 @@ name: h2o_feet
 3 columns, 12 rows in set
 ```
 
-### 首先返回最新的点并且包含`GROUP BY time()`子句
+### First return the latest point and include the `GROUP BY time()` clause
 
 ```sql
 >>> SELECT COUNT("water_level") FROM "h2o_feet" WHERE time >= '2019-08-18T00:00:00Z' AND time <= '2019-08-18T00:30:00Z' GROUP BY time(12m) ORDER BY time DESC

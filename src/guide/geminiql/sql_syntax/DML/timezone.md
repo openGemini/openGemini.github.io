@@ -4,19 +4,19 @@ order: 6
 
 # TIMEZONE
 
-`tz()`子句返回指定时区的UTC偏移量。
+The `tz()` clause returns the UTC offset of the specified time zone.
 
-## 语法
+## Syntax
 
 ```sql
 SELECT COLUMN_CLAUSES FROM_CLAUSE [WHERE_CLAUSE] [GROUP_BY_CLAUSE] [LIMIT_CLAUSE] [OFFSET_CLAUSE] tz('<time_zone>')
 ```
 
-openGemini 默认以UTC格式存储和返回时间戳。
+openGemini stores and returns timestamps in UTC format by default.
 
-## 例子
+## Examples
 
-### 返回芝加哥时区的UTC偏移量
+### Return the UTC offset of the Chicago time zone
 
 ```sql
 >>> SELECT "water_level" FROM "h2o_feet" WHERE "location" = 'santa_monica' AND time >= '2019-08-18T00:00:00Z' AND time <= '2019-08-18T00:18:00Z' tz('America/Chicago')
@@ -32,4 +32,4 @@ name: h2o_feet
 2 columns, 4 rows in set
 ```
 
-该查询结果中，时间戳包含了美国/芝加哥（`America/Chicago`）的时区的UTC偏移量（`-05:00`）。
+The timestamp of this query contains the UTC offset (`-05:00`) from the USA/Chicago (`America/Chicago`) time zone.

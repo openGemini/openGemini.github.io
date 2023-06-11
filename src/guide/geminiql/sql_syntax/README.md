@@ -1,5 +1,5 @@
 ---
-title: SQL语法
+title: SQL syntax
 index: false
 dir:
     order: 2
