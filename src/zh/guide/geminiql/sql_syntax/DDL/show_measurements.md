@@ -51,7 +51,7 @@ name: measurements
 
 该查询返回数据库`NOAA_water_database`中的measurement。数据库`NOAA_water_database`有五个measurement：`average_temperature`、`h2o_feet`、`h2o_pH`、`h2o_quality`和`h2o_temperature`。
 
-### 运行不带有`ON`子句的`SHOW SERIES`查询
+### 运行不带有`ON`子句的`SHOW MEASUREMENTS`查询
 
 ::: tabs
 

@@ -4,39 +4,40 @@ order: 8
 
 # CREATE DATABASE
 
-## 语法
+## Syntax
 
 ```sql
 CREATE DATABASE <database_name> [WITH [DURATION <duration>] [REPLICATION <n>] [SHARD DURATION <duration>] [NAME <retention-policy-name>]]
 ```
 
-## 语法描述
+## Syntax Description
 
-`CREATE DATABASE`需要数据库名称。
+`CREATE DATABASE` requires the database name.
 
-`WITH` ，`DURATION`，`REPLICATION`，`SHARD DURATION`，`NAME` 子句以及创建与数据库相关联的单个保留策略是可选项。
-如果未在`WITH`之后指定子句，则会默认创建名称为`autogen`的保留策略。
+The `WITH`, `DURATION`, `REPLICATION`, `SHARD DURATION`, `NAME` clauses and the creation of a single retention policy associated with the database are optional.
 
-成功的`CREATE DATABASE`查询不返回任何结果。
+If no clause is specified after `WITH`, a reservation policy with the name `autogen` will be created by default.
 
-如果创建一个已经存在的数据库，openGemini 不执行任何操作，但也不会返回错误。
+A successful `CREATE DATABASE` query does not return any results.
 
-## 示例
+If you create a database that already exists, openGemini does not perform any operation, but also does not return an error.
 
-### 创建数据库
+## Examples
+
+### Create database
 
 ```sql
 > CREATE DATABASE "NOAA_water_database"
 ```
 
-该查询创建一个名为 `NOAA_water_database`的数据库。
+This query creates a database named `NOAA_water_database`.
 
-默认情况下，openGemini还会创建默认的保留策略`autogen`并与数据库`NOAA_water_database`进行关联。
+By default, openGemini also creates the default retention policy `autogen` and associates it with the database `NOAA_water_database`.
 
-## 创建具有特定保留策略的数据库
+## Create a database with specific retention policies
 
 ```sql
 > CREATE DATABASE "NOAA_water_database" WITH DURATION 3d REPLICATION 1 SHARD DURATION 1h NAME "liquid"
 ```
 
-该操作创建一个名称为`NOAA_water_database`的数据库。还为`NOAA_water_database`创建一个默认的保留策略，名称为`liquid`，其`DURATION`为3d，复制因子为1，分片组持续时间为1h。
+This operation creates a database with the name `NOAA_water_database`. It also creates a default retention policy for `NOAA_water_database` with the name `liquid`, a `DURATION` of 3d, a replication factor of 1, and a slice group duration of 1h.

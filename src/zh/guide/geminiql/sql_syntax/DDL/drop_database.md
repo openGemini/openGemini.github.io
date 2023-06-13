@@ -6,7 +6,7 @@ order: 9
 
 `DROP DATABASE`查询从指定数据库中删除所有数据，measurement，series，连续查询和保留策略。
 
-查询采语法如下：
+查询语法如下：
 
 ```sql
 DROP DATABASE <database_name>

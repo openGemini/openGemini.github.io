@@ -4,23 +4,23 @@ order: 5
 
 # SHOW TAG KEYS
 
-返回指定数据库的tag key。
+Returns the tag key of the specified database.
 
-## 语法
+## Syntax
 
 ```sql
 SHOW TAG KEYS [ON <database_name>] [FROM_CLAUSE] [LIMIT_CLAUSE] [OFFSET_CLAUSE]
 ```
 
-## 语法描述
+## Syntax Description
 
-`ON <database_name>`是可选项。如果查询中没有包含`ON <database_name>`，您必须在CLI中使用`USE <database_name>`指定数据库，或者在openGemini API请求中使用参数`db`指定数据库。
+`ON <database_name>` is optional. If the query does not contain `ON <database_name>`, you must specify the database in the CLI using `USE <database_name>` or in the openGemini API request using the parameter `db`.
 
-`FROM`子句是可选的。
+The `FROM` clause is optional.
 
-## 示例
+## Examples
 
-### 运行带有`ON`子句的`SHOW TAG KEYS`查询
+### Run a `SHOW TAG KEYS` query with the `ON` clause
 
 ```sql
 >>> SHOW TAG KEYS ON "NOAA_water_database"
@@ -67,15 +67,15 @@ name: h2o_temperature
 
 ```
 
-该查询返回数据库`NOAA_water_database`中的tag key。查询结果按measurement的名字进行分组；它展示了每个measurement都有一个名为`location`的tag key，并且，measurement `h2o_quality`还具有另外一个tag key `randtag`。
+This query returns the tag key in the database `NOAA_water_database`. The query results are grouped by the name of the measurement; it shows that each measurement has a tag key named `location` and that the measurement `h2o_quality` also has an additional tag key `randtag`.
 
-### 运行不带有`ON`子句的`SHOW TAG KEYS`查询
+### Run a `SHOW TAG KEYS` query without the `ON` clause
 
 ::: tabs
 
 @tab CLI
 
-使用`USE <database_name>`指定数据库：
+Use `USE <database_name>` to specify the database:
 
 ```sql
 >>> use NOAA_water_database
@@ -125,7 +125,7 @@ name: h2o_temperature
 
 @tab API
 
-使用参数`db`指定数据库
+Use the parameter `db` to specify the database
 
 ```bash
 ~# curl -G "http://localhost:8086/query?db=NOAA_water_database&pretty=true" --data-urlencode "q=SHOW TAG KEYS"
@@ -200,7 +200,7 @@ name: h2o_temperature
 
 :::
 
-### 运行带有多个子句的`SHOW TAG KEYS`查询
+### Run a `SHOW TAG KEYS` query with multiple clauses
 
 ```sql
 >>> SHOW TAG KEYS ON "NOAA_water_database" FROM "h2o_quality" LIMIT 1 OFFSET 1
@@ -213,4 +213,4 @@ name: h2o_quality
 1 columns, 1 rows in set
 ```
 
-该查询返回数据库`NOAA_water_database`中名为`h2o_quality`的measurement里的tag key。`LIMIT`子句将返回的tag key的个数限制为1，`OFFSET`子句将输出结果偏移一个。
+This query returns the tag key of the measurement named `h2o_quality` in the database `NOAA_water_database`. The `LIMIT` clause limits the number of tag keys returned to 1, and the `OFFSET` clause offsets the output by one.

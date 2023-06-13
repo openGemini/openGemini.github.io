@@ -4,18 +4,18 @@ order: 10
 
 # DROP MEASUREMENT
 
-使用`DROP MEASUREMENT`删除measurement
+Use `DROP MEASUREMENT` to delete measurement
 
-`DROP MEASUREMENT`从指定的measurement中删除所有数据和series，并删除measurement。
+`DROP MEASUREMENT` removes all data and series from the specified measurement, and deletes the measurement.
 
-查询语法如下：
+The query syntax is as follows:
 ```sql
 DROP MEASUREMENT <measurement_name>
 ```
 
 Delete the measurement `h2o_feet`:
 
-删除名称为`h2o_feet`的measurement
+Delete the measurement with the name `h2o_feet`
 
 ```sql
 > DROP MEASUREMENT "h2o_feet"
@@ -23,8 +23,8 @@ Delete the measurement `h2o_feet`:
 
 ::: warning
 
-`DROP MEASUREMENT`会删除measurement中的所有数据点和series。
+`DROP MEASUREMENT` will delete all data points and series in measurement.
 
 :::
 
-成功的`DROP MEASUREMENT`查询不返回任何结果。
+A successful `DROP MEASUREMENT` query does not return any results.

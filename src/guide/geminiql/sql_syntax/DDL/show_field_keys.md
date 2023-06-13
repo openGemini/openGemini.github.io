@@ -3,23 +3,24 @@ order: 7
 ---
 
 # SHOW FIELD KEYS
-返回field key和field value的数据类型。
 
-## 语法
+Returns the data type of field key and field value.
+
+## Syntax
 
 ```sql
 SHOW FIELD KEYS [ON <database_name>] [FROM <measurement_name>]
 ```
 
-## 语法描述
+## Syntax Description
 
-`ON <database_name>`是可选的。如果查询中没有包含`ON <database_name>`，您必须在CLI中使用`USE <database_name>`指定数据库，或者在openGemini API请求中使用参数`db`指定数据库。
+`ON <database_name>` is optional. If the query does not contain `ON <database_name>`, you must specify the database in the CLI using `USE <database_name>` or in the openGemini API request using the parameter `db`.
 
-`FROM`子句也是可选的。请查阅DML章节获得关于[`FROM`子句](../DML/select.md)的介绍。
+The `FROM` clause is also optional. Please consult the DML section for an introduction to the [`FROM` clause](../DML/select.md).
 
-## 示例
+## Examples
 
-### 运行带有`ON`子句的`SHOW FIELD KEYS`查询
+### Run a `SHOW FIELD KEYS` query with the `ON` clause
 
 ```sql
 > SHOW FIELD KEYS ON "NOAA_water_database"
@@ -51,15 +52,15 @@ fieldKey            fieldType
 degrees             float
 ```
 
-该查询返回数据库`NOAA_water_database`中每个measurement的field key以及对应的field value的数据类型。
+This query returns the field key of each measurement in the database `NOAA_water_database` and the data type of the corresponding field value.
 
-### 运行不带有`ON`子句的`SHOW FIELD KEYS`查询
+### Run a `SHOW FIELD KEYS` query without the `ON` clause
 
 ::: tabs
 
 @tab CLI
 
-使用`USE <database_name>`指定数据库：
+Use `USE <database_name>` to specify the database:
 
 ```sql
 > USE NOAA_water_database
@@ -96,7 +97,7 @@ degrees             float
 
 @tab API
 
-使用参数`db`指定数据库
+Use the parameter `db` to specify the database:
 
 ```bash
 ~# curl -G "http://localhost:8086/query?db=NOAA_water_database&pretty=true" --data-urlencode 'q=SHOW FIELD KEYS'
@@ -183,7 +184,7 @@ degrees             float
 
 :::
 
-### 运行带有`FROM`子句的`SHOW FIELD KEYS`查询
+### Run a `SHOW FIELD KEYS` query with a `FROM` clause
 
 ```sql
 > SHOW FIELD KEYS ON "NOAA_water_database" FROM "h2o_feet"
@@ -195,4 +196,4 @@ level description   string
 water_level         float
 ```
 
-该查询返回数据库`NOAA_water_database`中measurement `h2o_feet`里的fields key以及对应的field value的数据类型。
+This query returns the data type of the fields key and the corresponding field value in the measurement `h2o_feet` in the database `NOAA_water_database`.
