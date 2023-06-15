@@ -6,7 +6,8 @@ on:
       - '**/__tests__/**'
 
 jobs:
-  github_pages:
+  ci_build:
+    name: build github pages
     runs-on: ubuntu-latest
 
     env:
