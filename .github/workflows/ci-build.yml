@@ -1,0 +1,41 @@
+name: build pages
+
+on:
+  pull_request:
+    paths-ignore:
+      - '**/__tests__/**'
+
+jobs:
+  github_pages:
+    runs-on: ubuntu-latest
+
+    env:
+      DOCS_GA_ID: G-CTB8FQ7VMW
+      NODE_VERSION: '18'
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7 # TODO: 8
+          run_install: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Docs build
+        env:
+          NODE_OPTIONS: --max_old_space_size=8192
+        run: |-
+          pnpm run docs:build
+          > src/.vuepress/dist/.nojekyll

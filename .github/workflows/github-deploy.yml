@@ -10,6 +10,8 @@ on:
 
 jobs:
   github_pages:
+    # prevent job running from forked repository
+    if: ${{ github.repository == 'openGemini/openGemini' }}
     runs-on: ubuntu-latest
 
     env:
