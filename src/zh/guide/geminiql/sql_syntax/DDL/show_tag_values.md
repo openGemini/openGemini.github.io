@@ -20,7 +20,7 @@ SHOW TAG VALUES [ON <database_name>] [FROM_CLAUSE] WITH KEY [ [<operator> "<tag_
 
 `FROM`子句、`WHERE`子句、`LIMIT`子句和`OFFSET`子句是可选的。`WHERE`子句支持tag比较；在`SHOW TAG VALUES`查询中，field比较是无效的。
 
-`WITH`字句和`WHERE`子句中支持的操作符：
+`WITH`子句和`WHERE`子句中支持的操作符：
 
 | 操作符 | 含义   |
 | ------ | ------ |

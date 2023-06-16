@@ -4,9 +4,9 @@ order: 12
 
 # ALTER RETENTION POLICY
 
-## 语法
+## Syntax
 
-`ALTER RETENTION POLICY`查询语法如下，必须声明至少一个保留策略属性`DURATION`，`REPLICATION`，`SHARD DURATION`或`DEFAULT`：
+The `ALTER RETENTION POLICY` query syntax is as follows and must declare at least one reservation policy attribute `DURATION`, `REPLICATION`, `SHARD DURATION` or `DEFAULT`:
 
 ```sql
 ALTER RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <duration> REPLICATION <n> SHARD DURATION <duration> DEFAULT
@@ -14,23 +14,23 @@ ALTER RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <dura
 
 ::: warning
 
-复制因子 `REPLICATION <n>` 仅支持 1
+Replication factor `REPLICATION <n>` Supported only 1
 
 :::
 
-## 示例
+## Examples
 
-首先，以2d的`DURATION`创建保留策略`what_is_time`：
+First, create the retention policy `what_is_time` with the 2d `DURATION`:
 
 ```sql
 > CREATE RETENTION POLICY "what_is_time" ON "NOAA_water_database" DURATION 2d REPLICATION 1
 ```
 
-修改`what_is_time`以使其具有三周的`DURATION`，两个小时的分片组持续时间，并使其成为`NOAA_water_database`的`DEFAULT`保留策略。
+Modify `what_is_time` to have three weeks of `DURATION`, two hours of slice group duration, and make it a `DEFAULT` retention policy for `NOAA_water_database`.
 
 ```sql
 > ALTER RETENTION POLICY "what_is_time" ON "NOAA_water_database" DURATION 3w SHARD DURATION 2h DEFAULT
 ```
-在最后一个示例中，` what_is_time`保留其原始复制因子`1`。
+In the last example, ` what_is_time` retains its original replication factor `1`.
 
-成功的`ALTER RETENTION POLICY`查询不返回任何结果。
+A successful `ALTER RETENTION POLICY` query does not return any results.

@@ -3,23 +3,23 @@ order: 13
 ---
 
 # DROP RETENTION POLICY
-## 语法
+## Syntax
 
-删除保留策略中的所有measurement和数据：
+Delete all measurement and data from the retention policy:
 
 
-> **警告：**  删除保留策略将永久删除保留在保留策略中的所有measurement和数据。
+> **Warning:** Deleting a retention policy will permanently delete all measurements and data retained in the retention policy.
 
 
 ```sql
 DROP RETENTION POLICY <retention_policy_name> ON <database_name>
 ```
 
-在`NOAA_water_database`数据库中删除保留策略`what_is_time`：
+Delete the retention policy `what_is_time` in the `NOAA_water_database` database:
 
 ```sql
 > DROP RETENTION POLICY "what_is_time" ON "NOAA_water_database"
 ```
 
-成功的`DROP RETENTION POLICY`查询不返回任何结果。
-如果尝试删除不存在的保留策略，则openGemini不会返回错误。
+A successful `DROP RETENTION POLICY` query does not return any results.
+If an attempt is made to delete a non-existent retention policy, openGemini will not return an error.

@@ -64,6 +64,6 @@ CREATE RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <dur
 ::: tip
 
 您也可以在`CREATE DATABASE`查询中指定新的保留策略。
-请参阅 [使用`CREATE DATABASE`创建数据库](./create_database.md).
+请参阅 [使用`CREATE DATABASE`创建数据库](./create_database.md)。
 
 :::

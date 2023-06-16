@@ -4,17 +4,17 @@ order: 1
 
 # SHOW DATABASES
 
-返回实例上所有数据库的列表。
+Returns a list of all databases on the instance.
 
-## 语法
+## Syntax
 
 ```sql
 SHOW DATABASES
 ```
 
-## 示例
+## Examples
 
-### 运行 `SHOW DATABASES` 查询语句
+### Run the `SHOW DATABASES` query statement
 
 ```sql
 >>> SHOW DATABASES
@@ -27,4 +27,4 @@ name: databases
 1 columns, 1 rows in set
 ```
 
-该查询以表格格式返回数据库名称，这个实例有一个数据库：`NOAA_water_database`。
+The query returns the database name in tabular format. This instance has a database: `NOAA_water_database`.

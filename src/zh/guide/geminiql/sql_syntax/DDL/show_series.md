@@ -32,7 +32,7 @@ SHOW SERIES [ON <database_name>] [FROM_CLAUSE] [WHERE <tag_key> <operator> [ '<t
 
 ## 示例
 
-### 运行带有ON子句的SHOW SERIES查询
+### 运行带有`ON`子句的`SHOW SERIES`查询
 
 ```sql
 >>> SHOW SERIES ON NOAA_water_database
