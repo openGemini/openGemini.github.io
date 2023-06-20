@@ -1,4 +1,4 @@
-# Goland+WSL2远程debug
+# Debug 教程
 
 > - 已安装WSL2和较新版本的goland
 > - WSL2已安装并启动SSH服务
