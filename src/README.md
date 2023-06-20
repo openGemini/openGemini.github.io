@@ -4,25 +4,25 @@ title: 首页
 icon: home
 heroImage: images/logo.png
 heroText: openGemini Docs
-tagline: openGemini 统一文档站点
+tagline: openGemini document site
 actions:
-- text: 快速上手
-  link: /zh/guide/quick_start/get_started
+- text: Quick Start
+  link: /guide/quick_start/get_started
   type: primary
-- text: 项目简介
-  link: /zh/guide/introduction/introduction
+- text: Introduction
+  link: /guide/introduction/introduction
   type: secondary
 features:
-  - title: 高性能
+  - title: high performance
     # icon: http://www.opengemini.org/uploads/2022/03/ca7b37532e80da54c9df4812c793b72a.png
-    details: 支持亿级时间线和PB级时序数据管理，每秒千万级数据写入和毫秒级查询响应，相比InfluxDB，简单查询性能提升2-5倍，复杂查询性能提升60倍
+    details: Support billion-level timeline and PB-level time series data management, write tens of millions of data per second and query response at millisecond level. Compared with InfluxDB, the performance of simple query is improved by 2-5 times, and the performance of complex query is improved by 60 times
     # link: /zh/guide/quick_start/get_started.md
-  - title: 分布式
-    details: 采用MPP大规模并行处理分层架构，由ts-sql、ts-meta、ts-store三个组件组成，各组件可独立扩展，支持100+节点的大规模集群部署
-  - title: 存储分析一体化
-    details: 内置AI数据分析平台，提供了对时序数据的实时异常检测能力，实现了数据从存储到分析完整的闭环管理。
-  - title: 高数据压缩率
-    details: 采用列式存储方式，提供高效数据压缩算法，相同数据量下存储成本仅有关系型数据库的1/20，NoSQL的1/10
+  - title: distributed
+    details: It adopts MPP large-scale parallel processing layered architecture, which consists of three components ts-sql, ts-meta, and ts-store. Each component can be independently expanded, and supports large-scale cluster deployment of 100+ nodes.
+  - title: Integration of storage analysis
+    details: The built-in AI data analysis platform provides real-time anomaly detection capabilities for time series data, and realizes complete closed-loop management of data from storage to analysis.
+  - title: high data compression
+    details: Columnar storage method is adopted to provide efficient data compression algorithm. Under the same amount of data, the storage cost is only 1/20 of relational database and 1/10 of NoSQL.
 
 copyright: false
 footer: Copyright @2023 OpenGemini-All Rights Reserved.

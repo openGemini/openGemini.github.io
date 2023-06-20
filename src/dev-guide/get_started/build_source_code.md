@@ -2,17 +2,17 @@
 order: 2
 ---
 
-# Clone，Build, and Run
+# Clone-Build-Run
 
 ## Prerequisites
 
-#### Compile environment information
+### Compile environment information
 
 - [GO](https://go.dev/dl/) : version v1.18+
 - [Python](https://www.python.org/downloads/) : version v3.7+
 - [Git](https://git-scm.com/downloads) : The openGemini source code is hosted on GitHub as a git repository. To work with the git repository, please [install Git](https://git-scm.com/downloads).
 
-#### **How to set GO environment variables**
+### How to set GO environment variables
 
 Open ~/.profile configuration file and add the following configurations to the end of the file:
 
@@ -27,12 +27,6 @@ export GONOSUMDB=*
 export GOSUMDB=off
 ```
 
-> **Note**:
->
-> currently openGemini only supports Linux OS.
-
-
-
 ## Clone
 
 Clone the source code to your development machine:
@@ -40,8 +34,6 @@ Clone the source code to your development machine:
 ```bash
 git clone https://github.com/openGemini/openGemini.git
 ```
-
-
 
 ## Build
 
@@ -57,41 +49,42 @@ cd openGemini
 python3 build.py --clean
 ```
 
-> The compiled binary file is in the build directory
->
-> ```bash
-> > ls build
-> ts-cli ts-meta ts-monitor ts-server  ts-sql  ts-store
-> ```
+::: tips
 
-3. run standalone version.
+The compiled binary file is in the build directory
+
 ```bash
-bash ./scripts/install.sh
+> ls build
+> ts-cli ts-meta ts-monitor ts-server ts-sql ts-store
 ```
 
-   
+`ts-server` is the standalone version.
+
+:::  
 
 ## Run
 
-After entering the folder where ts-server is located, execute it.
+Run the stand-alone version.
 
 ```bash
-./ts-server
+./build/ts-server
 ```
+
+::: tips
 
 > For version v1.0.1 and earlier, you need to specify the configuration file to start the `ts-server`.
 >
 > ```bash
-> ./ts-server -config /path/to/openGemini.singlenode.conf
+> ./build/ts-server -config config/openGemini.singlenode.conf
 > ```
 >
-> If you want to start it in the background, you can use the following command:
+> If you want to start it in the background, you can use the following command.
 >
 > ```bash
-> nohup ./ts-server > server_extra.log 2>&1 &
+> nohup ./build/ts-server -config config/openGemini.singlenode.conf > server_extra.log 2>&1 &
 > ```
 
-
+:::
 
 ## Connect
 

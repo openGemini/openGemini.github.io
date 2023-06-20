@@ -1,29 +1,30 @@
-import { sidebar } from "vuepress-theme-hope";
+import {sidebar} from "vuepress-theme-hope";
 
 export const enSidebar = sidebar({
-  "/": [
-    {
-      text: "Guide",
-      prefix: "guide/",
-      children: [
-        "introduction/",
-        "quick_start/",
-        "geminiql/",
-        "write/",
-        "manage/",
-        "platforms/",
-        "reference/",
-        "versions/",
-        "troubleshoot/",
-        ],
-    },
-    {
-      text: "Development Guide",
-      prefix: "dev-guide/",
-      children: [
-        "get_started/",
-       ],
-    },
+    "/": [
+        {
+            text: "Guide",
+            prefix: "guide/",
+            children: [
+                "introduction/",
+                "quick_start/",
+                "geminiql/",
+                "write/",
+                "manage/",
+                "platforms/",
+                "reference/",
+                "versions/",
+                "troubleshoot/",
+            ],
+        },
+        {
+            text: "Development Guide",
+            prefix: "dev-guide/",
+            children: [
+                "get_started/",
+                "contribute/",
+            ],
+        },
 //    {
 //      text: "Docs",
 //      icon: "note",
@@ -32,9 +33,13 @@ export const enSidebar = sidebar({
 //      children: "structure",
 //    },
 //    "slides",
-  ],
+    ],
 
-  // separate file directory
-  "/guide/": "structure",
-  "/dev-guide/": "structure"
+    // separate file directory
+    "/guide/": "structure",
+    "/dev-guide/": "structure"
+
+//  "/zh/config/": "structure",
+
+//  "/zh/cookbook/": "structure",
 });
