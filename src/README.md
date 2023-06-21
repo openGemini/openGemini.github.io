@@ -1,6 +1,6 @@
 ---
 home: true
-title: 首页
+title: Home
 icon: home
 heroImage: images/logo.png
 heroText: openGemini Docs
