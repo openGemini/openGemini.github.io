@@ -1,6 +1,6 @@
-import {hopeTheme} from "vuepress-theme-hope";
-import {enNavbar, zhNavbar} from "./navbar/index.js";
-import {enSidebar, zhSidebar} from "./sidebar/index.js";
+import { hopeTheme } from "vuepress-theme-hope";
+import { enNavbar, zhNavbar } from "./navbar/index.js";
+import { enSidebar, zhSidebar } from "./sidebar/index.js";
 
 export default hopeTheme({
     hostname: "https://openGemini.github.io",
@@ -68,15 +68,15 @@ export default hopeTheme({
     },
 
     plugins: {
-//    comment: {
-//      // @ts-expect-error: You should generate and use your own comment service
-//      provider: "Waline",
-//    },
+        //    comment: {
+        //      // @ts-expect-error: You should generate and use your own comment service
+        //      provider: "Waline",
+        //    },
 
-//    copyCode: {
-//      fancy: true,
-//      duration: 1000,
-//    },
+        //    copyCode: {
+        //      fancy: true,
+        //      duration: 1000,
+        //    },
         copyCode: false,
 
         // all features are enabled for demo, only preserve features you need here
@@ -105,11 +105,11 @@ export default hopeTheme({
             stylize: [
                 {
                     matcher: "Recommended",
-                    replacer: ({tag}) => {
+                    replacer: ({ tag }) => {
                         if (tag === "em")
                             return {
                                 tag: "Badge",
-                                attrs: {type: "tip"},
+                                attrs: { type: "tip" },
                                 content: "Recommended",
                             };
                     },
