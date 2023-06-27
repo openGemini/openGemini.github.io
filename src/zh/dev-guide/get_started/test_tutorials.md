@@ -16,7 +16,7 @@ make gotest
 
 这几乎等同于 `go test ./...` 但它在运行测试之前和之后启用和禁用失败点。
 
-[failpoint](https://github.com/pingcap/failpoint) 是 Golang 的 [failpoints](https://www.freebsd.org/cgi/man.cgi?query=fail) 的一个实现。 失败点用于添加可以注入错误的代码点。 失败点是一个代码片段，只有在相应的失败点处于活动状态时才会执行。
+[pingcap/failpoint](https://github.com/pingcap/failpoint) 是 Golang 的 [failpoints](https://www.freebsd.org/cgi/man.cgi?query=fail) 的一个实现。 失败点用于添加可以注入错误的代码点。 失败点是一个代码片段，只有在相应的失败点处于活动状态时才会执行。
 
 ### 运行单个测试
 
