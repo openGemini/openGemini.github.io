@@ -1,8 +1,9 @@
-import { navbar } from "vuepress-theme-hope";
+import {navbar} from "vuepress-theme-hope";
 
 export const enNavbar = navbar([
-  { text: "Guide", icon: "creative", link: "/guide" },
-  { text: "Development", icon: "code", link: "/dev-guide/get_started/build_source_code" },
+    {text: "Guide", icon: "creative", link: "/guide"},
+    {text: "Development", icon: "code", link: "/dev-guide/get_started/build_source_code"},
+    {text: "openGemini on k8s", icon: "app", link: "/deploy-on-k8s/about/introduction"},
 //  {
 //    text: "Guide",
 //    icon: "creative",

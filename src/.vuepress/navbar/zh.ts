@@ -1,8 +1,9 @@
-import { navbar } from "vuepress-theme-hope";
+import {navbar} from "vuepress-theme-hope";
 
 export const zhNavbar = navbar([
-  { text: "用户指南", icon: "creative", link: "/zh/guide" },
-  { text: "开发指南", icon: "code", link: "/zh/dev-guide/get_started/build_source_code" },
+    {text: "用户指南", icon: "creative", link: "/zh/guide"},
+    {text: "开发指南", icon: "code", link: "/zh/dev-guide/get_started/build_source_code"},
+    {text: "在k8s中部署", icon: "app", link: "/zh/deploy-on-k8s/about/introduction"},
 //  { text: "案例", icon: "discover", link: "/zh/demo/" },
 //  {
 //    text: "指南",
