@@ -25,11 +25,18 @@ export const zhSidebar = sidebar({
                 "contribute/",
             ],
         },
+        // {
+        //     text: "在k8s中部署",
+        //     prefix: "deploy-on-k8s/",
+        //     children: [
+        //     ],
+        // },
     ],
 
     // separate file directory
     "/zh/guide/": "structure",
     "/zh/dev-guide/": "structure",
+    "/zh/deploy-on-k8s/": "structure",
 
 //  "/zh/config/": "structure",
 

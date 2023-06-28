@@ -37,7 +37,8 @@ export const enSidebar = sidebar({
 
     // separate file directory
     "/guide/": "structure",
-    "/dev-guide/": "structure"
+    "/dev-guide/": "structure",
+    "/deploy-on-k8s/": "structure",
 
 //  "/zh/config/": "structure",
 
