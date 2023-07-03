@@ -1,8 +1,8 @@
 ---
-order: 6
+order: 16
 ---
 
-# SHOW TAG VALUES
+# SHOW TAG VALUES (查看表中所有TAG字段及其对应的值)
 
 返回数据库中指定tag key的tag value。
 

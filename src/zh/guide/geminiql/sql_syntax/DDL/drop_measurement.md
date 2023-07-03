@@ -1,8 +1,8 @@
 ---
-order: 10
+order: 22
 ---
 
-# DROP MEASUREMENT
+# DROP MEASUREMENT (删除表)
 
 使用`DROP MEASUREMENT`删除measurement
 

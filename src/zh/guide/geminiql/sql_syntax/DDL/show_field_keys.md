@@ -1,8 +1,8 @@
 ---
-order: 7
+order: 14
 ---
 
-# SHOW FIELD KEYS
+# SHOW FIELD KEYS (查看表中全部Field字段及其数据类型)
 返回field key和field value的数据类型。
 
 ## 语法

@@ -1,8 +1,8 @@
 ---
-order: 11
+order: 2
 ---
 
-# CREATE RETENTION POLICY
+# CREATE RETENTION POLICY (创建数据保留策略)
 
 
 ## 语法

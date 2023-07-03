@@ -1,8 +1,8 @@
 ---
-order: 5
+order: 15
 ---
 
-# SHOW TAG KEYS
+# SHOW TAG KEYS (查看表中所有TAG字段)
 
 返回指定数据库的tag key。
 
@@ -214,3 +214,14 @@ name: h2o_quality
 ```
 
 该查询返回数据库`NOAA_water_database`中名为`h2o_quality`的measurement里的tag key。`LIMIT`子句将返回的tag key的个数限制为1，`OFFSET`子句将输出结果偏移一个。
+
+### 查看TAG的统计数量
+在某些场景下，仅需要了解TAG数量，不关心具体的TAG，可以使用SHOW TAG KEY CARDINALITY命令，使用方式如下：
+``` 
+SHOW TAG KEY CARDINALITY [ON <database_name>] [FROM_CLAUSE]
+```
+例如：
+```sql
+>>> SHOW TAG KEY CARDINALITY
+#TODO
+```

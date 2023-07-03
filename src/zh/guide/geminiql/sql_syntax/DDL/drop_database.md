@@ -1,8 +1,8 @@
 ---
-order: 9
+order: 21
 ---
 
-# DROP DATABASE
+# DROP DATABASE (删除数据库)
 
 `DROP DATABASE`查询从指定数据库中删除所有数据，measurement，series，连续查询和保留策略。
 

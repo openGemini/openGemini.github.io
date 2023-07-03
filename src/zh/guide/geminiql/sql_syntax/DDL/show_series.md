@@ -1,8 +1,8 @@
 ---
-order: 3
+order: 18
 ---
 
-# SHOW SERIES
+# SHOW SERIES (查看全部时间线)
 
 返回指定数据库的系列。
 

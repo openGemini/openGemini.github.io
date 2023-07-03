@@ -1,8 +1,8 @@
 ---
-order: 8
+order: 1
 ---
 
-# CREATE DATABASE
+# CREATE DATABASE (创建数据库)
 
 ## 语法
 

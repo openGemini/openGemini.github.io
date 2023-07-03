@@ -1,8 +1,8 @@
 ---
-order: 13
+order: 23
 ---
 
-# DROP RETENTION POLICY
+# DROP RETENTION POLICY (删除数据保留策略)
 ## 语法
 
 删除保留策略中的所有measurement和数据：

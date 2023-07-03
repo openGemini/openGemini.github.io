@@ -1,8 +1,8 @@
 ---
-order: 1
+order: 11
 ---
 
-# SHOW DATABASES
+# SHOW DATABASES (查看已创建的所有数据库)
 
 返回实例上所有数据库的列表。
 

@@ -1,8 +1,8 @@
 ---
-order: 4
+order: 12
 ---
 
-# SHOW MEASUREMENTS
+# SHOW MEASUREMENTS (查看数据库中所有表名称)
 
 返回指定数据库的measurement。
 
@@ -135,3 +135,12 @@ name: measurements
 ```
 
 该查询返回数据库`NOAA_water_database`中名字以`h2o`开头的measurement。
+
+### 查看表数量
+```sql
+>>> SHOW MEASUREMENT CARDINALITY
+TODO
+
+>>> SHOW MEASUREMENT CARDINALITY ON NOAA_water_database
+TODO
+```
