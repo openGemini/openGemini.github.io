@@ -1,8 +1,8 @@
 ---
-order: 2
+order: 13
 ---
 
-# SHOW RETENTION POLICIES
+# SHOW RETENTION POLICIES (查看已创建的所有数据保留策略)
 
 返回指定数据库的**保留策略**列表。
 

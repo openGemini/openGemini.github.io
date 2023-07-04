@@ -1,8 +1,8 @@
 ---
-order: 12
+order: 5
 ---
 
-# ALTER RETENTION POLICY
+# ALTER RETENTION POLICY (修改数据保留策略)
 
 ## 语法
 
