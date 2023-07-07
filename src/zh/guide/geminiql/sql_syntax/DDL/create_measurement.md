@@ -4,7 +4,7 @@ order: 3
 
 # CREATE MEASUREMENT (创建表)
 
-openGemini在写数据时支持自动创建表，但如下三种情况，需要提前创建表：
+openGemini在写数据时支持自动创建表，但如下三种情况，需要提前创建表
 
 ## 指定分区键
 openGemini中数据默认按照时间线进行hash分区打散，但某些场景下，业务频繁使用某个或者某几个TAG进行数据检索，采用时间线hash分区的方式让这部分TAG的数据分散到了不同的节点，造成查询扇出度比较大。如果可以按照这部分频繁使用的TAG对数据进行分区，这样相同TAG值的数据会集中存储在同一个节点之上，从而减少查询扇出度，提升数据检索效率。
@@ -29,13 +29,18 @@ CREATE MEASUREMENT mst WITH INDEXTYPE text INDEXLIST description, error_message
 ```sql
 CREATE MEASUREMENT mst WITH INDEXTYPE text INDEXLIST description, error_message SHARDKEY location
 ```
-创建名为mst的表，并指定在description和error_message两个字段上创建全文索引, 同时设置mst根据location对数据进行分区打散
+创建名为mst的表，并指定在description和error_message两个字段上创建全文索引, 同时设置mst根据location对数据进行分区打散  
+
 ::: tip
 
-仅会在指定的字段field_name1和field_name2创建全文索引，若在其他Field中检索关键字，可能会比较慢
-在字段field_name1和field_name2支持精确匹配，短语匹配和模糊匹配三种，相关语法示例参考SELECT
-不支持在TAG上创建文本索引
+仅会在PRIMARYKEY指定的字段descriptio和error_message创建全文索引，若在其他Field中检索关键字，可能会比较慢  
+
+在字段descriptio和error_message支持精确匹配，短语匹配和模糊匹配三种，相关语法示例参考[文本检索](./text_retrieval.md)  
+
+不建议在TAG上创建文本索引，可能出现不可预见的问题  
+
 :::
+
 ## 使用高基数存储引擎
 openGemini的高基数存储引擎HSCE解决了传统时序数据库因时间线过大导致的索引膨胀问题，我们在使用时，需要在创建表的时候指定存储引擎，openGemini默认的存储引擎并不是HSCE。
 ```sql
