@@ -24,6 +24,6 @@ features:
   - title: 高数据压缩率
     details: 采用列式存储方式，提供高效数据压缩算法，相同数据量下存储成本仅有关系型数据库的1/20，NoSQL的1/10
 
-copyright: false
-footer: Copyright @2023 OpenGemini-All Rights Reserved.
+copyright: Copyright @2023 OpenGemini-All Rights Reserved.
+footer: true
 ---
