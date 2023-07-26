@@ -3,15 +3,15 @@ order: 6
 ---
 
 # SET PASSWORD
-重置密码
+Reset Password
 
-## 语法
+## Syntax
 
 ```sql
 SET PASSWORD FOR <username> = '<password>'
 ```
 
-## 示例
+## Examples
 
 ```sql
 SET PASSWORD FOR "todd" = 'your_pwd'
@@ -19,8 +19,8 @@ SET PASSWORD FOR "todd" = 'your_pwd'
 
 ::: tip
 
-密码字符串必须用单引号引起来，验证请求时，请包含单引号
+The password string must be enclosed in single quotes to validate the request
 
-建议避免在密码中使用单引号（‘）和反斜杠（\）字符，对于包含这些字符\’的密码，在创建密码和提交身份验证请求时，请使用反斜杠对特殊字符进行转义，（例如（））
+It is recommended to avoid using single quotes (') and backslash (\\) characters in passwords, and for passwords containing these characters \\', use a backslash to escape special characters when creating passwords and submitting authentication requests, (e.g. ())
 
 :::

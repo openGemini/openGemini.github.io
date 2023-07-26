@@ -4,23 +4,23 @@ order: 2
 
 # GRANT
 
-grant `READ`, `WRITE` or `ALL` 现有用户的数据库特权
+grant `READ`, `WRITE` or `ALL` database privileges for existing users
 
-## 语法
+## Syntax
 
 ```sql
 GRANT [READ,WRITE,ALL] ON <database_name> TO <username>
 ```
 
-## 示例
+## Examples
 
-授权`todd`对 `NOAA_water_database` 数据库读权限:
+Grant `todd` read access to the `NOAA_water_database` database:
 
 ```sql
 GRANT READ ON "NOAA_water_database" TO "todd"
 ```
 
-授权`todd`对`NOAA_water_database` 数据库所有权限:
+Grant `todd` all permissions to the `NOAA_water_database` database:
 
 ```sql
 GRANT ALL ON "NOAA_water_database" TO "todd"

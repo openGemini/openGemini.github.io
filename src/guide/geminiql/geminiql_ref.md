@@ -2,14 +2,14 @@
 order: 6
 ---
 
-# 参考
+# References
 
 
-## 文法介绍
+## Introduction to grammar
 
 go-yacc
 
-## 关键字(Keywords)
+## Keywords
 
 ```
 ALL          ALTER         ANY          AS           ASC         BEGIN
@@ -29,7 +29,7 @@ VALUES        WHERE        WITH         WRITE
 ```
 
 
-如果您使用GeminiQL关键字作为标识符，您需要将每个查询中的标识符用双引号括起来。
+If you are using the GeminiQL keyword as an identifier, you need to enclose the identifier in double quotes in each query.
 
-关键字`time`是一个特例。`time`可以是一个连续查询名字、数据库名字、measurement的名字、保留策略名字、和用户名。在这些情况下，不需要在查询中用双引号将`time`括起来。
-`time`不能是field key或tag key；openGemini拒绝写入将`time`作为field key或tag key的数据，对于这种数据写入，openGemini会返回错误。
+The keyword `time` is a special case. `time` can be a continuous query name, a database name, the name of a measurement, the name of a retention policy, and a user name. In these cases, it is not necessary to enclose `time` in double quotes in the query.
+`time` cannot be a field key or tag key; openGemini refuses to write data with `time` as a field key or tag key, for which openGemini returns an error.

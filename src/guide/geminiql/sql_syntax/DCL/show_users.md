@@ -4,15 +4,15 @@ order: 4
 
 # SHOW USERS
 
-查看所有现有用户及其管理员状态
+View all existing users and their administrator status
 
-## 语法
+## Syntax
 
 ```sql
 SHOW USERS
 ```
 
-## 示例
+## Examples
 
 ```sql
 >>> SHOW USERS
