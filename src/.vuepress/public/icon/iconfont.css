@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4182602 */
-  src: url('iconfont.woff2?t=1690272991613') format('woff2'),
-       url('iconfont.woff?t=1690272991613') format('woff'),
-       url('iconfont.ttf?t=1690272991613') format('truetype');
+  src: url('iconfont.woff2?t=1690446685355') format('woff2'),
+       url('iconfont.woff?t=1690446685355') format('woff'),
+       url('iconfont.ttf?t=1690446685355') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,18 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-myouxiang:before {
+  content: "\e645";
+}
+
+.icon-mchengyuan:before {
+  content: "\e65c";
+}
+
+.icon-mhome:before {
+  content: "\e7c6";
 }
 
 .icon-mYoutube-fill:before {

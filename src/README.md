@@ -24,7 +24,6 @@ features:
     - title: high data compression
       details: Columnar storage method is adopted to provide efficient data compression algorithm. Under the same amount of data, the storage cost is only 1/20 of relational database and 1/10 of NoSQL.
 
-copyright: Copyright @2023 OpenGemini-All Rights Reserved.
 # 采用默认footer /.vuepress/theme.ts
 footer: true
 ---
