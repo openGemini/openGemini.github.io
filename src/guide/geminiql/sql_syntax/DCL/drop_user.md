@@ -3,15 +3,15 @@ order: 7
 ---
 
 # DROP USER
-删除用户
+Delete User
 
-## 语法
+## Syntax
 
 ```sql
 DROP USER <username>
 ```
 
-## 示例
+## Examples
 
 ```sql
 DROP USER "todd"

@@ -1,14 +1,14 @@
 ---
-title: 数据类型
+title: Data Type
 order: 5
 ---
 
-# 数据类型
+# Data Type
 
 <table>
   <tr>
-    <th>域</th>
-    <th>类型</th>
+    <th>Domain</th>
+    <th>Type</th>
   </tr>
   <tr>
     <td rowspan="1">Measurement</td>

@@ -3,15 +3,15 @@ order: 5
 ---
 
 # SHOW GRANTS
-查看指定用户现有权限
+View existing permissions for a given user
 
-## 语法
+## Syntax
 
 ```sql
 SHOW GRANTS FOR <username>
 ```
 
-## 示例
+## Examples
 
 ```sql
 >>> SHOW GRANTS FOR "admin"
