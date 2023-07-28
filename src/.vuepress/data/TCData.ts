@@ -8,7 +8,7 @@ export const SIG = {
                 enName: 'Yijian Zhou',
                 title: 'Maintainer',
                 img: '/images/member/zhouyijian.jpg',
-                imgPosition: 'center', // 用来微调图片展示位置
+                // imgPosition: 'center', // 用来微调图片展示位置
                 email: 'zhouyijian@huawei.com',
                 github: 'https://github.com/scuzyj',
             },
