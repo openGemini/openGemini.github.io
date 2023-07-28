@@ -35,7 +35,7 @@ export default hopeTheme({
             // sidebar
             sidebar: enSidebar,
 
-            copyright: 'Copyright @2023 OpenGemini-All Rights Reserved.',
+            copyright: 'Copyright @2023 openGemini-All Rights Reserved.',
             footer: getFooter('en'),
 
             displayFooter: true,
@@ -55,7 +55,7 @@ export default hopeTheme({
             // sidebar
             sidebar: zhSidebar,
 
-            copyright: 'Copyright @2023 OpenGemini-All Rights Reserved.',
+            copyright: 'Copyright @2023 openGemini-All Rights Reserved.',
             footer: getFooter('zh'),
 
             displayFooter: true,
