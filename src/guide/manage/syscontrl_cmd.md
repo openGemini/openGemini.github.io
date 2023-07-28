@@ -3,134 +3,134 @@ order: 6
 ---
 
 
-# 系统命令
-> 请求均为POST类型
-## store类
+# System command
+> Requests are all of the POST type
+## store class
 
 
-### 1.数据刷新（DataFlush）
+### 1.DataFlush（DataFlush）
 
-- 作用：内存中的数据强制下盘
+- Function: Data in memory is forced to go down
 
-- 参数：mod=flush
+- Parameters: mod=flush
 
-- 例：所有节点内存上的数据强制下盘
+- Example: Forced down disking of data on all node memory
 
   ```bash
   curl -i -XPOST 'http://127.0.0.1:8086/debug/ctrl?mod=flush'
   ```
 
-### 2.压缩（compactionEn）
+### 2.compress（compactionEn）
 
-- 作用：设置shard是否开启compaction
+- Function: Sets whether the shard enables compaction.
 
   1. allshards=true
 
-     设置所有的分片的compaction
+     Set the compaction of all slices
 
   2. allshards=false
 
-     设置指定的分片的compaction
+     Set the compaction of the specified slice
 
-- 参数：mod=compen&switchon=true/false&allshards=true/false&shid=[number]
+- Parameters：mod=compen&switchon=true/false&allshards=true/false&shid=[number]
 
-- 例：设置shard开启compaction
+- Example: Set the shard to enable compaction
 
   ```bash
   curl -i -XPOST 'http://127.0.0.1:8086/debug/ctrl?mod=compen&switchon=true&allshards=true'
   ```
 
-### 3.压缩合并（compmerge）
+### 3.Compression and merging（compmerge）
 
-- 作用：设置shard是否开启merge(乱序合并)
+- Function: Set whether shard enables merge
 
   1. allshards=true
 
-     设置所有的分片的merge
+     Set the merge of all the slices
 
   2. allshards=false
 
-     设置指定的分片的merge
+     Set the merge for the specified slice
 
-- 参数：mod=merge&switchon=true/false&allshards=true/false&shard_id=[number]
+- Parameters：mod=merge&switchon=true/false&allshards=true/false&shard_id=[number]
 
-- 例：设置所d=4的shard开启merge
+- Example: Set the shard with d=4 to enable merge
 
   ```bash
   curl -i -XPOST 'http://127.0.0.1:8086/debug/ctrl?mod=merge&switchon=true&allshards=false&shard_id=4'
   ```
 
-### 4.快照（snapshot）
+### 4.snapshot（snapshot）
 
-- 作用：设置快照的时间间隔
+- Function: Set the time interval for snapshots
 
-- 参数：mod=snapshot&duration=[time duration]
+- Parameters：mod=snapshot&duration=[time duration]
 
-- 例：设置快照的时间间隔为30分钟
+- Example: Set the snapshot interval to 30 minutes
 
   ```bash
   curl -i -XPOST 'http://127.0.0.1:8086/debug/ctrl?mod=snapshot&duration=30m'
   ```
 
-### 5.故障点（Failpoint）
+### 5.Failpoint（Failpoint）
 
-- 作用：启用/禁用故障点
+- Function: Enable/Disable the point of failure
 
-- 参数：mod=fallpoint&switchon=true/false&point=[]&term=[]
+- Parameters：mod=fallpoint&switchon=true/false&point=[]&term=[]
 
-- 例：
+- Example：
 
-  1. 禁用故障点xxx
+  1. Disable Fault Points xxx
 
   ```bash
   curl -i -XPOST 'http://127.0.0.1:8086/debug/ctrl?mod=fallpoint&switch=false&point=xxx'
   ```
 
-  2. 带有term参数启用故障点xxx
+  2. Enabling Fault Points with the term parameter xxx
 
   ```bash
   curl -i -XPOST 'http://127.0.0.1:8086/debug/ctrl?mod=fallpoint&switch=true&point=xxx&term=xxx'
   ```
 
-### 6.降采样顺序（DownSampleInOrder）
+### 6.Downsampling order（DownSampleInOrder）
 
-- 作用：设置降采样遍历顺序（顺序或逆序寻找符合条件的DownSamplePolicy）
+- Function: Set the order of downsampling traversal (sequential or inverse order to find eligible DownSamplePolicy)
 
-- 参数：mod=downsample_in_order&order=true/false（true顺序，false逆序）
+- Parameters：mod=downsample_in_order&order=true/false（true order，false reverse order）
 
-- 例：设置为顺序
+- Example: set to order
 
   ```bash
   curl -i -XPOST 'http://127.0.0.1:8086/debug/ctrl?mod=downsample_in_order&order=true'
   ```
 
-### 7.节点验证（verifyNode）
+### 7.Node Validation（verifyNode）
 
-- 作用：设置是否验证节点状态
+- Function: Set whether to verify the node status
 
-- 参数：mod=verifynode&switchon=true/false
+- Parameters：mod=verifynode&switchon=true/false
 
-- 例：禁用验证节点状态
+- Example: Disabling Authentication Node Status
 
   ```bash
   curl -i -XPOST 'http://127.0.0.1:8086/debug/ctrl?mod=verifynode&switchon=false'
   ```
 
-### 8.只读操作（ReadOnly)
+### 8.read-only operation（ReadOnly）
 
-- 作用：设置engine读写权限是否是只读的
+- Function: Sets the read/write permissions of the engine to be read-only
 
-- 参数：mod=readonly&switchon=true/false&allnodes=y
+- Parameters：mod=readonly&switchon=true/false&allnodes=y
 
-- 例：
+- Example：
 
-  1. 向所有节点发设置engine权限只读
+  1. Set engine privileges read-only to all nodes
 
   ```
   curl -i -XPOST 'http://127.0.0.1:8086/debug/ctrl?mod=readonly&switchon=true&allnodes=y'
   ```
 
-- 2. 向指定的host发设置engine权限只读
+- 2. Set read-only engine privileges to the specified host
 
   ```bash
   curl -i -XPOST 'http://127.0.0.1:8086/debug/ctrl?mod=readonly&switchon=true&host=127.0.0.1
@@ -138,92 +138,119 @@ order: 6
 
 
 
-## sql类
->发送cmd给所有节点
+## sql class
+>Send cmd to all nodes
 
-### 1.chunk_reader并发控制(ChunkReaderParallel)
+### 1.chunk_reader parallel control(ChunkReaderParallel)
 
-- 作用：设置最大chunk_reader并发的数量
+- Function：Set the maximum number of chunk_reader concurrency
 
-- 参数：mod=chunk_reader_parallel&limit=[number]  （number>=0)
+- Parameters：mod=chunk_reader_parallel&limit=[number]  （number>=0）
 
-- 例：设置最大chunk_reader并发的数量为4
+- Example：Set the maximum chunk_reader concurrency to 4
 
   ```bash
   curl -i -XPOST 'http://127.0.0.1:8086/debug/ctrl?mod=chunk_reader_parallel&limit=4'
   ```
 
-### 2.二叉树合并策略（BinaryTreeMerge）
+### 2.Binary Tree Merging Strategy（BinaryTreeMerge）
 
-- 作用：设置查询时是否启用二叉树合并策略
+- Function：Set whether to enable the binary tree merge policy for queries
 
-- 参数：mod=binary_tree_merge&enabled=1/0
+- Parameters：mod=binary_tree_merge&enabled=1/0
 
-- 例：设置为查询时使用二叉树合并策略
+- Example：Set to use binary tree merge strategy for queries
 
   ```bash
   curl -i -XPOST 'http://127.0.0.1:8086/debug/ctrl?mod=binary_tree_merge&enabled=1'
   ```
 
-### 3.打印逻辑计划（PrintLogicalPlan）
+### 3.Print Logical Plan（PrintLogicalPlan）
 
-- 作用：设置是否打印逻辑计划
+- Function：Set whether to print the logical plan
 
-- 参数：mod=print_logical_plan&enabled=1/0
+- Parameters：mod=print_logical_plan&enabled=1/0
 
-- 例：设置为查询时打印出逻辑计划
+- Example：Set to print out the logical plan when querying
 
   ```bash
   curl -i -XPOST 'http://127.0.0.1:8086/debug/ctrl?mod=print_logical_plan&enabled=1'
   ```
 
-### 4.滑动窗口推送（SlidingWindowPushUp）
+### 4.Sliding window push up（SlidingWindowPushUp）
 
-- 作用：设置在支持聚合下推优化计划和shema没有子查询的情况下是否启用的是滑动窗口推送
+- Function：Set whether sliding-window push is enabled when supporting aggregated push optimization plans and shema without subqueries
 
-- 参数：mod=sliding_window_push_up&enabled=1/0
+- Parameters：mod=sliding_window_push_up&enabled=1/0
 
-- 例：在支持聚合下推优化计划和shema没有子查询的情况下**启用**的是滑动窗口推送
+- Example：With support for aggregation down push optimization plans and shema without subqueries **enabled** is sliding window push
 
   ```bash
   curl -i -XPOST 'http://127.0.0.1:8086/debug/ctrl?mod=sliding_window_push_up&enabled=1'
   ```
 
-### 5.日志行（LogRows）
+### 5.Log Rows（LogRows）
 
-- 作用：设置打印数据的规则，用于排查是否丢数据
+- Function：Set up rules for printing data to troubleshoot for missing data
 
-- 参数：mod=log_rows&switchon=true&rules=主节点标记,key1=value1,key2=value2.....
+- Parameters：mod=log_rows&switchon=true&rules=[Master Node Marker],key1=value1,key2=value2.....
 
-- 例：设置为新的日志行规则主节点标记为mst，标签信息为tk1=tv1
+- Example：Set as new log line rule master node tagged as mst with tag message tk1=tv1
 
   ```bash
   curl -i -XPOST 'http://127.0.0.1:8086/debug/ctrl?mod=log_rows&switchon=true&rules=mst,tk1=tv1'
   ```
 
-### 6.强制广播查询（ForceBroadcastQuery）
+### 6.Force broadcasting of queries（ForceBroadcastQuery）
 
-- 作用：设置进行强制广播查询开关
+- Function：Set the switch to perform a forced broadcast query
 
-  1. 开：针对所有分片
-  2. 关：针对计算得到的分片
+  1. on: for all slices
+  2. off: for calculated slices
 
-- 参数：mod=force_broadcast_query&enabled=1/0
+- Parameters：mod=force_broadcast_query&enabled=1/0
 
-- 例：强制广播查询
+- Example：Force broadcasting of queries
 
   ```bash
   curl -i -XPOST 'http://127.0.0.1:8086/debug/ctrl?mod=force_broadcast_query&enabled=1'
   ```
 
-### 7.强制时间过滤（TimeFilterProtection）
+### 7.Forced Time Filtering（TimeFilterProtection）
 
-- 作用：设置查询操作是否必须有时间过滤
+- Function：Set whether the query operation must have a time filter
 
-- 参数：mod=time_filter_protection&enabled=true/false
+- Parameters：mod=time_filter_protection&enabled=true/false
 
-- 例：设置为查询操作必须时间过滤
+- Example：Set as a query operation must be time filtered
 
   ```bash
   curl -i -XPOST 'http://127.0.0.1:8086/debug/ctrl?mod=time_filter_protection&enabled=true'
   ```
+
+## meta class
+
+### 1.Switch Leader（SwitchLeader）
+
+- Function：switch Leader
+
+> Note: Leader execution of this command can take effect, that is, switching the Leader, Follower execution of this command will return to the Leader's address
+
+- Parameters：none
+
+- Example：
+
+```bash
+curl -i -XPOST 'http://127.0.0.1:8091/leadershiptransfer'
+```
+
+### 2.Viewing node information（ShowNodeInfo）
+- Function：Viewing node information
+
+- Parameters：witch=raft-stat
+
+- Example：
+
+```bash
+curl -s -GET http://127.0.0.1:8091/debug?witch=raft-stat -H 'all:y' | python -mjson.tool
+```
