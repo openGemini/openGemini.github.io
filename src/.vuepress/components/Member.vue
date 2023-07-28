@@ -48,6 +48,7 @@ img {
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
+    pointer-events: none;
     /* object-position: center; */
 }
 p {
