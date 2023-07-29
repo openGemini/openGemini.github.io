@@ -81,7 +81,7 @@ export const SIG = {
     },
     release: {
         groupName: 'Release',
-        github: 'https://github.com/openGemini/openGemini',
+        github: 'https://github.com/openGemini/openGemini/releases',
         member: [
             {
                 name: '向宇',
