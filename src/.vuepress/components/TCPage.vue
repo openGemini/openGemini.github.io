@@ -52,6 +52,8 @@ html[data-theme='light'] {
 html[data-theme='dark'] {
     --tc-bg-color: #282828;
 }
+</style>
+<style scoped>
 h2 {
     border: 0;
     text-align: center;
