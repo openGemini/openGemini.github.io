@@ -1,8 +1,8 @@
 ---
-title: 参考指南
+title: 参与社区
 index: false
 dir:
-    order: 11
+    order: 10
 ---
-
+	
 <AutoCatalog />
