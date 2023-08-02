@@ -1,8 +1,8 @@
 ---
-title: 参考指南
+title: 元数据
 index: false
 dir:
-    order: 11
+    order: 5
 ---
 
 <AutoCatalog />

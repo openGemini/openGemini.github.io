@@ -1,8 +1,7 @@
 ---
+title: 安装部署
 order: 1
 ---
-
-# 手动安装
 
 本指南介绍如何快速上手体验 openGemini时序数据库。对于非生产环境，你可以选择以下任意一种方式部署openGemini时序数据库。
 
@@ -96,13 +95,13 @@ git clone https://github.com/openGemini/openGemini.git
 **进入主目录**
 
 ```shell
-cd openGemini
+> cd openGemini
 ```
 
 **编译**
 
 ```shell
-python3 build.py --clean
+> python3 build.py --clean
 ```
 
 编译成功后，二进制保存在`build`目录中。
@@ -110,7 +109,7 @@ python3 build.py --clean
 **运行单机版**
 
 ```shell
-bash ./scripts/install.sh
+> bash ./scripts/install.sh
 ```
 
 :::
@@ -120,7 +119,7 @@ bash ./scripts/install.sh
 **进入 ts-server 所在文件夹后，执行**
 
 ```shell
-./ts-server
+> ./ts-server
 ```
 
 ::: warning
@@ -128,23 +127,23 @@ bash ./scripts/install.sh
 `v1.0.1`及以前版本，运行`ts-server`需要指定配置文件启动：
 
 ```shell
-./ts-server -config /path/to/openGemini.singlenode.conf
+> ./ts-server -config /path/to/openGemini.singlenode.conf
 ```
 
 如需后台启动：
 
 ```shell
-nohup ./ts-server > server_extra.log 2>&1 &
+> nohup ./ts-server > server_extra.log 2>&1 &
 ```
 
 :::
 
-## openGemini 命令行（ts-cli）
+## 命令行（ts-cli
 
 为便于执行数据库（Database）的各种查询，openGemini 提供一命令行应用程序（以下简称为 openGemini CLI）ts-cli。要进入 openGemini 命令行，您只要进入`ts-cli`所在目录，在终端执行`ts-cli` 即可。
 
 ```sh
-./ts-cli
+> ./ts-cli
 ```
 
 ::: tip
@@ -152,18 +151,18 @@ nohup ./ts-server > server_extra.log 2>&1 &
 默认连接127.0.0.1:8086，可通过以下命令连接其他主机：
 
 ```shell
-./ts-cli -host 192.168.0.1 -port 8086
+> ./ts-cli -host 192.168.0.1 -port 8086
 ```
 
 更多用法请使用如下命令，自行探索：
 
 ```shell
-./ts-cli -h
+> ./ts-cli -h
 ```
 
 :::
 
-## 基本操作
+## 基本操作（ts-cli）
 
 **创建数据库**
 
@@ -180,9 +179,9 @@ nohup ./ts-server > server_extra.log 2>&1 &
 运行效果
 
 ```sql
->>> create database db0
+> create database db0
 Elapsed: 1.446074ms
->>> show databases
+> show databases
 name: databases
 +------+
 | name |
@@ -192,7 +191,6 @@ name: databases
 1 columns, 1 rows in set
 
 Elapsed: 2.178147ms
->>>
 ```
 
 **使用数据库**
@@ -222,11 +220,11 @@ Elapsed: 2.178147ms
 运行效果
 
 ```sql
->>> use db0
+> use db0
 Elapsed: 251ns
->>> insert cpu_load,host="server-01",region="west_cn" value=75.3
+> insert cpu_load,host="server-01",region="west_cn" value=75.3
 Elapsed: 162.328339ms
->>> show measurements
+> show measurements
 name: measurements
 +----------+
 | name     |
@@ -237,7 +235,7 @@ name: measurements
 1 columns, 2 rows in set
 
 Elapsed: 13.374945ms
->>> select * from cpu_load
+> select * from cpu_load
 name: cpu_load
 +---------------------+-------------+-----------+-------+
 | time                | host        | region    | value |
@@ -253,6 +251,6 @@ Elapsed: 3.259995ms
 
 `ts-server`为openGemini的单机版二进制文件，可简单理解为`ts-server`由一个`ts-sql`、一个`ts-meta`和一个`ts-store`组成。 注意事项：
 
-1. 如果默认配置不能满足需求，需要使用配置文件`openGemini.singlenode.conf`启动，完整的配置项和含义参考[管理-配置项](../manage/configurations.md)章节。
+1. 如果默认配置不能满足需求，需要使用配置文件`openGemini.singlenode.conf`启动，完整的配置项和含义参考[管理-配置项](../reference/configurations.md)章节。
 2. 默认配置文件中数据、日志等默认保存在`/tmp/openGemini`目录下，建议替换为其他目录，确保有足够的存储空间。如果使用的`scripts/install.sh`脚本启动，还需要对应修改脚本中的`/tmp/`目录。
-3. 如果启动过程中发现端口已占用，可以修改配置文件中的默认端口。所有端口用途请参考[管理-端口矩阵](../manage/ports.md)章节。
+3. 如果启动过程中发现端口已占用，可以修改配置文件中的默认端口。所有端口用途请参考[管理-端口矩阵](../reference/ports.md)章节。

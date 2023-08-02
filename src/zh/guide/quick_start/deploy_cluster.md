@@ -1,13 +1,20 @@
 ---
+title: 集群部署
 order: 3
 ---
 
-# 集群部署
 集群部署可以把openGemini的三个组件都部署在一个节点上，也可以把组件分散部署在多个节点上。
-
 ## 部署伪集群
-把openGemini集群的所有组件都部署在同一个节点上，这种集群部署方式我们称之为伪集群部署，目前社区提供了部署脚本install_cluster.sh。运行命令为： sh scripts/install_cluster.sh，执行该命令，在不修改配置文件的前提下，可直接在本地拉起一个openGemini集群，包括1个ts-sql、3个ts-meta和2个ts-store组件。但该集群仅在本地回环地址127.0.0.1上监听运行，可用于本地功能测试和学习，不能对外提供访问服务。
-若要让集群监听本机IP，让外部节点可以访问，配置上相对要复杂一点，虽然可行，但不推荐。同样以部署1个ts-sql、3个ts-meta和2个ts-store组成的集群为例。
+
+把openGemini集群的所有组件都部署在同一个节点上，这种集群部署方式我们称之为伪集群部署。  
+目前社区提供了部署脚本install_cluster.sh。
+```shell
+> sh scripts/install_cluster.sh
+```
+
+执行该命令，在不修改配置文件的前提下，可直接在本地拉起一个openGemini集群，包括1个ts-sql、3个ts-meta和2个ts-store组件。但该集群仅在本地回环地址127.0.0.1上监听运行，可用于本地功能测试和学习，不能对外提供访问服务。  
+若要让集群监听本机IP，让外部节点可以访问，配置上相对要复杂一点，虽然可行，但不推荐。  
+同样以部署1个ts-sql、3个ts-meta和2个ts-store组成的集群为例。
 1.	分配端口
 所有节点均监听本机IP地址，如192.168.0.1，所以所有组件之间不能使用相同的端口，需重新分配。可以做如下分配（参考）： 
 
@@ -160,14 +167,15 @@ nohup build/ts-meta -config config/meta-1.conf -pidfile /path/openGemini/pid/met
 ```
 > sh scripts/cluster.sh
 ```
+
 ## 标准集群部署
 
-目前还没有开发集群部署的自动化脚本，只能手动部署，欢迎感兴趣的童鞋到社区贡献!
+目前还没有开发集群部署的自动化脚本，只能手动部署，欢迎感兴趣的童鞋到社区贡献!  
 openGemini集群部署如图所示，集群有ts-meta(3x), ts-sql(2x), ts-store(2x)：
 
 ![5](https://user-images.githubusercontent.com/49023462/200800488-5683ecc2-e06b-4b65-a8ca-33b3bceaf6e4.jpg)
 
-这种部署方式，不存在两个相同组件被部署在同一个节点之上，没有端口竞争，则可以让同一个节点上的所有组件共用一个配置文件。
+这种部署方式，不存在两个相同组件被部署在同一个节点之上，没有端口竞争，则可以让同一个节点上的所有组件共用一个配置文件。  
 以Node1：192.168.0.1为例，仅需修改配置文件openGemini.conf如下内容：
 ```
 [common]
@@ -206,7 +214,11 @@ meta-bind-port = 8010
 members = ["192.168.0.1:8010", "192.168.0.2:8010", "192.168.0.3:8010"]
 ```
 其他地方的IP地址分别替换为Node2的IP 192.168.0.2 和 Node3的IP 192.168.0.3即可，端口可以不用修改。
-**需要注意的是，openGemini拉起集群时对组件启动顺序是有要求的，先启动所有三个节点之上的ts-meta组件（命令示例）：**
+:::tip
+openGemini拉起集群时对组件启动顺序有要求
+:::
+先启动所有三个节点之上的ts-meta组件（命令示例）：
+
 ```
 > nohup ts-meta --config openGemini.conf -pidfile meta.pid > meta_extra.log 2>&1 &
 ```
@@ -219,79 +231,3 @@ members = ["192.168.0.1:8010", "192.168.0.2:8010", "192.168.0.3:8010"]
 > nohup ts-sql --config openGemini.conf -pidfile sql.pid > sql_extra.log 2>&1 &
 ```
 
-# 集群扩容
-以扩ts-store组件为例，按部署方式可分为三种情况：
-1.	新增组件ts-store部署在已有节点上，该节点已存在ts-store组件，这种情况下，ts-store的各个端口需要重新分配。
-部署方式如图所示：
-![6](https://user-images.githubusercontent.com/49023462/200800553-73d0bb25-de2c-4cf2-b401-8d8ddb00ded2.png)
-
-为新增节点单独准备配置文件，具体配置如下：
-```
-[common]
-# 保持不变
-meta-join = [meta-join = ["192.168.0.1:8092", "192.168.0.2:8092", "192.168.0.3:8092"]
-…
-[data]
-store-ingest-addr = "192.168.0.3:8402"
-store-select-addr = "192.168.0.3:8403"
-store-data-dir = "/path/to/openGemini/data/2"
-store-wal-dir = "/path/to/openGemini/data/2"
-store-meta-dir = "/path/to/openGemini/data/meta/2"
-…
-[logging]
-# 建议修改目录
-path = "/path/openGemini/logs"
-[gossip]
-bind-address = "192.168.0.3"
-store-bind-port = 8012
-# 保持不变
-members = ["192.168.0.1:8010", "192.168.0.2:8010", "192.168.0.3:8010"]
-```
-2.	新增组件ts-store部署在已有节点上，该节点无ts-store组件，这种情况下，不需要重新分配端口，除非端口被其他应用程序占用。
-部署方式如图所示：
-![7](https://user-images.githubusercontent.com/49023462/200800580-2d1b0f70-fb89-42bd-864f-29da12cd3336.png)
-
-可以该节点其他组件共用同一个配置文件，只需修改ts-store对应的配置项即可(IP和目录)
-```
-[data]
-store-ingest-addr = "192.168.0.2:8400"
-store-select-addr = "192.168.0.2:8401"
-store-data-dir = "/path/to/openGemini/data/1"
-store-wal-dir = "/path/to/openGemini/data/1"
-store-meta-dir = "/path/to/openGemini/data/meta/1"
-…
-[logging]
-# 建议修改目录
-path = "/path/openGemini/logs"
-[gossip]
-bind-address = "192.168.0.2"
-store-bind-port = 8011
-# 保持不变
-members = ["192.168.0.1:8010", "192.168.0.2:8010", "192.168.0.3:8010"]
-```
-3.	新增组件ts-store部署在新节点上，该节点无ts-store组件，这种情况下，不需要重新分配端口，除非端口被其他应用程序占用。
-部署方式如图所示：
-![8](https://user-images.githubusercontent.com/49023462/200800601-896711db-17ee-45c5-8cee-1b9f4d342e63.png)
-
-配置文件的配置与第二种情况一样
-```
-[common]
-# 保持不变
-meta-join = [meta-join = ["192.168.0.1:8092", "192.168.0.2:8092", "192.168.0.3:8092"]
-…
-[data]
-store-ingest-addr = "192.168.0.4:8400"
-store-select-addr = "192.168.0.4:8401"
-store-data-dir = "/path/to/openGemini/data/1"
-store-wal-dir = "/path/to/openGemini/data/1"
-store-meta-dir = "/path/to/openGemini/data/meta/1"
-…
-[logging]
-# 建议修改目录
-path = "/path/openGemini/logs"
-[gossip]
-bind-address = "192.168.0.4"
-store-bind-port = 8011
-# 保持不变
-members = ["192.168.0.1:8010", "192.168.0.2:8010", "192.168.0.3:8010"]
-```

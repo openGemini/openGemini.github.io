@@ -2,7 +2,7 @@
 title: Troubleshoot
 index: false
 dir:
-    order: 8
+    order: 13
 ---
 
 <AutoCatalog />
