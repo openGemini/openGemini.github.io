@@ -11,6 +11,9 @@ html[data-theme='light'] {
   --foot-font-color: #474762;
   --foot-title-color: #272841;
 }
+.footer-wrapper{
+  z-index: 99;
+}
 .footer{
   width: 100%;
 }
@@ -42,6 +45,7 @@ html[data-theme='light'] {
 }
 #custom-footer .links > a {
   margin: 0.5rem;
+  font-size: 1.2rem;
   display: inline-block;
 }
 #custom-footer .logo {
@@ -76,4 +80,24 @@ html[data-theme='light'] {
 }
 .iconfont {
   color: var(--foot-font-color);
+}
+.motianlun{
+  height: 20px;
+  width: 20px;
+  background: url("/images/motianlun.png") center left;
+  background-size: 70px 20px;
+}
+.links{
+  display: flex;
+  align-items: baseline;
+}
+.qr-code{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.wechat{
+  width: 80px;
+  object-fit: scale-down;
+  margin-bottom: 8px;
 }
