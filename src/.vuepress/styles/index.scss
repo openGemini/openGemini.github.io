@@ -11,8 +11,9 @@ html[data-theme='light'] {
   --foot-font-color: #474762;
   --foot-title-color: #272841;
 }
-.footer-wrapper{
+.footer-wrapper {
   z-index: 99;
+  padding-inline-start: 2rem;
 }
 .footer{
   width: 100%;
@@ -27,10 +28,21 @@ html[data-theme='light'] {
 #custom-footer .content {
   margin: 0 auto;
   display: flex;
+  min-width: 530px;
   width: 50%;
   justify-content: space-between;
   flex-wrap: wrap;
+  gap: 1rem;
 }
+
+@media (max-width: 650px) {
+  #custom-footer .content {
+    min-width: unset;
+    width: calc(100% - 4rem);
+    justify-content: center;
+  }
+}
+
 #custom-footer .content > div {
   display: flex;
   flex-direction: column;
