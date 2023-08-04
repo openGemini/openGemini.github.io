@@ -39,7 +39,7 @@ CREATE MEASUREMENT mst WITH SHARDKEY location，region
 
 仅会在PRIMARYKEY指定的字段descriptio和error_message创建全文索引，若在其他Field中检索关键字，可能会比较慢  
 
-在字段descriptio和error_message支持精确匹配，短语匹配和模糊匹配三种，相关语法示例参考[文本检索](../develop/logs.md)  
+在字段descriptio和error_message支持精确匹配，短语匹配和模糊匹配三种，相关语法示例参考[文本检索](../features/logs.md)  
 
 不建议在TAG上创建文本索引，可能出现不可预见的问题  
 
