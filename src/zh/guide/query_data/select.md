@@ -40,7 +40,7 @@ SELECT COLUMN_CLAUSES FROM_CLAUSE
 | `SELECT "<field_key>","<tag_key>"`             | 返回指定的field和tag。如果指定了tag，则必须指定至少一个field |
 | `SELECT "<field_key>"::field,"<tag_key>"::tag` | 返回特定field和tag。 ::[field \| tag] 语法指定标识符类型。使用此语法区分具有相同名称的field和tag |
 
-其他支持的功能： [数学表达式]()、 [聚合算子]()、 [正则表达式]()
+其他支持的功能： [数学表达式](../reference/math.md)、 [聚合算子](../functions/aggregate.md)、 [正则表达式]()
 
 ::: tip
 

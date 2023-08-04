@@ -13,7 +13,7 @@ order: 4
 
 ## SHOW TAG KEYS
 
-返回指定数据库的tag key。
+查看表中所有TAG字段
 
 ### 语法
 
