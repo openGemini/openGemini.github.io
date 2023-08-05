@@ -102,8 +102,8 @@ report的配置项中
 
     - 由于openGemini与influxdb的协议是一致，配置数据源时选择influxdb
 
-   ![](../../../../static/img/guide/manage/monitor/dbsource.png)
+   ![](../../../static/img/guide/manage/monitor/dbsource.png)
 
     - 增加dashboard，增加或导入一些已经有json配置文件，即可在grafana中看到OpenGemini的监控数据
 
-   ![](../../../../static/img/guide/manage/monitor/dashboard.png)
+   ![](../../../static/img/guide/manage/monitor/dashboard.png)
