@@ -1,5 +1,5 @@
 ---
-title: 常见问题（FAQs）
+title: Frequently asked questions
 order: 1
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: 遥测数据
+title: Telemetry data
 order: 2
 ---
 

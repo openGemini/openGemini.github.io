@@ -1,5 +1,5 @@
 ---
-title: Quick Start
+title: Quick start
 index: false
 dir:
     order: 2
