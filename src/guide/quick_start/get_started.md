@@ -1,8 +1,7 @@
 ---
+title: Install & Deployment
 order: 1
 ---
-
-# Manually installation
 
 This section introduces how to quickly get started with the openGemini temporal database. For non-production environments, you can choose to deploy the openGemini temporal database by one of the following ways.
 
@@ -19,7 +18,7 @@ This guide takes standalone deployment as an example. To learn about cluster dep
     > Please replace **`<version>`** with the version of downloaded installation package.
 
     ```bash
-    wget https://github.com/openGemini/openGemini/releases/download/v<version>/openGemini-<version>-linux-amd64.tar.gz
+    > wget https://github.com/openGemini/openGemini/releases/download/v<version>/openGemini-<version>-linux-amd64.tar.gz
     ```
 
      Manually downloading the corresponding installation package is also OK.
@@ -27,8 +26,8 @@ This guide takes standalone deployment as an example. To learn about cluster dep
 2. Move to the directory of the installation package, use `tar` to unzip.
 
    ```shell
-   mkdir openGemini
-   tar -zxvf openGemini-<version>-linux-amd64.tar.gz -C openGemini
+   > mkdir openGemini
+   > tar -zxvf openGemini-<version>-linux-amd64.tar.gz -C openGemini
    ```
 
    `ts-server` is the the standalone version of binary system. 
@@ -41,7 +40,7 @@ This guide takes standalone deployment as an example. To learn about cluster dep
    > Please replace **`<version>`** with the version of downloaded installation package.
 
    ```bash
-   wget https://github.com/openGemini/openGemini/releases/download/v<version>/openGemini-<version>-linux-arm64.tar.gz
+   > wget https://github.com/openGemini/openGemini/releases/download/v<version>/openGemini-<version>-linux-arm64.tar.gz
    ```
 
     Manually downloading the corresponding installation package is also OK.
@@ -49,19 +48,18 @@ This guide takes standalone deployment as an example. To learn about cluster dep
 2. Move to the directory of the installation package, use `tar` to unzip.
 
    ```shell
-   mkdir openGemini
-   tar -zxvf openGemini-<version>-linux-arm64.tar.gz -C openGemini
+   > mkdir openGemini
+   > tar -zxvf openGemini-<version>-linux-arm64.tar.gz -C openGemini
    ```
 
    `ts-server` is the the standalone version of binary system. 
    `openGemini.singlenode.conf` is the configuration file which adapts to `ts-server`.
 
 @tab openEuler
-
 Currently, the openGemini installation package is only added to the openEuler image source. Other Linux operating systems are further improving.
 
 ```bash
-yum install openGemini
+> yum install openGemini
 ```
 
 After the automatic installation is successful, all binary files of openGemini are stored in /usr/bin, and configuration files are stored in /etc/openGemini
@@ -92,19 +90,19 @@ export GOSUMDB=off
 **Download source code**
 
 ```shell
-git clone https://github.com/openGemini/openGemini.git
+> git clone https://github.com/openGemini/openGemini.git
 ```
 
 **Move to the main directory**
 
 ```shell
-cd openGemini
+> cd openGemini
 ```
 
 **Compile**
 
 ```shell
-python3 build.py --clean
+> python3 build.py --clean
 ```
 
 After successfully compiled, binary files are saved in the `build` directory。
@@ -112,12 +110,12 @@ After successfully compiled, binary files are saved in the `build` directory。
 **Run a standalone version**
 
 ```shell
-bash ./scripts/install.sh
+> bash ./scripts/install.sh
 ```
 
 :::
 
-## Start
+## Run
 
 **Move to the directory where ts-server is saved, run**
 
@@ -141,12 +139,12 @@ nohup ./ts-server > server_extra.log 2>&1 &
 
 :::
 
-## OpenGemini Command Line (ts-cli)
+## Command Line (ts-cli)
 
 To facilitate the execution of various queries in the database, openGemini provides a command-line application (hereinafter referred to as openGemini CLI) ts cli. To enter the openGemini command line, simply enter the directory where `ts-cli` is located and execute `ts-cli` in the terminal.
 
 ```sh
-./ts-cli
+> ./ts-cli
 ```
 
 ::: tip
@@ -154,13 +152,13 @@ To facilitate the execution of various queries in the database, openGemini provi
 Connect to 127.0.0.1:8086 in default. Connect to other host by the following command:
 
 ```shell
-./ts-cli -host 192.168.0.1 -port 8086
+> ./ts-cli -host 192.168.0.1 -port 8086
 ```
 
 For more usage, please use the following command to explore on your own:
 
 ```shell
-./ts-cli -h
+> ./ts-cli -h
 ```
 
 :::
@@ -182,9 +180,9 @@ For more usage, please use the following command to explore on your own:
 Effects
 
 ```sql
->>> create database db0
+> create database db0
 Elapsed: 1.446074ms
->>> show databases
+> show databases
 name: databases
 +------+
 | name |
@@ -224,11 +222,11 @@ Elapsed: 2.178147ms
 Effects
 
 ```sql
->>> use db0
+> use db0
 Elapsed: 251ns
->>> insert cpu_load,host="server-01",region="west_cn" value=75.3
+> insert cpu_load,host="server-01",region="west_cn" value=75.3
 Elapsed: 162.328339ms
->>> show measurements
+> show measurements
 name: measurements
 +----------+
 | name     |
@@ -239,7 +237,7 @@ name: measurements
 1 columns, 2 rows in set
 
 Elapsed: 13.374945ms
->>> select * from cpu_load
+> select * from cpu_load
 name: cpu_load
 +---------------------+-------------+-----------+-------+
 | time                | host        | region    | value |
@@ -255,6 +253,6 @@ Elapsed: 3.259995ms
 
 `ts-server` is a standalone binary file of OpenGemini, which can be simply understood as `ts-server` consisted of a`ts-sql`,a`ts-meta` and a `ts-store`. Attention:
 
-1. If the default configuration cannot meet the requirements, configuration file `openGemini.singlenode.conf` is needed to start. For the complete configuration items and meanings, please refer to [Management - Configuration Items](../manage/configurations.md).
+1. If the default configuration cannot meet the requirements, configuration file `openGemini.singlenode.conf` is needed to start. For the complete configuration items and meanings, please refer to [Management - Configuration Items](../reference/configurations.md).
 2. The data and logs in the default configuration file are saved in `/tmp/openGemini` by default. It is recommended to replace them with another directory to ensure sufficient storage space. If you use `scripts/install.sh` to start, you also need to modify `/tmp/` in the script accordingly.
-3. If the port is found to be occupied during startup, the default port in the configuration file can be modified. Please refer to [Management Port Matrix ](../manage/ports.md)for all port purposes.
+3. If the port is found to be occupied during startup, the default port in the configuration file can be modified. Please refer to [Management Port Matrix ](../reference/ports.md)for all port purposes.
