@@ -70,6 +70,7 @@ yum install openGemini
 - [GO](https://go.dev/dl/) version v1.18+
 - [Python](https://www.python.org/downloads/) version v3.7+
 - [Git](https://git-scm.com/downloads)
+- [Gcc(windows上编译需安装)](https://www.cnblogs.com/kala00k/p/16364116.html)
 
 **GO环境变量设置**
 
@@ -85,7 +86,7 @@ export GO111MODULE=on
 export GONOSUMDB=*
 export GOSUMDB=off
 ```
-
+windows环境下，在“我的电脑” -> “高级系统设置” -> “环境变量”进行配置。
 **下载源码**
 
 ```shell
@@ -138,7 +139,7 @@ git clone https://github.com/openGemini/openGemini.git
 
 :::
 
-## 命令行（ts-cli
+## 命令行 (ts-cli)
 
 为便于执行数据库（Database）的各种查询，openGemini 提供一命令行应用程序（以下简称为 openGemini CLI）ts-cli。要进入 openGemini 命令行，您只要进入`ts-cli`所在目录，在终端执行`ts-cli` 即可。
 

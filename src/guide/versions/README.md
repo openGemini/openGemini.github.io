@@ -1,8 +1,8 @@
 ---
-title: 版本发布历史
+title: Release notes
 index: false
 dir:
-    order: 7
+    order: 15
 ---
 
 <AutoCatalog />
