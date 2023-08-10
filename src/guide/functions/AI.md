@@ -3,13 +3,13 @@ title: Anomaly detection
 order: 5
 ---
 
-# 异常检测函数
+This chapter mainly introduces the following functions:
 
-| 异常检测函数 | 说明 |
+| Anomaly detection functions | descriptions |
 | --- | --- |
-| **CASTOR()** | 异常检测和预测 |
+| **CASTOR()** | Anomaly Detection and Prediction |
 
 ::: tip
-社区正在快马加鞭补齐相关文档，如有需求，可在交流群咨询
+The community is working hard to complete the relevant documents.
 :::
 

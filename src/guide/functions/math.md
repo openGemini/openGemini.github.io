@@ -3,33 +3,33 @@ title: Maths
 order: 2
 ---
 
-本章主要介绍如下函数：
+This chapter mainly introduces the following functions:
 
-| 数学函数 | 说明 |
+| math functions | descriptions |
 | --- | --- | 
-| ABS() | 绝对值 |
-| ACOS() | 反余弦值 | 
-| ASIN() | 反正弦值 |
-| COS() | 余弦值 |
-| SIN()	| 正弦值 |
-| TAN()	| 正切值 |
-| ATAN() | 反正切值 |
-|ATAN2() | y/x的反正切值 |
-| CEIL() | 向上取整 |
-|EXP() | 指数 |
-| FLOOR()| 向下取整 |
-| LN() | 自然对数 |
-| LOG()	| 指定底数的对数 |
-| LOG2()| 底数2的对数 |
-| LOG10()| 底数10的对数 |
-| POW() | 幂值 |
-| ROUND()| 四舍五入 |
-| SQRT() | 平方根 |
+| ABS() | Returns the absolute value of the field value. |
+| ACOS() | Returns the arccosine (in radians) of the field value. Field values must be between -1 and 1 | 
+| ASIN() | Returns the arcsine (in radians) of the field value. Field values must be between -1 and 1 |
+| COS() | Returns the cosine of the field value |
+| SIN()	| Returns the sine of the field value |
+| TAN()	| Returns the tangent of the field value |
+| ATAN() |Returns the arctangent (in radians) of the field value. Field values must be between -1 and 1|
+|ATAN2() | Returns the the arctangent of y/x in radians |
+| CEIL() | Returns the subsequent value rounded up to the nearest integer |
+|EXP() | Returns the exponential of the field value |
+| FLOOR()| Returns the subsequent value rounded down to the nearest integer |
+| LN() | Returns the natural logarithm of the field value |
+| LOG()	| Returns the logarithm of the field value with base ```b``` |
+| LOG2()| Returns the logarithm of the field value to the base ```2``` |
+| LOG10()| Returns the logarithm of the field value to the base ```10``` |
+| POW() | Returns the field value to the power of ```x``` |
+| ROUND()| Returns the subsequent value rounded to the nearest integer |
+| SQRT() | Returns the square root of field value |
 
 ::: tip
 
-这部分函数兼容InfluxDB的用法，可参考InfluxDB对应的函数用法。
-社区正在快马加鞭补齐相关文档，如有需求，可在交流群咨询
+These methods are compatible with the usage of InfluxDB. [You can refer to the corresponding function usage of InfluxDB](https://docs.influxdata.com/influxdb/v1.8/query_language/functions/#content)
+
+The community is working hard to complete the relevant documents.
 :::
 
-##TODO
