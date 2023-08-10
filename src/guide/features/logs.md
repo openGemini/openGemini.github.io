@@ -3,26 +3,26 @@ title: Log search
 order: 3
 ---
 :::tip
-创建表参考[表操作](../schema/measurement.md)
+relate entries [create measurement](../schema/measurement.md#text-search)
 :::
-## 精确匹配 (MATCH)
-精确匹配是指只有整个单词与关键字相同才匹配。比如在日志检索中，根据特定错误码检索所有相关的日志信息。
+## MATCH
+An exact match means that only the entire word matches the keyword. For example, in log retrieval, all relevant log information is retrieved according to a specific error code.
 ```sql
 > SELECT server_name，message FROM mst WHERE MATCH(message, "504") AND server_name="server0" AND time > now() - 1d
 ```
-查询过去一天内，server0服务的全部504日志
+Query all logs of "server0" service which contained error code '504' in the past day
 
-## 短语匹配 (MATCHPHRASE)
-同MATCH查询一样，短语匹配是标准全文检索中的一种最常用查询方式，MATCH 和 MATCHPHRASE都是精确匹配，不同的是，MATCHPHRASE是按短语查询，而MATCH是单个单词。
+## MATCHPHRASE
+Like MATCH query, phrase matching is one of the most commonly used query methods in standard full-text search. Both MATCH and MATCHPHRASE are exact matches. The difference is that MATCHPHRASE is a query by phrase, while MATCH is a single word.
 ```sql
 > SELECT COUNT(message) FROM mst WHERE MATCHPHRASE(message, 'GET images backnews.gif') AND time > now() - 1h
 ```
-统计过去1小时内包含'GET images backnews.gif'内容的日志总数
+Query the total number of logs containing the content of 'GET images backnews.gif' in the past 1 hour
 
-## 模糊匹配 (LIKE)
-模糊匹配是另一种常见的全文检索查询方式，可以返回带有某个前缀或者后缀的一类字符串，比如在业务日志中，某些错误都有固定的前缀，但是错误码是不一样的，但都表示某一类错误信息，这时你会想到使用模糊匹配
+## LIKE
+Fuzzy matching is another common full-text search query method, which can return a type of string with a certain prefix or suffix. For example, in service logs, some errors have fixed prefixes, but the error codes are different. , but all indicate a certain type of error message, then you will think of using fuzzy matching
 ```sql
 > SELECT * FROM mst WHERE message LIKE 'NET%'
 ```
-查询包含NET开头关键字的全部日志数据
+Query all log data containing keywords starting with 'NET'
 

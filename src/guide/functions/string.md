@@ -2,15 +2,13 @@
 title: Strings
 order: 4
 ---
-
-# 字符串函数
-
-| 字符串函数 | 说明
+This chapter mainly introduces the following functions:
+| string functions | descriptions |
 | --- | --- |
-| STR() | 字符串中是否包含指定字符 |
-| STRLEN() | 字符串长度 |
-| SUBSTR() | 取子串 |
+| STR() | Returns whether the specified character is contained in the string |
+| STRLEN() | Returns the length of the string |
+| SUBSTR() | Returns a substring of a string |
 ::: tip
-社区正在快马加鞭补齐相关文档，如有需求，可在交流群咨询
+The community is working hard to complete the relevant documents. 
 :::
 

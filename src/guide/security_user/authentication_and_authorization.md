@@ -3,43 +3,41 @@ title: Authentication
 order: 2
 ---
 
+## authentication
+openGemini supports security verification of user name and password
 
-# 身份认证和授权
-
-## 认证方式
-openGemini API和openGemini CLI包含身份验证功能，启用身份验证后，openGemini仅执行验证通过的HTTP请求。
-
-1. 创建至少一个管理员用户，有关如何创建管理员用户，请参见[用户管理](./user_manage.md)。
-2. 默认情况下，配置文件中禁用身份验证，通过在配置文件中将`auth-enabled`选项设为`true`来开启身份验证。
+1. Create at least one admin user, see [User Management](./user_manage.md) for how to create an admin user
+2. By default, authentication is disabled in the configuration file, enable authentication by setting the `auth-enabled` option to `true` in the configuration file.
     ```toml
     [http]  
-    auth-enabled = true # ✨
+    auth-enabled = true
     ```
-3. 重新启动进程，openGemini将检查每个请求的用户信息，并将仅处理通过验证的用户请求。
+3. After restarting the process, openGemini will check the user information of each request and will only process authenticated user requests.
 
-## 使用API进行验证
-如果同时使用基本身份验证和URL查询参数进行身份验证，则查询参数中指定的用户凭据优先，以下示例中查询假定该用户是admin用户，有关不同用户类型，其特权以及有关用户管理的更多信息，请参见[用户管理-GRANT]((./user_manage.md))的部分。
-* Basic Authentication 验证
+## Authenticate using the API
+* Basic Authentication
     
     ```bash
     curl -G http://localhost:8086/query -u user0:${YOUR_PWD} --data-urlencode "q=SHOW DATABASES"
     ```
     
-* 在URL中使用查询参数
+* Using username and password as parameters in the URL
     ```bash
     curl -G "http://localhost:8086/query?u=user0&p=${YOUR_PWD}" --data-urlencode "q=SHOW DATABASES"
     ```
     
-* 在URL中使用请求正文
+* put username and password in request body
     ```bash
     curl -G http://localhost:8086/query --data-urlencode "u=user0" --data-urlencode "p=${YOUR_PWD}" --data-urlencode "q=SHOW DATABASES"
     ```
-## 使用CLI进行验证
-* 在启动CLI时通过username和password进行身份验证
+**relate entries** [User Management](./user_manage.md#grant)
+
+## Authenticate using the CLI
+* Authenticate by username and password when starting the CLI
     ```bash
     ts-cli -username user0 -password ${YOUR_PWD}
     ```
-* 启动CLI后使用auth命令进行验证
+* Use the auth command to authenticate after starting the CLI
     ```sql
     >>> auth
     username: user0  

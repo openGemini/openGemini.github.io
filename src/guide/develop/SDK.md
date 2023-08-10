@@ -5,7 +5,6 @@ order: 1
 
 ## Compatible with InfluxDB SDK
 
-openemini兼容InfluxDB，因此可以使用InfluxDB的SDK开发openGemini相关应用，安装和用法Demo可以点击下方连接，在对应github仓库中可以找到。  
 openemini is compatible with InfluxDB, so you can use the InfluxDB SDK to develop openGemini applications. You can click the link below for the installation and usage, which can be found in the github repository.
 - [C/C++](https://github.com/openGemini/openGemini/blob/main)
 - [Java](https://github.com/influxdata/influxdb-java)
