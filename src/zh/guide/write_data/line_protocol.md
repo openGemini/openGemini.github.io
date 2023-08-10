@@ -3,13 +3,11 @@ title: 数据行协议
 order: 1
 ---
 
-
 # 常规行协议定义
 
-line protocol 是一种基于文本的格式，用于将points 写入 openGemini
+Line Protocol 是InfluxDB提出的一种基于文本的数据格式，openGemini使用相同Line Protocol，用于将points 写入 openGemini
 
-> 采用InfluxDB相同的line protocol
-
+[关于InfluxDB Line Protocol](https://docs.influxdata.com/influxdb/cloud/reference/syntax/line-protocol/)
 ## line protocol语法
 
 ```
@@ -114,14 +112,14 @@ openGemini 支持科学计数法指定的field value.
 | 元素                                           | 双引号                                                     | 单引号 |
 | :--------------------------------------------- | :--------------------------------------------------------- | :----- |
 | Timestamp                                      | 从不                                                       | 从不   |
-| Measurements, tag keys, tag values, field keys | 从不*                                                      | 从不*  |
+| Measurements, tag keys, tag values, field keys | 从不                                                      | 从不  |
 | Field values                                   | 双引号字符串字段值，不要用引号引上浮点数，整数或者Booleans | 从不   |
 
-\* openGemini line protocol 允许用户使用双引号和单引号measurement名称，tag keys，tag values和field key。但是，它将假定双引号或单引号是名称，key 或values的一部分。这会使查询语法复杂化（请参见下面的示例）
+Line Protocol允许measurement(表名), tag keys, tag values和field key使用双引号和单引号，但是会把双引号或单引号作为measurement(表名)，keys或values的一部分。这会使查询语法复杂化（请参见下面的示例）
 
 #### 例子
 
-##### 无效的line protocol-双引号时间戳
+##### 无效的Line Protocol-双引号时间戳
 
 ```bash
 curl -X POST "http://localhost:8086/write?db=NOAA_water_database" --data-binary 'mymeas value=9 "1466625759000000000"'
@@ -130,7 +128,7 @@ curl -X POST "http://localhost:8086/write?db=NOAA_water_database" --data-binary 
 
 双重引用（或单引号）时间戳会产生bad time stamp错误。
 
-##### 语义错误 - 双引号表示Boolean
+##### 语义错误 - Boolean类型加双引号变成字符串
 
 ```sql
 > INSERT mymeas value="true"
@@ -143,7 +141,7 @@ value		   string
 
 openGemini 假设所有双引号field values都是字符串
 
-##### Semantic error - Double quote a measurement name
+##### 语义错误 - 表名加双引号会创建一个名称带双引号的表
 
 ```sql
 > INSERT "mymeas" value=200

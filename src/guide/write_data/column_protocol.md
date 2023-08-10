@@ -1,6 +1,6 @@
 ---
 title: Column protocol
-order: 3
+order: 2
 ---
 
 ##TODO

@@ -2,33 +2,32 @@
 title: Manage schema
 order: 4
 ---
-本章主要包括如下内容
-- [SHOW TAG KEYS (查看表中所有TAG字段)](#show-tag-keys)
-- [SHOW TAG VALUES (查看表中所有TAG字段及其对应的值)](#show-tag-values)
-- [SHOW FIELD KEYS (查看表中全部Field字段及其数据类型)](#show-field-keys)
-- [SHOW SERIES (查看全部时间线)](#show-series)
-- [SHOW SERIES CARDINALITY (查询时间线统计数量)](#show-series-cardinality)
-- [SHOW SHARDS (查看数据分片信息)](#show-shards)
-- [SHOW SHARD GROUPS(查看分片组信息)](#show-shard-groups)
+This chapter mainly includes the following contents:
+- [SHOW TAG KEYS ](#show-tag-keys)
+- [SHOW TAG VALUES](#show-tag-values)
+- [SHOW FIELD KEYS ](#show-field-keys)
+- [SHOW SERIES](#show-series)
+- [SHOW SERIES CARDINALITY](#show-series-cardinality)
+- [SHOW SHARDS ](#show-shards)
+- [SHOW SHARD GROUPS](#show-shard-groups)
 
 ## SHOW TAG KEYS
 
-查看表中所有TAG字段
+View all TAG fields in the measurements
 
-### 语法
+### Syntax
 
 ```sql
 SHOW TAG KEYS [ON <database_name>] [FROM_CLAUSE] [LIMIT_CLAUSE] [OFFSET_CLAUSE]
 ```
 
-`ON <database_name>`是可选项。  
-`FROM`子句是可选项。  
+`ON <database_name>` is optional. If the query does not contain `ON <database_name>`, you must specify the database in the CLI using `USE <database_name>` or in the openGemini API request using the parameter `db`.
 
-如果查询中没有包含`ON <database_name>`，您必须在CLI中使用`USE <database_name>`指定数据库，或者在openGemini API请求中使用参数`db`指定数据库。
+`FROM` is optional.
 
-### 示例
+### Examples
 
-- **运行带有`ON`子句的`SHOW TAG KEYS`查询**
+#### `SHOW TAG KEYS` with the `ON` clause
 
 ```sql
 > SHOW TAG KEYS ON "NOAA_water_database"
@@ -75,15 +74,15 @@ name: h2o_temperature
 
 ```
 
-该查询返回数据库`NOAA_water_database`中的tag key。查询结果按measurement的名字进行分组；它展示了每个measurement都有一个名为`location`的tag key，并且，measurement `h2o_quality`还具有另外一个tag key `randtag`。
+This query returns the tag key in the database `NOAA_water_database`. The query results are grouped by the name of the measurement; it shows that each measurement has a tag key named `location` and that the measurement `h2o_quality` also has an additional tag key `randtag`.
 
-- **运行不带有`ON`子句的`SHOW TAG KEYS`查询**
+#### `SHOW TAG KEYS` without the `ON` clause
 
 ::: tabs
 
 @tab ts-cli
 
-使用`USE <database_name>`指定数据库：
+Use `USE <database_name>` to specify the database:
 
 ```sql
 > use NOAA_water_database
@@ -133,7 +132,7 @@ name: h2o_temperature
 
 @tab HTTP API
 
-使用参数`db`指定数据库
+Use the parameter `db` to specify the database
 
 ```bash
 > curl -G "http://localhost:8086/query?db=NOAA_water_database&pretty=true" --data-urlencode "q=SHOW TAG KEYS"
@@ -208,7 +207,7 @@ name: h2o_temperature
 
 :::
 
-- **运行带有多个子句的`SHOW TAG KEYS`查询**
+#### `SHOW TAG KEYS` with multiple clauses
 
 ```sql
 > SHOW TAG KEYS ON "NOAA_water_database" FROM "h2o_quality" LIMIT 1 OFFSET 1
@@ -221,14 +220,15 @@ name: h2o_quality
 1 columns, 1 rows in set
 ```
 
-该查询返回数据库`NOAA_water_database`中名为`h2o_quality`的measurement里的tag key。`LIMIT`子句将返回的tag key的个数限制为1，`OFFSET`子句将输出结果偏移一个。
+This query returns the tag key of the measurement named `h2o_quality` in the database `NOAA_water_database`. The `LIMIT` clause limits the number of tag keys returned to 1, and the `OFFSET` clause offsets the output by one.
 
-- **查看TAG的统计数量**
-在某些场景下，仅需要了解TAG数量，不关心具体的TAG，可以使用SHOW TAG KEY CARDINALITY命令，使用方式如下：
+#### SHOW TAG KEY CARDINALITY
+
+In some cases, you only need to know the number of TAGs. You can use the 'SHOW TAG KEY CARDINALITY' command as follows:
 ``` 
 SHOW TAG KEY CARDINALITY [ON <database_name>] [FROM_CLAUSE]
 ```
-例如：
+
 ```sql
 > SHOW TAG KEY CARDINALITY
 #TODO
@@ -236,35 +236,35 @@ SHOW TAG KEY CARDINALITY [ON <database_name>] [FROM_CLAUSE]
 
 ## SHOW TAG VALUES
 
-返回数据库中指定tag key的tag value。
+Returns the tag value of the specified tag key in the database.
 
-### 语法
+### Syntax
 
 ```sql
 SHOW TAG VALUES [ON <database_name>] [FROM_CLAUSE] WITH KEY [ [<operator> "<tag_key>" | <regular_expression>] | [IN ("<tag_key1>","<tag_key2")]] [WHERE <tag_key> <operator> ['<tag_value>' | <regular_expression>]] [LIMIT_CLAUSE] [OFFSET_CLAUSE]
 ```
 
-`ON <database_name>`是可选的。如果查询中没有包含`ON <database_name>`，您必须在CLI中使用`USE <database_name>`指定数据库，或者在HTTP API请求中使用参数`db`指定数据库。
+`ON <database_name>` is optional. If the query does not contain `ON <database_name>`, you must specify the database in the CLI using `USE <database_name>` or in the HTTP API request using the parameter `db`.
 
-`WITH`子句是必须要有的，它支持指定一个tag key、一个正则表达式或多个tag key。
+The `WITH` clause is mandatory and it supports specifying a tag key, a regular expression or multiple tag keys.
 
-`FROM`子句、`WHERE`子句、`LIMIT`子句和`OFFSET`子句是可选的。`WHERE`子句支持tag比较；在`SHOW TAG VALUES`查询中，field比较是无效的。
+The `FROM` clause, `WHERE` clause, `LIMIT` clause and `OFFSET` clause are optional. The `WHERE` clause supports tag comparisons; field comparisons are disabled in `SHOW TAG VALUES` queries.
 
-`WITH`子句和`WHERE`子句中支持的操作符：
+Operators supported in the `WITH` clause and the `WHERE` clause:
 
-| 操作符 | 含义   |
+| Operators | Description   |
 | ------ | ------ |
-| `=`    | 等于   |
-| `<>`   | 不等于 |
-| `!=`   | 不等于 |
-| `=~`   | 匹配   |
-| `!~`   | 不匹配 |
+| `=`    | equal   |
+| `<>`   | not equal |
+| `!=`   | not equal |
+| `=~`   | match   |
+| `!~`   | not match |
 
-请查阅DML章节获得关于[`FROM`子句](../query_data/select.md#select)、[`LIMIT、OFFSET`子句](../query_data/select.md#limit-offset)、和正则表达式的介绍。
+**relate entries** [`FROM`](../query_data/select.md#select)、[`LIMIT、OFFSET`](../query_data/select.md#limit-offset)
 
-### 示例
+### Examples
 
-- **运行带有`ON`子句的`SHOW TAG VALUES`查询**
+#### `SHOW TAG VALUES` with the `ON` clause
 
 ```sql
 > SHOW TAG VALUES ON "NOAA_water_database" WITH KEY = "randtag"
@@ -277,15 +277,15 @@ randtag   2
 randtag   3
 ```
 
-该查询返回数据库`NOAA_water_database`中的tag key `randtag`的所有tag value。`SHOW TAG VALUES`将查询结果按measurement的名字进行分组。
+This query returns all tag values for the tag key `randtag` in the database `NOAA_water_database`. `SHOW TAG VALUES` groups the query results by the name of the measurement.
 
-- **运行不带有`ON`子句的`SHOW TAG KEYS`查询**
+#### `SHOW TAG KEYS` without the `ON` clause
 
 ::: tabs
 
 @tab ts-cli
 
-使用`USE <database_name>`指定数据库：
+Use `USE <database_name>` to specify the database:
 
 ```sql
 > USE NOAA_water_database
@@ -303,7 +303,7 @@ randtag   3
 
 @tab HTTP API
 
-使用参数`db`指定数据库
+Use the parameter `db` to specify the database
 
 ```bash
 > curl -G "http://localhost:8086/query?db=NOAA_water_database&pretty=true" --data-urlencode 'q=SHOW TAG VALUES WITH KEY = "randtag"'
@@ -342,7 +342,7 @@ randtag   3
 
 :::
 
-- **运行带有多个子句的`SHOW TAG VALUES`查询**
+#### `SHOW TAG VALUES` with multiple clauses
 
 ```sql
 > SHOW TAG VALUES ON "NOAA_water_database" WITH KEY IN ("location","randtag") WHERE "randtag" =~ /./ LIMIT 3
@@ -354,25 +354,26 @@ location   coyote_creek
 location   santa_monica
 randtag	   1
 ```
-该查询从数据库`NOAA_water_database`的所有measurement中返回`location`或`randtag`的tag value，并且返回的数据还需满足条件：`randtag`的tag value不为空。`LIMIT`子句将返回的tag value的个数限制为3。
+This query returns the tag value of `location` or `randtag` from all measurements of database `NOAA_water_database`, and the returned data must also satisfy the condition that the tag value of `randtag` is not null. The `LIMIT` clause limits the number of returned tag values to 3.
 
 ## SHOW FIELD KEYS
-返回field key和field value的数据类型。
+Returns the data type of field key and field value.
 
-### 语法
+### Syntax
 
 ```sql
 SHOW FIELD KEYS [ON <database_name>] [FROM <measurement_name>]
 ```
 
-`ON <database_name>`是可选的  
-`FROM`子句是可选的。请参考[`FROM`子句](../query_data/select.md)的介绍。
+`ON <database_name>` is optional. If the query does not contain `ON <database_name>`, you must specify the database in the CLI using `USE <database_name>` or in the openGemini API request using the parameter `db`.
 
-如果查询中没有包含`ON <database_name>`，您必须在CLI中使用`USE <database_name>`指定数据库，或者在openGemini API请求中使用参数`db`指定数据库。
+The `FROM` clause is also optional.
 
-### 示例
+**relate entries** [`FROM`](../query_data/select.md)
 
-- **运行带有`ON`子句的`SHOW FIELD KEYS`查询**
+### Examples
+
+#### `SHOW FIELD KEYS` with the `ON` clause
 
 ```sql
 > SHOW FIELD KEYS ON "NOAA_water_database"
@@ -404,15 +405,15 @@ fieldKey            fieldType
 degrees             float
 ```
 
-该查询返回数据库`NOAA_water_database`中每个measurement的field key以及对应的field value的数据类型。
+This query returns the field key of each measurement in the database `NOAA_water_database` and the data type of the corresponding field value.
 
-- **运行不带有`ON`子句的`SHOW FIELD KEYS`查询**
+#### `SHOW FIELD KEYS` without the `ON` clause
 
 ::: tabs
 
 @tab ts-cli
 
-使用`USE <database_name>`指定数据库：
+Use `USE <database_name>` to specify the database:
 
 ```sql
 > USE NOAA_water_database
@@ -449,7 +450,7 @@ degrees             float
 
 @tab HTTP API
 
-使用参数`db`指定数据库
+Use the parameter `db` to specify the database:
 
 ```bash
 > curl -G "http://localhost:8086/query?db=NOAA_water_database&pretty=true" --data-urlencode 'q=SHOW FIELD KEYS'
@@ -536,7 +537,7 @@ degrees             float
 
 :::
 
-- **运行带有`FROM`子句的`SHOW FIELD KEYS`查询**
+#### `SHOW FIELD KEYS` with a `FROM` clause
 
 ```sql
 > SHOW FIELD KEYS ON "NOAA_water_database" FROM "h2o_feet"
@@ -548,37 +549,36 @@ level description   string
 water_level         float
 ```
 
-该查询返回数据库`NOAA_water_database`中measurement `h2o_feet`里的fields key以及对应的field value的数据类型。
+This query returns the data type of the fields key and the corresponding field value in the measurement `h2o_feet` in the database `NOAA_water_database`.
 
 ## SHOW SERIES
 
-返回指定数据库的系列。
+Returns the time series of the specified database.
 
-### 语法
+### Syntax
 
 ```sql
 SHOW SERIES [ON <database_name>] [FROM_CLAUSE] [WHERE <tag_key> <operator> [ '<tag_value>' | <regular_expression>]] [LIMIT_CLAUSE] [OFFSET_CLAUSE]
 ```
+`ON <database_name>` is optional. If the query does not contain `ON <database_name>`, you must specify the database in the CLI using `USE <database_name>` or in the openGemini API request using the parameter `db`.
 
-`ON <database_name>`是可选的。如果查询中没有包含`ON <database_name>`，您必须在CLI中使用`USE <database_name>`指定数据库，或者在openGemini API请求中使用参数`db`指定数据库。
+The `WHERE` clause supports `tag` comparisons; `field` comparisons are invalid in `SHOW SERIES` queries.
 
-`WHERE`子句支持`tag`比较；在`SHOW SERIES`查询中，`field`比较是无效的。
+Operators supported in the `WHERE` clause:
 
-`WHERE`子句中支持的操作符：
-
-| 操作符 | 含义   |
+| Operators | Description   |
 | ------ | ------ |
-| `=`    | 等于   |
-| `<>`   | 不等于 |
-| `!=`   | 不等于 |
-| `=~`   | 匹配   |
-| `!~`   | 不匹配 |
+| `=`    | equal   |
+| `<>`   | not equal |
+| `!=`   | not equal |
+| `=~`   | match   |
+| `!~`   | not match |
 
-参考[`FROM`子句](../query_data/select.md#select)、[`LIMIT、OFFSET`子句](../query_data/select.md#limit-offset)、和正则表达式的介绍。
+**relate entries** [`FROM`](../query_data/select.md#select)、[`LIMIT、OFFSET`](../query_data/select.md#limit-offset)
 
-### 示例
+### Examples
 
-- **运行带有`ON`子句的`SHOW SERIES`查询**
+#### `SHOW SERIES` with an `ON` clause
 
 ```sql
 >>> SHOW SERIES ON NOAA_water_database
@@ -603,15 +603,15 @@ SHOW SERIES [ON <database_name>] [FROM_CLAUSE] [WHERE <tag_key> <operator> [ '<t
 1 columns, 14 rows in set
 ```
 
-该查询的输出类似行协议格式。第一个逗号之前的所有内容是`measurement`的名字。第一个逗号之后的所有内容都是`tag key`或者`tag value`。数据库`NOAA_water_database`有五个不同的`measurement`和14个不同的系列。
+The output of this query is similar to the line protocol format. Everything before the first comma is the name of `measurement`. Everything after the first comma is the `tag key` or `tag value`. The database `NOAA_water_database` has five different `measurement`s and 14 different series.
 
-- **运行不带有`ON`子句的`SHOW SERIES`查询**
+#### `SHOW SERIES` without the `ON` clause
 
 ::: tabs
 
 @tab TS-CLI
 
-使用`USE <database_name>`指定数据库：
+Use `USE <database_name>` to specify the database:
 
 ```bash
 > USE NOAA_water_database
@@ -640,7 +640,7 @@ Elapsed: 561ns
 
 @tab HTTP API
 
-使用参数`db`指定数据库
+Use the parameter `db` to specify the database
 
 ```bash
 > curl -G "http://localhost:8086/query?db=NOAA_water_database&pretty=true" --data-urlencode "q=SHOW SERIES"
@@ -706,7 +706,7 @@ Elapsed: 561ns
 
 :::
 
-- **运行带有多个子句的`SHOW SERIES`查询**
+#### `SHOW SERIES` with multiple clauses
 
 ```
 > SHOW SERIES ON NOAA_water_database FROM "h2o_quality" WHERE "location" = 'coyote_creek' LIMIT 2
@@ -719,7 +719,7 @@ Elapsed: 561ns
 1 columns, 2 rows in set
 ```
 
-该查询返回数据库`NOAA_water_database`中，与measurement `h2o_quality`和tag `location = coyote_creek`相关联的所有系列。`LIMIT`子句将返回的系列个数限制为2。
+This query returns all series associated with measurement `h2o_quality` and tag `location = coyote_creek` in database `NOAA_water_database`. The `LIMIT` clause limits the number of series returned to 2.
 
 ## SHOW SERIES CARDINALITY
 ##TODO

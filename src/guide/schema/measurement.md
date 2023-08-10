@@ -3,107 +3,115 @@ title: Manage meausurments
 order: 2
 ---
 
-## CREATE MEASUREMENT(创建表)
+## CREATE MEASUREMENT
 
-openGemini在写数据时支持自动创建表，但如下三种情况，需要提前创建表
+openGemini supports automatic table creation when writing data, but in the following three situations, tables need to be created in advance.
 
-### 指定分区键
+### Specify a tag as partition key
 
-openGemini中数据默认按照时间线进行hash分区打散，但某些场景下，业务频繁使用某个或者某几个TAG进行数据检索，采用时间线hash分区的方式让这部分TAG的数据分散到了不同的节点，造成查询扇出度比较大。  
-如果可以按照这部分频繁使用的TAG对数据进行分区，这样相同TAG值的数据会集中存储在同一个节点之上，从而减少查询扇出度，提升数据检索效率。
+By default, data in openGemini is partition by hash base on time series. However, in some scenarios, users frequently use one or more tags for data query. the hash method distributes the data to different nodes. AS a result, the query fanout is large.  
+If the data can be partitioned according to these frequently used TAGs, then the data with the same TAG value will be stored on the same node, thereby reducing query fan-out and improving data query efficiency.
 
-- **指定一个TAG（如location）对数据进行打散**
+#### Specify a TAG (such as location) to break up the data
 ```sql
 CREATE MEASUREMENT mst WITH SHARDKEY location
 ```
-- **指定多个TAG（如location，region）作为SHARDKEY**
+#### Specify multiple TAGs (such as location, region) as SHARD KEY
 ```sql
 CREATE MEASUREMENT mst WITH SHARDKEY location，region
 ```
 
-### 文本检索
+### TEXT SEARCH
 
-文本检索指根据文本内容，如关键字、短语等对文本集合进行检索、过滤等。openGemini支持文本检索，比如对日志进行关键字检索，可返回包含关键字的所有日志数据。  
-当你在使用该功能时，需要预先创建表，创建表的目的其实是为了指定要在哪些Field字段上创建全文索引，但有个前提，这些Field字段必须是String数据类型。
+Text retrieval refers to searching and filtering base on keywords or phrases in text data sets. openGemini supports text retrieval, such as keyword retrieval of logs, which can return all log data containing keywords.
+
+You need to create a measurement before use it. The purpose of creating a measurement is to specify which Field fields to create a full-text index on, but there is a premise that these fields must be 'string' data type
+
 ```sql
 > CREATE MEASUREMENT mst WITH INDEXTYPE text INDEXLIST description, error_message
 ```
-创建名为mst的表，并指定在description和error_message两个字段上创建全文索引。
+
+Create a measurement named mst and specify to create a full-text index on the two fields ```description ```and ```error_message```.
 
 ```sql
 > CREATE MEASUREMENT mst WITH INDEXTYPE text INDEXLIST description, error_message SHARDKEY location
 ```
-创建名为mst的表，并指定在description和error_message两个字段上创建全文索引, 同时设置mst根据location对数据进行分区打散  
-
+ 
+Create a measurement named mst, and specify to create a full-text index on the ```description``` and ```error_message``` fields, and set ```location``` as partition key
 ::: tip
 
-仅会在PRIMARYKEY指定的字段descriptio和error_message创建全文索引，若在其他Field中检索关键字，可能会比较慢  
+Full-text indexes will only be created on the fields ```description``` and ```error_message``` specified by PRIMARYKEY. If you search keywords in other Fields, it may be slower
 
-在字段descriptio和error_message支持精确匹配，短语匹配和模糊匹配三种，相关语法示例参考[文本检索](../features/logs.md)  
+It supports exact matching, phrase matching and fuzzy matching on fields ```description``` and ```error_message```
 
-不建议在TAG上创建文本索引，可能出现不可预见的问题  
+**related entries** [Text Search](../features/logs.md)
+
+It is not recommended to create a text index on a TAG, and unforeseeable problems may occur.
 
 :::
 
-### 使用高基数存储引擎
+### USE A HIGH SERIES CARDINALITY STORAGE ENGINE(HSCE)
 
-openGemini的高基数存储引擎HSCE解决了传统时序数据库因时间线过大导致的索引膨胀问题，我们在使用时，需要在创建表的时候指定存储引擎，openGemini默认的存储引擎并不是HSCE。
+The traditional time series database has the problem of index expansion due to the large time series, and openGemini's HSCE solves this problem. When we use it, we need to specify the engine type 'columnstore' when creating a measurement. The default storage engine is not HSCE.
 ```sql
 > CREATE MEASUREMENT mst (location string field default "", direction string field default "", rtt int field default 0, time int field default 0,) WITH ENGINETYPE = columnstore SHARDKEY location TYPE hash PRIMARYKEY location, direction SORTKEY time
 ```
-该语句说明如下：
-- 创建名为mst的表，有location, direction, rtt, time等四个字段，并分别指定了数据类型和默认值，比如location为字符串类型，默认值为空字符串。
-- **ENGINETYPE**关键字必须指定mst的存储引擎类型为columnstore（表示使用高基数引擎）
-- **SHARDKEY**关键字指定使用location对数据进行分区打散
-- **TYPE**关键字表示打散方式，分为hash和range两种
-- **PRIMARYKEY**表示主键为location和direction，意味着存储引擎会在这两个字段之上创建索引。
-- **SORTKEY**指定存储引擎内部的数据排序方式，time表示按时间排序，也可以换为rtt或者direction，甚至表中其他的字段。
+Create a measurement named mst with four fields ```location```, ```direction```, ```rtt```, ```time, ```, and specify the data type and default value respectively. For example, location is a string type, and the default value is an empty string.
 
-这里创建表同样使用create measurement语句，不同的是：
-1. 在创建表的时候指定了表中的全部字段名称、数据类型、是TAG还是普通字段（Field）以及缺失值的情况下的默认值。
-2. 创建表时，必须指定ENGINETYPE=columnstore才是使用高基数存储引擎
-3. 如果不指定SHARDKEY，数据会全部落在其中一个数据节点上
-4. 上述关键字ENGINETYPE、PRIMARYKEY、SORTKEY必须指定
+#### ENGINETYPE
+Required, must be columnstore
+#### SHARDKEY
+Required, specify ```location``` as partition key
+#### TYPE
+Required, There are two ways to break up data: hash and range
+#### PRIMARYKEY
+Required, The primary key is ```location``` and ```direction```, which means that the storage engine will create indexes on these two fields.
+#### SORTKEY
+Required, specify the data sorting method inside the storage engine. ```time``` means sorting by time, and can also be changed to ```rtt``` or ```direction```, or even other fields in the table.
+
+When creating measurement, you need to pay attention to:
+
+1. Must specify all field names, data types, TAG or ordinary field and the default value in case of missing values.
+
+2. If ```SHARDKEY``` is not specified, all data will be written to one data node
 
 ::: tip
 
-传统倒排索引在高基维场景近似稠密索引，索引开销较大，同时对于数据过滤几乎没有效果。openGemini高基数存储引擎使用更合适的数据聚簇和排序方式，并通过构建基数无关的稀疏索引，提升数据过滤效果与查询性能。  
+The traditional inverted index is similar to a dense index with high series cardinality. The index take a lot of memory space, and the query efficiency is low, and it has little effect on data filtering. The openGemini high series cardinality storage engine improves data query efficiency by building sparse indexes.
 
-针对高基数这一难题，openGemini从根本上进行了解决，但openGemini在新存储引擎之上的许多数据库功能还尚未完善，不满足生产环境使用，比如不支持聚合算子，再比如创建表的语法还需要进一步精简，以及一些异常情况也还未处理。  
+For the problem of high series cardinality, openGemini has found a solution, but many functions of openGemini on the new storage engine are not yet perfect and cannot be used in a production environment. For example, it does not support aggregation operators, and the syntax for creating measurement still needs further streamlining, and some exceptions have not been handled yet.  
 
-openGemini高基数存储引擎具备非常高读写性能，我们欢迎感兴趣的开发者参与进来，一起完善功能。
+Welcome to participate and improve the functions together.
 
 :::
 
 
-## SHOW MEASUREMENTS(查看表)
+## SHOW MEASUREMENTS
 
-返回指定数据库的measurement。
-
-### 语法
+View the measurements created in the database
 
 ```sql
 SHOW MEASUREMENTS [ON <database_name>] [WITH MEASUREMENT <operator> ['<measurement_name>' | <regular_expression>]]
 ```
-`ON <database_name>`是可选项。如果查询中没有包含`ON <database_name>`，您必须在CLI中使用`USE <database_name>`指定数据库，或者在openGemini API请求中使用参数`db`指定数据库。
+`ON <database_name>`is optional。If ```ON <database_name>``` is not included in the query, you must specify the database with ```USE <database_name>``` in the CLI before, or use the parameter `db` in the openGemini API request.
 
-`WITH`子句，`WHERE`子句，`LIMIT`子句和`OFFSET`子句是可选的。`WHERE`子句支持tag比较；在`SHOW MEASUREMENTS`查询中，field比较是无效的。
+The `WITH` clause, `WHERE` clause, `LIMIT` clause and `OFFSET` clause are optional. The `WHERE` clause supports tag comparison; in `SHOW MEASUREMENTS` queries, field comparison is invalid.
 
-`WHERE`子句中支持的操作符：
+The operators in `WHERE` clause are:
 
-| 操作符 | 含义   |
+| Operators | Description   |
 | ------ | ------ |
-| `=`    | 等于   |
-| `<>`   | 不等于 |
-| `!=`   | 不等于 |
-| `=~`   | 匹配   |
-| `!~`   | 不匹配 |
+| `=`    | equal   |
+| `<>`   | not equal |
+| `!=`   | not equal |
+| `=~`   | match   |
+| `!~`   | not match |
 
-请查阅DML章节获得关于[`FROM`子句](../query_data/select.md#select)、[`LIMIT、OFFSET`子句](../query_data/select.md#limit-offset)、和正则表达式的介绍。
+**relate entries** [`FROM`clause](../query_data/select.md#select)、[`LIMIT、OFFSET`clause](../query_data/select.md#limit-offset)
 
-### 示例
+### Examples
 
-- **运行带有`ON`子句的`SHOW MEASUREMENTS`查询**
+#### `SHOW MEASUREMENTS` with an `ON` clause
 
 ```sql
 > SHOW MEASUREMENTS ON NOAA_water_database
@@ -119,16 +127,15 @@ name: measurements
 +---------------------+
 1 columns, 5 rows in set
 ```
+The database `NOAA_water_database` has five measurements: `average_temperature`, `h2o_feet`, `h2o_pH`, `h2o_quality` and `h2o_temperature`.
 
-该查询返回数据库`NOAA_water_database`中的measurement。数据库`NOAA_water_database`有五个measurement：`average_temperature`、`h2o_feet`、`h2o_pH`、`h2o_quality`和`h2o_temperature`。
-
-- **运行不带有`ON`子句的`SHOW MEASUREMENTS`查询**
+#### `SHOW MEASUREMENTS` without the `ON` clause
 
 ::: tabs
 
 @tab CLI
 
-使用`USE <database_name>`指定数据库：
+use command `USE <database_name>` specified database：
 
 ```bash
 > USE NOAA_water_database
@@ -149,7 +156,7 @@ name: measurements
 
 @tab API
 
-使用参数`db`指定数据库
+Use the parameter `db` to specify the database
 
 ```bash
 > curl -G "http://localhost:8086/query?db=NOAA_water_database&pretty=true" --data-urlencode "q=SHOW MEASUREMENTS"
@@ -189,7 +196,7 @@ name: measurements
 
 :::
 
-- **运行带有多个子句的`SHOW MEASUREMENTS`查询**
+#### `SHOW MEASUREMENTS` with multiple clauses
 
 ```sql
 > SHOW MEASUREMENTS ON NOAA_water_database WITH MEASUREMENT =~ /h2o.*/
@@ -205,9 +212,9 @@ name: measurements
 1 columns, 4 rows in set
 ```
 
-该查询返回数据库`NOAA_water_database`中名字以`h2o`开头的measurement。
+Return measurements whose names start with `h2o` in the database `NOAA_water_database`.
 
-- **查看表数量**
+#### View the number of measurements
 ```sql
 > SHOW MEASUREMENTS CARDINALITY
 TODO
@@ -216,23 +223,19 @@ TODO
 TODO
 ```
 
-## DROP MEASUREMENT(删除表)
+## DROP MEASUREMENT
 
-使用`DROP MEASUREMENT`删除measurement
+use command `DROP MEASUREMENT` to delete measurement.
 
-`DROP MEASUREMENT`从指定的measurement中删除所有数据和series，并删除measurement。
-
-### 语法
+Deleting a measurement will delete all data and indexes.
 
 ```sql
 DROP MEASUREMENT <measurement_name>
 ```
 
-**<font size=5 color=green>示例</font>**
+### Examples
 
----
-
-删除名称为`h2o_feet`的measurement
+Delete the measurement `h2o_feet`
 
 ```sql
 > DROP MEASUREMENT "h2o_feet"
@@ -240,10 +243,9 @@ DROP MEASUREMENT <measurement_name>
 
 ::: warning
 
-1. `DROP MEASUREMENT`会删除measurement中的所有数据点和series。
-2. 成功执行`DROP MEASUREMENT`不返回任何结果
+There has no results return when the command 'DROP MEASUREMENT' excute success.
 
 :::
 
-## ALTER MEASUREMENT(修改表)
+## ALTER MEASUREMENT
 ##TODO

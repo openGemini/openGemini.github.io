@@ -28,7 +28,7 @@ mst,host=“192.168.0.1” cpu=0.62 1567000000
 mst,host=“192.168.0.1” cpu=0.32 1568000000  
 ```
 这里的数据源指host为“192.168.0.1"的这台机器。
-openGemini支持InfluxDB的Line Protocol，时间线由两部分组成（时间线Key和时间线Value），时间线Key由tags（数据属性)决定，唯一标识一条时间线，还句话说，每一种tags的组合就是一条时间线。  
+openGemini支持InfluxDB的Line Protocol，时间线由两部分组成（时间线Key和时间线Value），时间线Key由tags（数据属性)决定，唯一标识一条时间线，换句话说，每一种tags的组合就是一条时间线。  
 举个例子：  
 有如下6条数据，表名为mst，Tag分别是region,host
 ```sql
@@ -47,5 +47,5 @@ region="Guangdong",host=“192.168.0.1”
 region="Guangdong",host=“192.168.0.2”
 region="Guangdong",host=“192.168.0.3”
 ```
-参考[查看时间线数量]()
+参考[查看时间线数量](../schema/schema.md#show-series-cardinality)
 

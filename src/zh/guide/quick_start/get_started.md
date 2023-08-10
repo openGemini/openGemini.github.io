@@ -149,13 +149,13 @@ git clone https://github.com/openGemini/openGemini.git
 
 ::: tip
 
-默认连接127.0.0.1:8086，可通过以下命令连接其他主机：
+默认连接127.0.0.1:8086，可通过以下命令连接其他主机
 
 ```shell
 > ./ts-cli -host 192.168.0.1 -port 8086
 ```
 
-更多用法请使用如下命令，自行探索：
+更多帮助请使用如下命令
 
 ```shell
 > ./ts-cli -h
