@@ -2,88 +2,79 @@
 title: Retention policy
 order: 3
 ---
-## CREATE RETENTION POLICY(创建数据保留策略)
-
-### 语法
+## CREATE RETENTION POLICY
+### Syntax
 ```sql
 CREATE RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <duration> REPLICATION <n> [SHARD DURATION <duration>] [DEFAULT]
 ```
 
-###语法描述
+#### DURATION
 
-**DURATION**
+`DURATION` determines how long openGemini keeps data. A retention policy has a minimum duration of one hour and a maximum duration of `INF` (infinite).
 
-`DURATION`子句确定openGemini将数据保留多长时间。 保留策略的最短持续时间为一小时，最长持续时间为`INF`（无限）。
+#### REPLICATION
 
-**REPLICATION**
+`REPLICATION` determines how many independent replicas of each data point are stored in the cluster, currently only `1` replica is supported.
 
-`REPLICATION`子句确定每个数据点在集群中存储了多少个独立副本，目前仅支持`1`副本。
+#### SHARD DURATION
 
-**SHARD DURATION**
+- Optional, `SHARD DURATION` sets the time range of the shard group
+- By default, the data expiration time is determined by the `DURATION` of the retention policy：
 
-- 可选项， `SHARD DURATION` 子句确定分片组的时间范围。
-- 默认情况下，分片组的持续时间由保留策略的`DURATION`确定：
-
-| 保留策略期限 | 分片组持续时间 |
+| DURATION | SHARD(GROUP) DURATION |
 |---|---|
 | < 2 days  | 1 hour  |
 | >= 2 days and <= 6 months  | 1 day  |
 | > 6 months  | 7 days  |
 
-最小允许的 `SHARD GROUP DURATION` 为`1h`.
-如果 `创建保留策略` 查询试图将 `SHARD GROUP DURATION` 设置为小于 `1h` 且大于 `0s`, openGemini 会自动的讲 `SHARD GROUP DURATION` 设置为 `1h`.
-如果 `CREATE RETENTION POLICY` 查询试图讲 `SHARD GROUP DURATION` 设置为你 `0s`, openGemini 会根据上面列出的默认自动设置`SHARD GROUP DURATION` 
+`SHARD GROUP DURATION` minimum is`1h`.
 
-**DEFAULT**
+If the `Create retention policy` query tries to set `SHARD GROUP DURATION` to be less than `1h` and greater than `0s`, openGemini will automatically set `SHARD GROUP DURATION` to `1h`.
 
-将新的保留策略设置为数据库的默认保留策略。此设置是可选项。
+If the `CREATE RETENTION POLICY` query tries to set `SHARD GROUP DURATION` to your `0s`, openGemini will automatically set `SHARD GROUP DURATION` according to the defaults listed above.
 
-### 示例
+#### DEFAULT
 
-- **创建保留策略**
+Set the new retention policy as the default retention policy for the database. This setting is optional.
+
+### Examples
+
+### Creating a retention policy
 
 ```sql
 > CREATE RETENTION POLICY "one_day_only" ON "NOAA_water_database" DURATION 1d REPLICATION 1
 ```
-该查询为数据库`NOAA_water_database`创建了一个名为`one_day_only`的保留策略，该策略的期限为`1d`，复制因子为`1`。
+This query creates a retention policy named `one_day_only` for the database `NOAA_water_database` with a duration of `1d` and a replication factor of `1`.
 
-- **创建默认保留策略**
+### Creating a default retention policy
 
 ```sql
 > CREATE RETENTION POLICY "one_day_only" ON "NOAA_water_database" DURATION 23h60m REPLICATION 1 DEFAULT
 ```
 
-该查询创建与上例相同的保留策略，但是将其设置为数据库的默认保留策略。
+This query creates the same retention policy as the above example, but sets it as the default retention policy for the database.
 
-成功的`CREATE RETENTION POLICY`查询不返回任何结果。
+A successful `CREATE RETENTION POLICY` query does not return any results.
 
-如果尝试创建与现有策略相同的保留策略，则openGemini不会返回错误。
-如果尝试创建与现有保留策略相同名称的保留策略，但属性不同，则openGemini将返回错误。
+If an attempt is made to create a retention policy with the same name as an existing policy, openGemini will not return an error.  
+If an attempt is made to create a retention policy with the same name as an existing retention policy, but with different attributes, openGemini will return an error.
 
-::: tip
+**related entries** [CREATE DATABASE](./database.md)。
 
-您也可以在`CREATE DATABASE`查询中指定新的保留策略。
-请参阅 [使用`CREATE DATABASE`创建数据库](./database.md)。
+## SHOW RETENTION POLICIES
 
-:::
+Returns a list of **reservation policies** for the specified database.
 
-## SHOW RETENTION POLICIES(查看数据保留策略)
-
-返回指定数据库的**保留策略**列表。
-
-### 语法
+### Syntax
 
 ```sql
 SHOW RETENTION POLICIES [ON <database_name>]
 ```
+`ON <database_name>` is optional. If the query does not contain `ON <database_name>`, you must specify the database in the CLI using `USE <database_name>` or in the openGemini API request using the parameter `db`.
 
-### 语法描述
+### Examples
 
-`ON <database_name>`是可选项。如果查询中没有包含`ON <database_name>`，您必须在CLI中使用`USE <database_name>`指定数据库，或者在openGemini API请求中使用参数`db`指定数据库。
-
-### 示例
-
-- **运行带有`ON`子句的`SHOW RETENTION POLICIES`查询**
+#### `SHOW RETENTION POLICIES` with the `ON` clause
 
 ```sql
 >>> SHOW RETENTION POLICIES ON NOAA_water_database
@@ -95,15 +86,15 @@ SHOW RETENTION POLICIES [ON <database_name>]
 8 columns, 1 rows in set
 ```
 
-该查询以表格的形式返回数据库`NOAA_water_database`中所有的保留策略。这个数据库有一个名为`autogen`的保留策略，该保留策略具有无限的持续时间，为期7天的shard group持续时间，复制系数为1，并且它是这个数据库的默认(`DEFAULT`)保留策略。
+This query returns all the retention policies in the database `NOAA_water_database` in tabular form. This database has a retention policy named `autogen` that has unlimited duration, a shard group duration of 7 days, a replication factor of 1, and it is the default (`DEFAULT`) retention policy for this database.
 
-- **运行不带有`ON`子句的`SHOW RETENTION POLICIES`查询**
+#### `SHOW RETENTION POLICIES` without the `ON` clause
 
 ::: tabs
 
 @tab ts-cli
 
-使用`USE <database_name>`指定数据库
+Specify the database using `USE <database_name>`
 
 ```bash
 > use NOAA_water_database
@@ -119,7 +110,7 @@ Elapsed: 704ns
 
 @tab HTTP API
 
-使用参数`db`指定数据库
+Use the parameter `db` to specify the database
 
 ```bash
 > curl -G "http://localhost:8086/query?db=NOAA_water_database&pretty=true" --data-urlencode "q=SHOW RETENTION POLICIES"
@@ -161,11 +152,11 @@ Elapsed: 704ns
 
 :::
 
-## ALTER RETENTION POLICY(修改数据保留策略)
+## ALTER RETENTION POLICY
 
-### 语法
+### Syntax
 
-`ALTER RETENTION POLICY`语法如下，必须声明至少一个保留策略属性`DURATION`，`REPLICATION`，`SHARD DURATION`或`DEFAULT`：
+The `ALTER RETENTION POLICY` query syntax is as follows and must declare at least one reservation policy attribute `DURATION`, `REPLICATION`, `SHARD DURATION` or `DEFAULT`:
 
 ```sql
 ALTER RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <duration> REPLICATION <n> SHARD DURATION <duration> DEFAULT
@@ -173,49 +164,49 @@ ALTER RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <dura
 
 ::: warning
 
-复制因子 `REPLICATION <n>` 仅支持 1
-
+`REPLICATION <n>` only support 1
 :::
 
-### 示例
+### Examples
 
-首先，以2d的`DURATION`创建保留策略`what_is_time`：
+First, create the retention policy `what_is_time` with the 2d `DURATION`:
 
 ```sql
 > CREATE RETENTION POLICY "what_is_time" ON "NOAA_water_database" DURATION 2d REPLICATION 1
 ```
 
-修改`what_is_time`以使其具有三周的`DURATION`，两个小时的分片组持续时间，并使其成为`NOAA_water_database`的`DEFAULT`保留策略。
+Modify `what_is_time` to have three weeks of `DURATION`, two hours of slice group duration, and make it a `DEFAULT` retention policy for `NOAA_water_database`.
 
 ```sql
 > ALTER RETENTION POLICY "what_is_time" ON "NOAA_water_database" DURATION 3w SHARD DURATION 2h DEFAULT
 ```
-在最后一个示例中，` what_is_time`保留其原始复制因子`1`。
+In the last example, ` what_is_time` retains its original replication factor `1`.
 
-成功的`ALTER RETENTION POLICY`查询不返回任何结果。
+There does not return any results when `ALTER RETENTION POLICY` execute successful.
 
-## DROP RETENTION POLICY(删除数据保留策略)
+## DROP RETENTION POLICY
 
 ::: danger
 
-删除保留策略将永久删除使用该保留策略的所有measurement和数据
+Deleting a retention policy will permanently delete all measurements and data using that retention policy
 
 :::
 
-### 语法
+### Syntax
 
 ```sql
 DROP RETENTION POLICY <retention_policy_name> ON <database_name>
 ```
 
-### 示例
-在`NOAA_water_database`数据库中删除保留策略`what_is_time`：
+### Examples
+Delete the retention policy `what_is_time` in the `NOAA_water_database` database:
 
 ```sql
 > DROP RETENTION POLICY "what_is_time" ON "NOAA_water_database"
 ```
 
-成功执行`DROP RETENTION POLICY`不返回任何结果。  
-<font color=red>如果尝试删除不存在的保留策略，则openGemini也不会返回错误。</font>
+There does not return any results when `DROP RETENTION POLICY` execute successful.
+
+<font color=red>If an attempt is made to delete a non-existent retention policy, openGemini will not return an error.</font>
 
 

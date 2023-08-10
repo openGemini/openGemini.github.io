@@ -31,8 +31,8 @@ CREATE RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <dur
 | > 6 months  | 7 days  |
 
 最小允许的 `SHARD GROUP DURATION` 为`1h`.
-如果 `创建保留策略` 查询试图将 `SHARD GROUP DURATION` 设置为小于 `1h` 且大于 `0s`, openGemini 会自动的讲 `SHARD GROUP DURATION` 设置为 `1h`.
-如果 `CREATE RETENTION POLICY` 查询试图讲 `SHARD GROUP DURATION` 设置为你 `0s`, openGemini 会根据上面列出的默认自动设置`SHARD GROUP DURATION` 
+如果 `创建保留策略` 查询试图将 `SHARD GROUP DURATION` 设置为小于 `1h` 且大于 `0s`, openGemini 会自动的将 `SHARD GROUP DURATION` 设置为 `1h`.
+如果 `CREATE RETENTION POLICY` 查询试图将 `SHARD GROUP DURATION` 设置为你 `0s`, openGemini 会根据上面列出的默认自动设置`SHARD GROUP DURATION` 
 
 **DEFAULT**
 

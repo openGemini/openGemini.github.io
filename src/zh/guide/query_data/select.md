@@ -11,7 +11,7 @@ order: 1
 
 ## 客户端
 
-为了方便探索数据，请先用ts-cli登录：
+在学习查询语句之前，需要使用客户端ts-cli连接openGemini：
 
 ```shell
 $ ts-cli -database NOAA_water_database
@@ -21,7 +21,7 @@ Please use `quit`, `exit` or `Ctrl-D` to exit this program.
 ```
 
 ## SELECT
-`SELECT` 查询执行数据检索。 默认情况下，请求的数据将返回给客户端，同时结合 [SELECT INTO]() 可以被转发到不同的表。
+`SELECT` 语句执行数据检索。 默认情况下，请求的数据将返回给客户端，同时结合 [SELECT INTO]() 可以被转发到不同的表。
 ### 语法
 
 ```sql

@@ -4,6 +4,8 @@ order: 4
 ---
 
 集群部署可以把openGemini的三个组件都部署在一个节点上，也可以把组件分散部署在多个节点上。
+
+下载二进制包，参考[安装部署](./get_started.md)
 ## 部署伪集群
 
 把openGemini集群的所有组件都部署在同一个节点上，这种集群部署方式我们称之为伪集群部署。  
@@ -11,18 +13,20 @@ order: 4
 ```shell
 > sh scripts/install_cluster.sh
 ```
-
-执行该命令，在不修改配置文件的前提下，可直接在本地拉起一个openGemini集群，包括1个ts-sql、3个ts-meta和2个ts-store组件。但该集群仅在本地回环地址127.0.0.1上监听运行，可用于本地功能测试和学习，不能对外提供访问服务。  
-若要让集群监听本机IP，让外部节点可以访问，配置上相对要复杂一点，虽然可行，但不推荐。  
+:::tip
+执行该命令，在不修改配置文件的前提下，可直接在本地拉起一个openGemini集群，包括1个ts-sql、3个ts-meta和2个ts-store组件。但该集群仅在本地回环地址127.0.0.1上监听运行，可用于本地功能测试和学习，不能对外提供访问服务。
+:::
+若要让集群监听本机IP，让外部节点可以访问，配置上相对要复杂一点，虽然可行，但在生产环境中不推荐。  
 同样以部署1个ts-sql、3个ts-meta和2个ts-store组成的集群为例。
-1.	分配端口
+### 分配端口
 所有节点均监听本机IP地址，如192.168.0.1，所以所有组件之间不能使用相同的端口，需重新分配。可以做如下分配（参考）： 
 
 ![4](https://user-images.githubusercontent.com/49023462/200800373-65a3ac6c-f38d-46ed-86d6-8b8f21232d50.png)
 
-2.	配置文件修改
-openGemini只有一个集群配置文件openGemini.conf，我们进行集群配置时，如果在一个节点上只部署一个ts-meta、一个ts-sql和一个ts-store，或者其中两个或一个，不存在相同组件部署在同一个节点上。则可以考虑在该节点上所有组件共用一个配置文件openGemini.conf
-显然部署伪集群是不能共用一个，因为在同一个节点上有3个ts-meta，2个ts-store。所以我们建议为每个组件对应一个配置文件。具体做法如下：
+### 配置文件修改
+openGemini的集群配置项都集中在openGemini.conf文件中，我们进行集群配置时，如果在同一个节点上只部署一个ts-meta、一个ts-sql和一个ts-store，或者合部其中两个或一个组件，不存在相同组件部署在同一个节点上的情况(因为没有IP和端口冲突)，则可以考虑在该节点上所有组件共用一个配置文件openGemini.conf
+
+显然部署伪集群是不能共用一个，因为在同一个节点上有3个ts-meta，2个ts-store，因为IP会有冲突，所以我们建议为每个组件对应一个配置文件。具体做法如下：
 ```
 > cp –rf openGemini.conf sql.conf
 > cp –rf openGemini.conf meta-1.conf
@@ -133,7 +137,7 @@ members = ["192.168.0.1:8010", "192.168.0.1:8012", "192.168.0.1:8013"]
 ```
 **如果还需要新增ts-store,可按照该配置，更换一下端口，再拉起即可**
 
-3.	拉起集群
+## 拉起集群
 编辑脚本
 ```
 > cp –rf scripts/install_cluster.sh  scripts/cluster.sh
@@ -163,6 +167,7 @@ nohup build/ts-meta -config config/openGemini -1.conf -pidfile /tmp/openGemini/p
 nohup build/ts-meta -config config/meta-1.conf -pidfile /path/openGemini/pid/meta1.pid > /path/openGemini/logs/1/meta_extra1.log 2>&1 &
 ```
 以此类推
+
 修改完成，执行命令,便可拉起伪集群
 ```
 > sh scripts/cluster.sh
@@ -230,4 +235,5 @@ openGemini拉起集群时对组件启动顺序有要求
 ```
 > nohup ts-sql --config openGemini.conf -pidfile sql.pid > sql_extra.log 2>&1 &
 ```
+客户端连接，参考 [ts-cli命令行](get_started.md#命令行-ts-cli)
 
