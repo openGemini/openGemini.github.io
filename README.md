@@ -9,7 +9,7 @@ openGemini Documentation.
 - install pnpm:
 
 ```
-npm install -g pnpm
+sudo npm install -g pnpm@7
 ```
 
 ref: https://pnpm.io/zh/cli/install
