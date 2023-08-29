@@ -8,11 +8,11 @@ order: 1
 ### 语法
 
 ```sql
-CREATE DATABASE <database_name> [WITH [DURATION <duration>] [REPLICATION <n>] [SHARD DURATION <duration>] [NAME <retention-policy-name>]]
+CREATE DATABASE <database_name> [WITH [DURATION <duration>] [REPLICATION <n>] [SHARD DURATION <duration>] [INDEX DURATION <duration>] [NAME <retention-policy-name>]]
 ```
 `CREATE DATABASE`需要数据库名称。
 
-`WITH` ，`DURATION`，`REPLICATION`，`SHARD DURATION`，`NAME` 子句以及创建与数据库相关联的单个保留策略是可选项。
+`WITH` ，`DURATION`，`REPLICATION`，`SHARD DURATION`，`INDEX DURATION`，`NAME` 子句以及创建与数据库相关联的单个保留策略是可选项。
 如果未在`WITH`之后指定子句，则会默认创建名称为`autogen`的保留策略。
 
 成功的`CREATE DATABASE`查询不返回任何结果。
@@ -34,10 +34,10 @@ CREATE DATABASE <database_name> [WITH [DURATION <duration>] [REPLICATION <n>] [S
 - **创建数据库指定保留策略**
 
 ```sql
-> CREATE DATABASE "NOAA_water_database" WITH DURATION 3d REPLICATION 1 SHARD DURATION 1h NAME "rp3d"
+> CREATE DATABASE "NOAA_water_database" WITH DURATION 3d REPLICATION 1 SHARD DURATION 1h INDEX DURATION 7h NAME "rp3d"
 ```
 
-该操作创建一个名称为`NOAA_water_database`的数据库。还为`NOAA_water_database`创建一个保留策略，名称为`rp3d`，其`DURATION`为3d，复制因子为1，分片组持续时间为1h。
+该操作创建一个名称为`NOAA_water_database`的数据库。还为`NOAA_water_database`创建一个保留策略，名称为`rp3d`，其`DURATION`为3d，复制因子为1，分片组持续时间为1h，索引组持续时间为7h。
 
 ## SHOW DATABASES (查看数据库)
 

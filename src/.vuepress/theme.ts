@@ -1,8 +1,8 @@
-import { hopeTheme } from 'vuepress-theme-hope';
-import { enNavbar, zhNavbar } from './navbar/index.js';
-import { enSidebar, zhSidebar } from './sidebar/index.js';
+import {hopeTheme} from 'vuepress-theme-hope';
+import {enNavbar, zhNavbar} from './navbar/index.js';
+import {enSidebar, zhSidebar} from './sidebar/index.js';
 // import { getDirname, path } from '@vuepress/utils';
-import { getFooter } from './utils/getFooter.js';
+import {getFooter} from './utils/getFooter.js';
 
 // 获取当前文件目录
 // const __dirname = getDirname(import.meta.url);
@@ -80,11 +80,11 @@ export default hopeTheme({
         //      provider: "Waline",
         //    },
 
-        //    copyCode: {
-        //      fancy: true,
-        //      duration: 1000,
-        //    },
-        copyCode: false,
+        copyCode: {
+            fancy: true,
+            duration: 1000,
+        },
+        // copyCode: false,
 
         // all features are enabled for demo, only preserve features you need here
         mdEnhance: {
@@ -112,11 +112,11 @@ export default hopeTheme({
             stylize: [
                 {
                     matcher: 'Recommended',
-                    replacer: ({ tag }) => {
+                    replacer: ({tag}) => {
                         if (tag === 'em')
                             return {
                                 tag: 'Badge',
-                                attrs: { type: 'tip' },
+                                attrs: {type: 'tip'},
                                 content: 'Recommended',
                             };
                     },

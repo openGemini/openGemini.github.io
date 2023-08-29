@@ -5,7 +5,7 @@ order: 3
 ## CREATE RETENTION POLICY
 ### Syntax
 ```sql
-CREATE RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <duration> REPLICATION <n> [SHARD DURATION <duration>] [DEFAULT]
+CREATE RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <duration> REPLICATION <n> [SHARD DURATION <duration>] [INDEX DURATION <duration>] [DEFAULT]
 ```
 
 #### DURATION
@@ -32,6 +32,10 @@ CREATE RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <dur
 If the `Create retention policy` query tries to set `SHARD GROUP DURATION` to be less than `1h` and greater than `0s`, openGemini will automatically set `SHARD GROUP DURATION` to `1h`.
 
 If the `CREATE RETENTION POLICY` query tries to set `SHARD GROUP DURATION` to your `0s`, openGemini will automatically set `SHARD GROUP DURATION` according to the defaults listed above.
+
+#### INDEX DURATION
+
+- Optional, `INDEX DURATION` sets the time range of the index group
 
 #### DEFAULT
 

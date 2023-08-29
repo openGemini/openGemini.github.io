@@ -6,20 +6,18 @@ order: 3
 
 ### 语法
 ```sql
-CREATE RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <duration> REPLICATION <n> [SHARD DURATION <duration>] [DEFAULT]
+CREATE RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <duration> REPLICATION <n> [SHARD DURATION <duration>] [INDEX DURATION <duration>] [DEFAULT]
 ```
 
-###语法描述
-
-**DURATION**
+#### DURATION
 
 `DURATION`子句确定openGemini将数据保留多长时间。 保留策略的最短持续时间为一小时，最长持续时间为`INF`（无限）。
 
-**REPLICATION**
+#### REPLICATION
 
 `REPLICATION`子句确定每个数据点在集群中存储了多少个独立副本，目前仅支持`1`副本。
 
-**SHARD DURATION**
+#### SHARD DURATION
 
 - 可选项， `SHARD DURATION` 子句确定分片组的时间范围。
 - 默认情况下，分片组的持续时间由保留策略的`DURATION`确定：
@@ -34,7 +32,11 @@ CREATE RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <dur
 如果 `创建保留策略` 查询试图将 `SHARD GROUP DURATION` 设置为小于 `1h` 且大于 `0s`, openGemini 会自动的将 `SHARD GROUP DURATION` 设置为 `1h`.
 如果 `CREATE RETENTION POLICY` 查询试图将 `SHARD GROUP DURATION` 设置为你 `0s`, openGemini 会根据上面列出的默认自动设置`SHARD GROUP DURATION` 
 
-**DEFAULT**
+#### INDEX DURATION
+
+- 可选项，`INDEX DURATION` 子句确定索引组的时间范围。
+
+#### DEFAULT
 
 将新的保留策略设置为数据库的默认保留策略。此设置是可选项。
 
