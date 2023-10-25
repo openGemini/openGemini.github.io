@@ -1,11 +1,15 @@
 ---
-title: 集群部署
+title: 手动部署(不推荐）
 order: 4
 ---
 
+::: info
+此文档指在探索手动部署需要部署哪些组件，对熟悉 openGemini 集群工作原理有所帮助。建议[使用 gemix 部署](./production_deployment_using_gemix)生产集群，
+:::
+
 集群部署可以把openGemini的三个组件都部署在一个节点上，也可以把组件分散部署在多个节点上。
 
-下载二进制包，参考[安装部署](./get_started.md)
+下载二进制包，参考[安装部署](../quick_start/get_started)
 ## 部署伪集群
 
 把openGemini集群的所有组件都部署在同一个节点上，这种集群部署方式我们称之为伪集群部署。  
@@ -235,5 +239,5 @@ openGemini拉起集群时对组件启动顺序有要求
 ```
 > nohup ts-sql --config openGemini.conf -pidfile sql.pid > sql_extra.log 2>&1 &
 ```
-客户端连接，参考 [ts-cli命令行](get_started.md#命令行-ts-cli)
+客户端连接，参考 [ts-cli命令行](../quick_start/get_started.md#命令行-ts-cli)
 

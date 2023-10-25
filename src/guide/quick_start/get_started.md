@@ -5,7 +5,7 @@ order: 1
 
 This section introduces how to quickly get started with the openGemini temporal database. For non-production environments, you can choose to deploy the openGemini temporal database by one of the following ways.
 
-This guide takes standalone deployment as an example. To learn about cluster deployment, please click on [deploy_cluster](./deploy_cluster.md) to view the details.
+This guide takes standalone deployment as an example. To learn about cluster deployment, please click on [production_deployment_using_gemix](../deploy_cluster/production_deployment_using_gemix) to view the details.
 
 ## Installation
 

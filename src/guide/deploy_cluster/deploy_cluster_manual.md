@@ -1,12 +1,16 @@
 ---
-title: Cluster deployment
+title: Deploy manual (Not Recommented）
 order: 4
 ---
+
+::: info
+This document explores which components need to be deployed for manual deployment and helps familiarize yourself with how the open gemini cluster works. You are advised to [deploy with gemix](./production_deployment_using_gemix) a production cluster.
+:::
 
 Cluster deployment can deploy all three components of openGemini on one node, or distribute components to multiple nodes.
 ## Deploy a pseudo-cluster
 
-Deploy a pseudo-cluster means all components of the openGemini are deployed on the same node. Currently, the community provides the deployment script install_cluster.sh. 
+Deploy a pseudo-cluster means all components of the openGemini are deployed on the same node. Currently, the community provides the deployment script install_cluster.sh.
 ```shell
 > sh scripts/install_cluster.sh
 ```
@@ -17,13 +21,13 @@ If you want to use local IP address so that can access openGemini with other mac
 The following uses a cluster with one ts-sql, three ts-meta, and two ts-store as an example to show how to deploy a openGemini cluster.
 
 1. **Allocate ports**  
-All nodes listen to the local IP address, for example, 192.168.0.1. Therefore, all components must use different ports. The following allocations can be made (for reference):
+   All nodes listen to the local IP address, for example, 192.168.0.1. Therefore, all components must use different ports. The following allocations can be made (for reference):
 
 ![4](https://user-images.githubusercontent.com/49023462/200800373-65a3ac6c-f38d-46ed-86d6-8b8f21232d50.png)
 
 2. **Modify the configuration file**  
-The openGemini has only one cluster configuration file openGemini.conf. If only one ts-meta, one ts-sql, and one ts-store, or two or one of them are deployed on a node, The same component is not deployed on the same node. In this case, all components on the node share the same configuration file openGemini.conf.
-Obviously, the pseudo-cluster cannot share one, because there are three ts-metas and two ts-stores on the same node. Therefore, we recommend a configuration file for each component. The method is as follows:
+   The openGemini has only one cluster configuration file openGemini.conf. If only one ts-meta, one ts-sql, and one ts-store, or two or one of them are deployed on a node, The same component is not deployed on the same node. In this case, all components on the node share the same configuration file openGemini.conf.
+   Obviously, the pseudo-cluster cannot share one, because there are three ts-metas and two ts-stores on the same node. Therefore, we recommend a configuration file for each component. The method is as follows:
 ```shell
 > cp –rf openGemini.conf sql.conf
 > cp –rf openGemini.conf meta-1.conf
@@ -33,7 +37,7 @@ Obviously, the pseudo-cluster cannot share one, because there are three ts-metas
 > cp –rf openGemini.conf store-2.conf
 ```
 - **Modify the following information in the sql.conf file**  
-use 192.168.0.1 as an example.
+  use 192.168.0.1 as an example.
 ```toml
 [common]
 meta-join = ["192.168.0.1:8092", "192.168.0.1:8094", "192.168.0.1:8096"]
@@ -43,7 +47,7 @@ bind-address = "192.168.0.1:8086"
 # recommend change the directory.
 path = "/path/openGemini/logs"
 ```
-- **Modify the meta-1.conf file**  
+- **Modify the meta-1.conf file**
 
 Only the following information needs to be modified.
 ```toml
@@ -64,7 +68,7 @@ meta-bind-port = 8010
 members = ["192.168.0.1:8010", "192.168.0.1:8012", "192.168.0.1:8013"]
 ```
 - **Modify the meta-2.conf file**  
-Only the following information needs to be modified:
+  Only the following information needs to be modified:
 ```toml
 [common]
 meta-join = ["192.168.0.1:8092", "192.168.0.1:8094", "192.168.0.1:8096"]
@@ -83,7 +87,7 @@ meta-bind-port = 8012
 members = ["192.168.0.1:8010", "192.168.0.1:8012", "192.168.0.1:8013"]
 ```
 - **Modify the meta-3.conf file**  
-Only the following information needs to be modified:
+  Only the following information needs to be modified:
 ```toml
 [common]
 meta-join = ["192.168.0.1:8092", "192.168.0.1:8094", "192.168.0.1:8096"]
@@ -138,10 +142,10 @@ bind-address = "192.168.0.1"
 store-bind-port = 8014
 members = ["192.168.0.1:8010", "192.168.0.1:8012", "192.168.0.1:8013"]
 ```
-- **If you need to add a ts-store, change the port and run the ts-store again**  
+- **If you need to add a ts-store, change the port and run the ts-store again**
 
 3. Start the cluster  
-Editing a Script
+   Editing a Script
 ```
 > cp –rf scripts/install_cluster.sh scripts/cluster.sh
 > vim scripts/cluster.sh
@@ -183,9 +187,9 @@ After the modification is complete, run the following command to start the pseud
 > sh scripts/cluster.sh
 ```
 
-## Deploy a standard cluster 
+## Deploy a standard cluster
 
-Currently, there is no automatic script for cluster deployment. You can only manually deploy the script. welcome to contribute if you have had one.  
+Currently, there is no automatic script for cluster deployment. You can only manually deploy the script. welcome to contribute if you have had one.
 
 The following figure shows the OpenGemini cluster deployment. The cluster has ts-meta(3x), ts-sql(2x), ts-store(2x).
 
@@ -253,11 +257,11 @@ Run the following command to start the ts-sql component:
 > nohup ts-sql --config openGemini.conf -pidfile sql.pid > sql_extra.log 2>&1 &
 ```
 
-# Cluster capacity expansion
+## Cluster capacity expansion
 The following uses the expansion of the ts-store component as an example. The deployment modes are as follows:
 1. The new component ts-store is deployed on an existing node that already has the ts-store component. In this case, ports of the ts-store component need to be re-allocated.
-The following figure shows the deployment mode.
-![6](https://user-images.githubusercontent.com/49023462/200800553-73d0bb25-de2c-4cf2-b401-8d8ddb00ded2.png)
+   The following figure shows the deployment mode.
+   ![6](https://user-images.githubusercontent.com/49023462/200800553-73d0bb25-de2c-4cf2-b401-8d8ddb00ded2.png)
 
 Prepare a configuration file for the new node. The configuration is as follows:
 ```toml
@@ -283,8 +287,8 @@ members = ["192.168.0.1:8010", "192.168.0.2:8010", "192.168.0.3:8010"]
 ```
 
 2. The new ts-store component is deployed on an existing node that does not have the ts-store component. In this case, you do not need to re-allocate ports unless the ports are occupied by other applications.
-The following figure shows the deployment mode.
-![7](https://user-images.githubusercontent.com/49023462/200800580-2d1b0f70-fb89-42bd-864f-29da12cd3336.png)
+   The following figure shows the deployment mode.
+   ![7](https://user-images.githubusercontent.com/49023462/200800580-2d1b0f70-fb89-42bd-864f-29da12cd3336.png)
 
 Other components on the node can share the same configuration file. You only need to modify the configuration items (IP address and directory) corresponding to the ts-store.
 
@@ -306,10 +310,12 @@ members = ["192.168.0.1:8010", "192.168.0.2:8010", "192.168.0.3:8010"]
 ```
 
 3. The new component ts-store is deployed on the new node. The node does not have the ts-store component. In this case, you do not need to re-allocate ports unless the ports are occupied by other applications.
-The following figure shows the deployment mode.
+   The following figure shows the deployment mode.
+
 ![8](https://user-images.githubusercontent.com/49023462/200800601-896711db-17ee-45c5-8cee-1b9f4d342e63.png)
 
 The configuration of the configuration file is the same as that of the second case.
+
 ```toml
 [common]
 # stay the same
