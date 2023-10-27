@@ -4,7 +4,7 @@ order: 4
 ---
 
 ::: info
-此文档指在探索手动部署需要部署哪些组件，对熟悉 openGemini 集群工作原理有所帮助。建议[使用 gemix 部署](./production_deployment_using_gemix)生产集群，
+此文档旨在探索手动部署需要部署哪些组件，对熟悉 openGemini 集群工作原理有所帮助。建议[使用 gemix 部署](./production_deployment_using_gemix)生产集群，
 :::
 
 集群部署可以把openGemini的三个组件都部署在一个节点上，也可以把组件分散部署在多个节点上。

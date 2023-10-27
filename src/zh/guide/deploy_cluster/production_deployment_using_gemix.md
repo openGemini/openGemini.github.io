@@ -17,7 +17,7 @@ gemix 是 openGemini  官方开发的集群运维工具，gemix cluster 是 gemi
 
 ## 第 2 步：在执行机上安装 gemix 组件
 
-在执行机上部署 TiUP 组件有两种方式：在线部署和离线部署。
+在执行机上部署 gemix 组件有两种方式：在线部署和离线部署。
 
 ### 在线部署
 
