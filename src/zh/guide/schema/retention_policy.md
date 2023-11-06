@@ -49,18 +49,6 @@ CREATE RETENTION POLICY "one_day_only" ON "NOAA_water_database" DURATION 1d REPL
 ```
 该查询为数据库`NOAA_water_database`创建了一个名为`one_day_only`的保留策略，该策略的期限为`1d`，复制因子为`1`。
 
-- **创建数据不过期的保留策略**
-
-```sql
-CREATE RETENTION POLICY "never_expire" ON "NOAA_water_database"
-```
-或者：
-```sql
-CREATE RETENTION POLICY "never_expire" ON "NOAA_water_database" DURATION 0
-```
-
-该查询为数据库`NOAA_water_database`创建了一个名为`never_expire`的保留策略，该策略的下的数据是不会过期的。
-
 - **创建默认保留策略**
 
 ```sql
@@ -69,16 +57,21 @@ CREATE RETENTION POLICY "one_day_only" ON "NOAA_water_database" DURATION 24h REP
 
 该查询创建与上例相同的保留策略，但是将其设置为数据库的默认保留策略。
 
+- **创建数据不过期的保留策略**
+
+```sql
+CREATE RETENTION POLICY "never_expire" ON "NOAA_water_database" DURATION 0s REPLICATION 1
+```
+
+该查询为数据库`NOAA_water_database`创建了一个名为`never_expire`的保留策略，该策略的下的数据是不会过期的。
+
+::: tip
 成功的`CREATE RETENTION POLICY`查询不返回任何结果。
 
 如果尝试创建与现有策略相同的保留策略，则openGemini不会返回错误。
 如果尝试创建与现有保留策略相同名称的保留策略，但属性不同，则openGemini将返回错误。
 
-::: tip
-
-您也可以在`CREATE DATABASE`查询中指定新的保留策略。
-请参阅 [使用`CREATE DATABASE`创建数据库](./database)。
-
+请参阅 [数据库操作](./database)
 :::
 
 ## SHOW RETENTION POLICIES(查看数据保留策略)

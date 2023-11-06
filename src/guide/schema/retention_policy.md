@@ -50,20 +50,6 @@ CREATE RETENTION POLICY "one_day_only" ON "NOAA_water_database" DURATION 1d REPL
 ```
 This query creates a retention policy named `one_day_only` for the database `NOAA_water_database` with a duration of `1d` and a replication factor of `1`.
 
-- **Create a retention policy that does not expire**
-
-```sql
-CREATE RETENTION POLICY "never_expire" ON "NOAA_water_database"
-```
-
-or：
-
-```sql
-CREATE RETENTION POLICY "never_expire" ON "NOAA_water_database" DURATION 0
-```
-
-This query creates a retention policy called 'never_expire' for the database 'noa a_water_database', the data under this policy will not expire.
-
 - **Creating a default retention policy**
 
 ```sql
@@ -72,12 +58,20 @@ CREATE RETENTION POLICY "one_day_only" ON "NOAA_water_database" DURATION 24h REP
 
 This query creates the same retention policy as the above example, but sets it as the default retention policy for the database.
 
+- **Create a retention policy that does not expire**
+
+```sql
+CREATE RETENTION POLICY "never_expire" ON "NOAA_water_database" DURATION 0s REPLICATION 1
+```
+
+This query creates a retention policy called `never_expire` for the database `NOAA_water_database`, the data under this policy will not expire.
+
+::: tip
+
 A successful `CREATE RETENTION POLICY` query does not return any results.
 
 If an attempt is made to create a retention policy with the same name as an existing policy, openGemini will not return an error.  
 If an attempt is made to create a retention policy with the same name as an existing retention policy, but with different attributes, openGemini will return an error.
-
-::: tip
 
 **related entries** [CREATE DATABASE](./database)
 
