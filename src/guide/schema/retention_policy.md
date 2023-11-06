@@ -10,7 +10,7 @@ CREATE RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <dur
 
 #### DURATION
 
-`DURATION` determines how long openGemini keeps data. A retention policy has a minimum duration of one hour and a maximum duration of `INF` (infinite).
+`DURATION` determines how long openGemini keeps data. A retention policy has a minimum duration of one hour and a maximum duration of infinite.
 
 #### REPLICATION
 
@@ -21,11 +21,11 @@ CREATE RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <dur
 - Optional, `SHARD DURATION` sets the time range of the shard group
 - By default, the data expiration time is determined by the `DURATION` of the retention policy：
 
-| DURATION | SHARD(GROUP) DURATION |
-|---|---|
-| < 2 days  | 1 hour  |
-| >= 2 days and <= 6 months  | 1 day  |
-| > 6 months  | 7 days  |
+| DURATION                  | SHARD(GROUP) DURATION |
+| ------------------------- | --------------------- |
+| < 2 days                  | 1 hour                |
+| >= 2 days and <= 6 months | 1 day                 |
+| > 6 months                | 7 days                |
 
 `SHARD GROUP DURATION` minimum is`1h`.
 
@@ -43,17 +43,31 @@ Set the new retention policy as the default retention policy for the database. T
 
 ### Examples
 
-### Creating a retention policy
+- **Creating a retention policy**
 
 ```sql
-> CREATE RETENTION POLICY "one_day_only" ON "NOAA_water_database" DURATION 1d REPLICATION 1
+CREATE RETENTION POLICY "one_day_only" ON "NOAA_water_database" DURATION 1d REPLICATION 1
 ```
 This query creates a retention policy named `one_day_only` for the database `NOAA_water_database` with a duration of `1d` and a replication factor of `1`.
 
-### Creating a default retention policy
+- **Create a retention policy that does not expire**
 
 ```sql
-> CREATE RETENTION POLICY "one_day_only" ON "NOAA_water_database" DURATION 23h60m REPLICATION 1 DEFAULT
+CREATE RETENTION POLICY "never_expire" ON "NOAA_water_database"
+```
+
+or：
+
+```sql
+CREATE RETENTION POLICY "never_expire" ON "NOAA_water_database" DURATION 0
+```
+
+This query creates a retention policy called 'never_expire' for the database 'noa a_water_database', the data under this policy will not expire.
+
+- **Creating a default retention policy**
+
+```sql
+CREATE RETENTION POLICY "one_day_only" ON "NOAA_water_database" DURATION 24h REPLICATION 1 DEFAULT
 ```
 
 This query creates the same retention policy as the above example, but sets it as the default retention policy for the database.
@@ -63,7 +77,11 @@ A successful `CREATE RETENTION POLICY` query does not return any results.
 If an attempt is made to create a retention policy with the same name as an existing policy, openGemini will not return an error.  
 If an attempt is made to create a retention policy with the same name as an existing retention policy, but with different attributes, openGemini will return an error.
 
-**related entries** [CREATE DATABASE](./database.md)。
+::: tip
+
+**related entries** [CREATE DATABASE](./database)
+
+:::
 
 ## SHOW RETENTION POLICIES
 
@@ -81,7 +99,7 @@ SHOW RETENTION POLICIES [ON <database_name>]
 #### `SHOW RETENTION POLICIES` with the `ON` clause
 
 ```sql
->>> SHOW RETENTION POLICIES ON NOAA_water_database
+> SHOW RETENTION POLICIES ON NOAA_water_database
 +---------+----------+--------------------+--------------+---------------+----------------+----------+---------+
 | name    | duration | shardGroupDuration | hot duration | warm duration | index duration | replicaN | default |
 +---------+----------+--------------------+--------------+---------------+----------------+----------+---------+
@@ -102,7 +120,6 @@ Specify the database using `USE <database_name>`
 
 ```bash
 > use NOAA_water_database
-Elapsed: 704ns
 > SHOW RETENTION POLICIES
 +---------+----------+--------------------+--------------+---------------+----------------+----------+---------+
 | name    | duration | shardGroupDuration | hot duration | warm duration | index duration | replicaN | default |
@@ -166,7 +183,7 @@ The `ALTER RETENTION POLICY` query syntax is as follows and must declare at leas
 ALTER RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <duration> REPLICATION <n> SHARD DURATION <duration> DEFAULT
 ```
 
-::: warning
+::: warning warning
 
 `REPLICATION <n>` only support 1
 :::
@@ -176,13 +193,13 @@ ALTER RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <dura
 First, create the retention policy `what_is_time` with the 2d `DURATION`:
 
 ```sql
-> CREATE RETENTION POLICY "what_is_time" ON "NOAA_water_database" DURATION 2d REPLICATION 1
+CREATE RETENTION POLICY "what_is_time" ON "NOAA_water_database" DURATION 2d REPLICATION 1
 ```
 
 Modify `what_is_time` to have three weeks of `DURATION`, two hours of slice group duration, and make it a `DEFAULT` retention policy for `NOAA_water_database`.
 
 ```sql
-> ALTER RETENTION POLICY "what_is_time" ON "NOAA_water_database" DURATION 3w SHARD DURATION 2h DEFAULT
+ALTER RETENTION POLICY "what_is_time" ON "NOAA_water_database" DURATION 3w SHARD DURATION 2h DEFAULT
 ```
 In the last example, ` what_is_time` retains its original replication factor `1`.
 
@@ -190,7 +207,7 @@ There does not return any results when `ALTER RETENTION POLICY` execute successf
 
 ## DROP RETENTION POLICY
 
-::: danger
+::: danger danger
 
 Deleting a retention policy will permanently delete all measurements and data using that retention policy
 
@@ -206,11 +223,15 @@ DROP RETENTION POLICY <retention_policy_name> ON <database_name>
 Delete the retention policy `what_is_time` in the `NOAA_water_database` database:
 
 ```sql
-> DROP RETENTION POLICY "what_is_time" ON "NOAA_water_database"
+DROP RETENTION POLICY "what_is_time" ON "NOAA_water_database"
 ```
 
 There does not return any results when `DROP RETENTION POLICY` execute successful.
 
-<font color=red>If an attempt is made to delete a non-existent retention policy, openGemini will not return an error.</font>
+::: tip
+
+If an attempt is made to delete a non-existent retention policy, openGemini will not return an error.
+
+:::
 
 
