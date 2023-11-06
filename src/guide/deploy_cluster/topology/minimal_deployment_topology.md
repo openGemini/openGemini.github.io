@@ -10,10 +10,10 @@ This document describes the minimal deployment topology of openGemini clusters.
 ## Topology information
 
 | Instance | Count | Physical machine configuration               | IP                                              | Configuration                               |
-| :------- | :---- | :------------------------------------------- |:------------------------------------------------| :------------------------------------------ |
-| ts-sql   | 3     | 16 VCore 32 GiB 100 GiB for storage          | 192.168.1.1 192.168.1.2 192.168.1.3 192.168.1.4 | Default port Global directory configuration |
+| :------- |:------| :------------------------------------------- |:------------------------------------------------| :------------------------------------------ |
+| ts-sql   | 4     | 16 VCore 32 GiB 100 GiB for storage          | 192.168.1.1 192.168.1.2 192.168.1.3 192.168.1.4 | Default port Global directory configuration |
 | ts-meta  | 3     | 4 VCore 8 GiB 100 GiB for storage            | 192.168.1.1 192.168.1.2 192.168.1.3             | Default port Global directory configuration |
-| ts-store | 3     | 16 VCore 32 GiB 2 TiB (NVMe SSD) for storage | 192.168.1.1 192.168.1.2 192.168.1.3 192.168.1.4 | Default port Global directory configuration |
+| ts-store | 4     | 16 VCore 32 GiB 2 TiB (NVMe SSD) for storage | 192.168.1.1 192.168.1.2 192.168.1.3 192.168.1.4 | Default port Global directory configuration |
 
 
 ## Topology templates
