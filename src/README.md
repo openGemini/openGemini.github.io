@@ -2,7 +2,7 @@
 home: true
 title: Home
 icon: home
-heroImage: images/logo.png
+heroImage: images/logo.svg
 heroText: openGemini Docs
 tagline: openGemini document site
 actions:
