@@ -51,8 +51,7 @@ export const getFooter = (lang = 'en') => {
 			<div class="content">
 				<div class="media-link">
 					<div class="logo">
-						<img src="/images/logo.png" />
-						<div>openGemini</div>
+						<img src="/images/horizontal.svg" />
 					</div>
 					<div class="links">   
 						<a class="icon iconfont" href="https://github.com/openGemini" target="_blank">&#xe600;</a>
