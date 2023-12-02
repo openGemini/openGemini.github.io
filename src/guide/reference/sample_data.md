@@ -16,7 +16,7 @@ https://s3.amazonaws.com/noaa.water-database/NOAA_data.txt
 ```shell
 curl -G  https://s3.amazonaws.com/noaa.water-database/NOAA_data.txt > NOAA_data.txt
 
-ts-cli -import -path=NOAA_data.txt -host=127.0.0.1 -port=8086 -precision=s
+ts-cli import --path=NOAA_data.txt --host=127.0.0.1 --port=8086 --precision=s
 ```
 
 数据自动导入到 database: NOAA_water_database
