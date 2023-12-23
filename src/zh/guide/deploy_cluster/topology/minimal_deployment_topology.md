@@ -5,15 +5,15 @@ order: 1
 
 # 最小拓扑架构
 
-本文档介绍 openGemini 集群最小部署的拓扑架构。
+本文档介绍 openGemini 集群最小部署的拓扑架构。此架构部署的集群不支持容灾。
 
 ## 拓扑信息
 
-| 实例     | 个数 | 物理机配置                                | IP                                              | 配置                  |
-| :------- |:---| :---------------------------------------- |:------------------------------------------------| :-------------------- |
-| ts-sql   | 4  | 16 VCore 32 GiB 100 GiB 用于存储          | 192.168.1.1 192.168.1.2 192.168.1.3 192.168.1.4 | 默认端口 全局目录配置 |
-| ts-meta  | 3  | 4 VCore 8 GiB 100 GiB 用于存储            | 192.168.1.1 192.168.1.2 192.168.1.3             | 默认端口 全局目录配置 |
-| ts-store | 4  | 16 VCore 32 GiB 2 TiB (NVMe SSD) 用于存储 | 192.168.1.1 192.168.1.2 192.168.1.3 192.168.1.4 | 默认端口 全局目录配置 |
+| 实例     | 个数 | 物理机配置                                | IP                                  | 配置                  |
+| :------- | :--- | :---------------------------------------- | :---------------------------------- | :-------------------- |
+| ts-meta  | 3    | 4 VCore 8 GiB 100 GiB 用于存储            | 192.168.1.1 192.168.1.2 192.168.1.3 | 默认端口 全局目录配置 |
+| ts-sql   | 3    | 16 VCore 32 GiB 100 GiB 用于存储          | 192.168.1.1 192.168.1.2 192.168.1.3 | 默认端口 全局目录配置 |
+| ts-store | 3    | 16 VCore 32 GiB 2 TiB (NVMe SSD) 用于存储 | 192.168.1.1 192.168.1.2 192.168.1.3 | 默认端口 全局目录配置 |
 
 
 ## 拓扑模版
@@ -23,34 +23,22 @@ order: 1
 ```yaml
 global:
   ssh_port: 22
-  user: "root"
-  log_dir: "/gemini-deploy/logs"
+  user: "gemini"
   deploy_dir: "/gemini-deploy"
+  log_dir: "/gemini-deploy/logs"
+  data_dir: "/gemini-data"
 ts-meta:
   - host: 192.168.1.1
-    data_dir: "/gemini-data/meta"
   - host: 192.168.1.2
-    data_dir: "/gemini-data/meta"
   - host: 192.168.1.3
-    data_dir: "/gemini-data/meta"
 ts-sql:
   - host: 192.168.1.1
   - host: 192.168.1.2
   - host: 192.168.1.3
-  - host: 192.168.1.4
 ts-store:
   - host: 192.168.1.1
-    data_dir: "/gemini-data/data"
-    meta_dir: "/gemini-data/meta"
   - host: 192.168.1.2
-    data_dir: "/gemini-data/data"
-    meta_dir: "/gemini-data/meta"
   - host: 192.168.1.3
-    data_dir: "/gemini-data/data"
-    meta_dir: "/gemini-data/meta"
-  - host: 192.168.1.4
-    data_dir: "/gemini-data/data"
-    meta_dir: "/gemini-data/meta"
 ```
 
 </details>
@@ -67,10 +55,12 @@ global:
   ssh_port: 22
   # user who started the openGemini process.
   user: "gemini"
-  # openGemini Cluster log file storage directory.
-  log_dir: "/gemini-deploy/logs"
   # Storage directory for cluster deployment files, startup scripts, and configuration files.
   deploy_dir: "/gemini-deploy"
+  # openGemini Cluster log file storage directory.
+  log_dir: "/gemini-deploy/logs"
+  # openGemini Cluster data file storage directory.
+	data_dir: "/gemini-data"
   # operating system, linux/darwin.
   os: "linux"
   # Supported values: "amd64", "arm64" (default: "amd64").
@@ -183,3 +173,9 @@ ts-store:
 ```
 
 </details>
+
+::: info
+
+生产环境建议ts-meta独立部署。
+
+:::
