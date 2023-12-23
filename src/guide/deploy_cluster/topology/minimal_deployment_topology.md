@@ -5,15 +5,15 @@ order: 1
 
 # Minimal deployment topology
 
-This document describes the minimal deployment topology of openGemini clusters.
+This document describes the minimal deployment topology of openGemini clusters. The cluster deployed in this architecture does not support disaster recovery.
 
 ## Topology information
 
-| Instance | Count | Physical machine configuration               | IP                                              | Configuration                               |
-| :------- |:------| :------------------------------------------- |:------------------------------------------------| :------------------------------------------ |
-| ts-sql   | 4     | 16 VCore 32 GiB 100 GiB for storage          | 192.168.1.1 192.168.1.2 192.168.1.3 192.168.1.4 | Default port Global directory configuration |
-| ts-meta  | 3     | 4 VCore 8 GiB 100 GiB for storage            | 192.168.1.1 192.168.1.2 192.168.1.3             | Default port Global directory configuration |
-| ts-store | 4     | 16 VCore 32 GiB 2 TiB (NVMe SSD) for storage | 192.168.1.1 192.168.1.2 192.168.1.3 192.168.1.4 | Default port Global directory configuration |
+| Instance | Count | Physical machine configuration               | IP                                  | Configuration                               |
+| :------- | :---- | :------------------------------------------- | :---------------------------------- | :------------------------------------------ |
+| ts-meta  | 3     | 4 VCore 8 GiB 100 GiB for storage            | 192.168.1.1 192.168.1.2 192.168.1.3 | Default port Global directory configuration |
+| ts-sql   | 3     | 16 VCore 32 GiB 100 GiB for storage          | 192.168.1.1 192.168.1.2 192.168.1.3 | Default port Global directory configuration |
+| ts-store | 3     | 16 VCore 32 GiB 2 TiB (NVMe SSD) for storage | 192.168.1.1 192.168.1.2 192.168.1.3 | Default port Global directory configuration |
 
 
 ## Topology templates
@@ -23,34 +23,22 @@ This document describes the minimal deployment topology of openGemini clusters.
 ```yaml
 global:
   ssh_port: 22
-  user: "root"
-  log_dir: "/gemini-deploy/logs"
+  user: "gemini"
   deploy_dir: "/gemini-deploy"
+  log_dir: "/gemini-deploy/logs"
+  data_dir: "/gemini-data"
 ts-meta:
   - host: 192.168.1.1
-    data_dir: "/gemini-data/meta"
   - host: 192.168.1.2
-    data_dir: "/gemini-data/meta"
   - host: 192.168.1.3
-    data_dir: "/gemini-data/meta"
 ts-sql:
   - host: 192.168.1.1
   - host: 192.168.1.2
   - host: 192.168.1.3
-  - host: 192.168.1.4
 ts-store:
   - host: 192.168.1.1
-    data_dir: "/gemini-data/data"
-    meta_dir: "/gemini-data/meta"
   - host: 192.168.1.2
-    data_dir: "/gemini-data/data"
-    meta_dir: "/gemini-data/meta"
   - host: 192.168.1.3
-    data_dir: "/gemini-data/data"
-    meta_dir: "/gemini-data/meta"
-  - host: 192.168.1.4
-    data_dir: "/gemini-data/data"
-    meta_dir: "/gemini-data/meta"
 ```
 
 </details>
