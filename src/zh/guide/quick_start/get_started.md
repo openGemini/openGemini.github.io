@@ -3,69 +3,131 @@ title: 安装部署
 order: 1
 ---
 
-本指南介绍如何快速上手体验 openGemini时序数据库。对于非生产环境，你可以选择以下任意一种方式部署openGemini时序数据库。
+本指南介绍如何快速上手体验 openGemini时序数据库。
 
-本指南以单机部署为例，如需了解集群部署，请点击[集群部署](../deploy_cluster/production_deployment_using_gemix)查看详细步骤。
+openGemini开源相关地址：
+
+主仓: https://github.com/openGemini
+
+备份仓: https://gitee.com/mirrors/opengemini
+
+国内二进制下载: https://gitee.com/opengemini/Releases/releases ( 自v1.1.1版本开始支持) 
 
 ## 安装
 
 ::: tabs
 
-@tab Linux-x86
+@tab CPU架构
 
-1. 可以到[GitHub Release](https://github.com/openGemini/openGemini/releases)页面复制最新版本链接
+| 架构         | 是否支持 | 说明                                                         |
+| ------------ | -------- | ------------------------------------------------------------ |
+| X86-64       | &#10004; | -                                                            |
+| X86-32       | &#10006; | 32bit暂不支持，但由于openGemini内核为Go语言开发，<br>可以尝试在32bit系统上进行编译 |
+| ARM-64       | &#10004; | -                                                            |
+| ARM-32       | &#10006; | 32bit暂不支持，但由于openGemini内核为Go语言开发，<br>可以尝试在32bit系统上进行编译 |
+| 其他，如龙芯 | &#10006; | 暂不支持                                                     |
 
-    > 请将 **`<version>`** 替换为下载的安装包版本
+@tab 操作系统
 
-    ```bash
-    wget https://github.com/openGemini/openGemini/releases/download/v<version>/openGemini-<version>-linux-amd64.tar.gz
-    ```
+由于绝大多数应用是在windows和Mac上开发，因此为了方便应用进行开发调试，openGemini自v1.1.0版本开始支持MacOS和 Windows操作系统。
 
-     也可以通过手动下载对应的安装包。
+| OS      | 是否支持 | 说明                                                         |
+| ------- | -------- | ------------------------------------------------------------ |
+| Linux   | &#10004; | 支持主流Linux操作系统，<br>如openEuler, Ubuntu, CentOS, RedHat等<br>验证版本：<br>- CentOS 7.3 及以上版本<br>- openEuler 22.03 LTS及以上版本<br>- Red Hat 8.4及以上 & 7.3以上的7.x版本 |
+| Darwin  | &#10004; | 支持MacOS，**建议用于项目开发调试**                          |
+| Windows | &#10004; | 支持Windows，**建议用于项目开发调试**，验证版本 win11        |
 
-2. 进入到安装包所在目录，使用 `tar` 解压安装包；
+@tab 一键安装
 
-   ```shell
-   mkdir openGemini
-   tar -zxvf openGemini-<version>-linux-amd64.tar.gz -C openGemini
-   ```
+使用Gemix工具一键安装部署，目前只能用于集群，支持在一台或多台虚拟机或者物理机上部署openGemini集群，具体使用方式参考[Gemix使用指南]()
 
-   `ts-server`就是单机版本的二进制，`openGemini.singlenode.conf`是适用于`ts-server`的配置文件。
+使用openGemini-operator一键容器化部署，目前只能用于集群，支持K8s容器化部署，具体使用方式参考[openGemini-operator使用指南]()
 
-@tab Linux-arm
+@tab 二进制安装
 
-1. 可以到[GitHub Release](https://github.com/openGemini/openGemini/releases)页面复制最新版本链接
+### **二进制下载**
 
-   > 请将 **`<version>`** 替换为下载的安装包版本
+1. 下载合适的二进制版本
+
+   下载地址：https://github.com/openGemini/openGemini/releases
+
+   国内下载地址： https://gitee.com/opengemini/Releases/releases
+
+   ![image-20231231155007725](../../../../static/img/guide/quick_start/image-20231231155007725.png)
+
+   wget命令下载二进制安装包
 
    ```bash
-   wget https://github.com/openGemini/openGemini/releases/download/v<version>/openGemini-<version>-linux-arm64.tar.gz
+   > wget https://github.com/openGemini/openGemini/releases/download/v<version>/openGemini-<version>-linux-amd64.tar.gz
    ```
 
-    也可以通过手动下载对应的安装包。
+   以下载openGemini-1.1.1-linux-amd64.tar.gz为例：
 
-2. 进入到安装包所在目录，使用 `tar` 解压安装包；
+   ```
+   > wget https://github.com/openGemini/openGemini/releases/download/v1.1.1/openGemini-1.1.1-linux-amd64.tar.gz
+   ```
+
+2. 进入到安装包所在目录，使用 `tar` 解压文件到openGemini目录。
 
    ```shell
-   mkdir openGemini
-   tar -zxvf openGemini-<version>-linux-arm64.tar.gz -C openGemini
+   > mkdir openGemini
+   > tar -zxvf openGemini-1.1.1-linux-amd64.tar.gz -C openGemini
    ```
 
-   `ts-server`就是单机版本的二进制，`openGemini.singlenode.conf`是适用于`ts-server`的配置文件。
 
-@tab openEuler
+### **运行openGemini**
 
-当前，openGemini 安装包仅添加到openEuler镜像源中，其他Linux操作系统正在进一步完善中
+1. 单机运行
 
-```bash
-yum install openGemini
-```
+   在本机启动openGemini，默认在 127.0.0.1:8086 监听，鉴权和https默认不开启，数据和日志的默认存放路径 /tmp/openGemini
 
-自动安装成功后，openGemini全部二进制存放位置为/usr/bin，配置文件存放位置为 /etc/openGemini
+   ```
+   > cd openGemini
+   > ./usr/bin/ts-server
+   ```
+
+   如果需要修改监听地址，修改配置文件 openGemini.singlenode.conf，替换所有127.0.0.1即可
+
+   ```tex
+   [common]
+     meta-join = ["127.0.0.1:8092"]
+   	...
+   
+   [meta]
+     bind-address = "127.0.0.1:8088"
+     http-bind-address = "127.0.0.1:8091"
+     rpc-bind-address = "127.0.0.1:8092"
+     ...
+   
+   [http]
+     bind-address = "127.0.0.1:8086"
+     flight-address = "127.0.0.1:8087"
+     ...
+   
+   [data]
+     store-ingest-addr = "127.0.0.1:8400"
+     store-select-addr = "127.0.0.1:8401"
+     ...
+   ```
+
+   > 配置文件路径 openGemini/etc/，openGemini为二进版本解压后的目录
+
+   ```shell
+   > ./usr/bin/ts-server --config ./etc/openGemini.singlenode.conf
+   
+   # 后台运行
+   > nohup ./usr/bin/ts-server --config ./etc/openGemini.singlenode.conf > server_extra.log 2>&1 &
+   ```
+
+   > **openGemini.singlenode.conf配置文件相对openGemini.conf更为精简，缺失的一些配置项（比如鉴权、https等）可以在openGemini.conf中找到，拷贝到相应位置即可**
+
+2. 集群运行
+
+   参考[标准集群部署]()
 
 @tab 源码编译
 
-**编译环境信息**
+### **编译环境信息**
 
 - [GO](https://go.dev/dl/) version v1.18+
 - [Python](https://www.python.org/downloads/) version v3.7+
@@ -74,23 +136,27 @@ yum install openGemini
 
 **GO环境变量设置**
 
-打开 `~/.profile`配置文件，在文件末尾添加如下配置：
+以linux为例，打开 `~/.profile`配置文件，在文件末尾添加如下配置：
 
 ```shell
-# 设置GOPATH(需自定义目录)
-export GOPATH=/path/to/dir
+# 设置GOPATH (按实际填写)
+export GOPATH=/root/go/
 # 设置国内代理
 export GOPROXY=https://goproxy.cn,direct
-# 开启go mod模式
-export GO111MODULE=on
-export GONOSUMDB=*
-export GOSUMDB=off
+# 配置GO安装目录 (按实际填写)
+export GOROOT=/usr/local/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin/
 ```
+
 windows环境下，在“我的电脑” -> “高级系统设置” -> “环境变量”进行配置。
-**下载源码**
+
+### **下载源码**
 
 ```shell
-git clone https://github.com/openGemini/openGemini.git
+> git clone https://github.com/openGemini/openGemini.git
+
+# 国内镜像仓库下载
+> git clone https://gitee.com/mirrors/opengemini.git
 ```
 
 **进入主目录**
@@ -99,7 +165,7 @@ git clone https://github.com/openGemini/openGemini.git
 > cd openGemini
 ```
 
-**编译**
+### **编译**
 
 ```shell
 > python3 build.py --clean
@@ -107,41 +173,47 @@ git clone https://github.com/openGemini/openGemini.git
 
 编译成功后，二进制保存在`build`目录中。
 
-**运行单机版**
+运行单机版 (默认监听地址 127.0.0.1，默认数据目录 /tmp/openGemini)
 
 ```shell
 > bash ./scripts/install.sh
 ```
 
+运行集群版 (单机启动的伪集群，默认监听地址 127.0.0.1，默认数据目录 /tmp/openGemini))
+
+```
+> bash ./scripts/install_cluster.sh
+```
+
+@tab 规格选型
+
+规格选型这方面，社区很难给出准确的意见，规格往往和业务量有关，希望使用者可以在社区分享，供其他人进行规格选型参考。
+
+openGemini在华为云使用的规格多为 32U128G 或者 64U256G，支持时间线规模已达亿级。建议根据业务情况而定，我们在这里给大家一个参考[硬件规格选型](../reference/specification.md)。
+
+具体参考信息：
+
+1. 对比InfluxDB，openGemini对资源的占用有大幅优化，内存控制较好，相同规格下 openGemini ts-server能支持更大业务量。
+
+2. openGemini启动后业务空转时，使用内存大约在100-200MB左右。边缘或者嵌入式设备可以参考。
+
+3. 内存使用较大的几种查询场景：
+
+   - 分组聚合时，分组数量大（比如几十万甚至百万）；
+   - 批量查询时，目标时间线数量大（比如几十万）；
+   - 流式计算时，单节点写入流量比较大；
+   - 时间线规模比较大时，使用show series命令（比如百万级甚至更大）；
+   - 聚合查询时，指定时间范围大，从而导致需要计算的目标数据量较大（比如查询过去3个月内数据，数据量达到数十亿甚至上百亿条）；
+
+   **如果存在以上类似业务，建议内存大一些。**
+
 :::
 
-## 启动
+## 连接数据库 (ts-cli)
 
-**进入 ts-server 所在文件夹后，执行**
+为便于执行数据库（Database）的各种查询，openGemini 提供了一个命令行客户端应用程序ts-cli，用于连接openGemini。ts-cli随版本一同发布，解压后在usr/bin目录下，亦或者在源码编译后的build目录中。
 
-```shell
-> ./ts-server
-```
-
-::: warning
-
-`v1.0.1`及以前版本，运行`ts-server`需要指定配置文件启动：
-
-```shell
-> ./ts-server -config /path/to/openGemini.singlenode.conf
-```
-
-如需后台启动：
-
-```shell
-> nohup ./ts-server > server_extra.log 2>&1 &
-```
-
-:::
-
-## 命令行 (ts-cli)
-
-为便于执行数据库（Database）的各种查询，openGemini 提供一命令行应用程序（以下简称为 openGemini CLI）ts-cli。要进入 openGemini 命令行，您只要进入`ts-cli`所在目录，在终端执行`ts-cli` 即可。
+如果openGemini ts-server或者ts-sql启动后的监听地址为127.0.0.1:8086，可不带任何参数，直接执行ts-cli，默认会连接127.0.0.1和8086端口。
 
 ```sh
 > ./ts-cli
@@ -149,10 +221,10 @@ git clone https://github.com/openGemini/openGemini.git
 
 ::: tip
 
-默认连接127.0.0.1:8086，可通过以下命令连接其他主机
+指定IP地址和端口连接
 
 ```shell
-> ./ts-cli -host 192.168.0.1 -port 8086
+> ./ts-cli --host 192.168.0.1 --port 8086
 ```
 
 更多帮助请使用如下命令

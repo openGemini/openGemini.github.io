@@ -2,7 +2,7 @@
 title: 写数据
 index: false
 dir:
-    order: 3
+    order: 4
 ---
-	
+
 <AutoCatalog />

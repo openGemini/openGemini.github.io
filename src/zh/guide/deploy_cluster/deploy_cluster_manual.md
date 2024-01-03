@@ -1,19 +1,20 @@
 ---
 title: 手动部署(不推荐）
-order: 4
+order: 2
 ---
 
 ::: info
-此文档旨在探索手动部署需要部署哪些组件，对熟悉 openGemini 集群工作原理有所帮助。建议[使用 gemix 部署](./production_deployment_using_gemix)生产集群，
+此文档旨在探索手动部署需要部署哪些组件，对熟悉 openGemini 集群工作原理有所帮助。
 :::
 
 集群部署可以把openGemini的三个组件都部署在一个节点上，也可以把组件分散部署在多个节点上。
 
-下载二进制包，参考[安装部署](../quick_start/get_started)
+下载二进制包，参考[安装部署](../quick_start/get_started.md#二进制下载)
 ## 部署伪集群
 
 把openGemini集群的所有组件都部署在同一个节点上，这种集群部署方式我们称之为伪集群部署。  
 目前社区提供了部署脚本install_cluster.sh。
+
 ```shell
 > sh scripts/install_cluster.sh
 ```
@@ -22,10 +23,11 @@ order: 4
 :::
 若要让集群监听本机IP，让外部节点可以访问，配置上相对要复杂一点，虽然可行，但在生产环境中不推荐。  
 同样以部署1个ts-sql、3个ts-meta和2个ts-store组成的集群为例。
+
 ### 分配端口
 所有节点均监听本机IP地址，如192.168.0.1，所以所有组件之间不能使用相同的端口，需重新分配。可以做如下分配（参考）： 
 
-![4](https://user-images.githubusercontent.com/49023462/200800373-65a3ac6c-f38d-46ed-86d6-8b8f21232d50.png)
+![](../../../../static/img/guide/reference/single_node_cluster.png)
 
 ### 配置文件修改
 openGemini的集群配置项都集中在openGemini.conf文件中，我们进行集群配置时，如果在同一个节点上只部署一个ts-meta、一个ts-sql和一个ts-store，或者合部其中两个或一个组件，不存在相同组件部署在同一个节点上的情况(因为没有IP和端口冲突)，则可以考虑在该节点上所有组件共用一个配置文件openGemini.conf
@@ -141,7 +143,7 @@ members = ["192.168.0.1:8010", "192.168.0.1:8012", "192.168.0.1:8013"]
 ```
 **如果还需要新增ts-store,可按照该配置，更换一下端口，再拉起即可**
 
-## 拉起集群
+### 拉起集群
 编辑脚本
 ```
 > cp –rf scripts/install_cluster.sh  scripts/cluster.sh
@@ -149,7 +151,7 @@ members = ["192.168.0.1:8010", "192.168.0.1:8012", "192.168.0.1:8013"]
 ```
 删除或注释cluster.sh脚本的第27-38行内容
 ```
-# generate config
+# delete the following rows
 for((i = 1; i <= 3; i++))
 do
 rm -rf config/openGemini-$i.conf
@@ -179,13 +181,14 @@ nohup build/ts-meta -config config/meta-1.conf -pidfile /path/openGemini/pid/met
 
 ## 标准集群部署
 
-目前还没有开发集群部署的自动化脚本，只能手动部署，欢迎感兴趣的童鞋到社区贡献!  
-openGemini集群部署如图所示，集群有ts-meta(3x), ts-sql(2x), ts-store(2x)：
+openGemini集群拓扑图如下所示，集群有ts-meta (3x), ts-sql (2x), ts-store (2x)：
 
-![5](https://user-images.githubusercontent.com/49023462/200800488-5683ecc2-e06b-4b65-a8ca-33b3bceaf6e4.jpg)
+![](../../../../static/img/guide/reference/cluster.png)
 
-这种部署方式，不存在两个相同组件被部署在同一个节点之上，没有端口竞争，则可以让同一个节点上的所有组件共用一个配置文件。  
+这种部署方式，不存在两个相同组件被部署在同一个节点之上，没有端口竞争，则可以让同一个节点上的所有组件共用一个配置文件。
+
 以Node1：192.168.0.1为例，仅需修改配置文件openGemini.conf如下内容：
+
 ```
 [common]
 meta-join = ["192.168.0.1:8092", "192.168.0.2:8092", "192.168.0.3:8092"]
@@ -239,5 +242,5 @@ openGemini拉起集群时对组件启动顺序有要求
 ```
 > nohup ts-sql --config openGemini.conf -pidfile sql.pid > sql_extra.log 2>&1 &
 ```
-客户端连接，参考 [ts-cli命令行](../quick_start/get_started.md#命令行-ts-cli)
+客户端连接，参考 [ts-cli命令行](../quick_start/get_started.md#连接数据库-ts-cli)
 
