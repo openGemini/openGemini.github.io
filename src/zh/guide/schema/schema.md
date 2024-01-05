@@ -18,17 +18,18 @@ order: 4
 ### 语法
 
 ```sql
-SHOW TAG KEYS [ON <database_name>] [FROM_CLAUSE] [LIMIT_CLAUSE] [OFFSET_CLAUSE]
+SHOW TAG KEYS [ON <database_name>] [FROM_clause] [WHERE <tag_key> <operator> ['<tag_value>' | <regular_expression>]] [LIMIT_clause] [OFFSET_clause]
 ```
-
-`ON <database_name>`是可选项。  
-`FROM`子句是可选项。  
 
 如果查询中没有包含`ON <database_name>`，您必须在CLI中使用`USE <database_name>`指定数据库，或者在openGemini API请求中使用参数`db`指定数据库。
 
 ### 示例
 
 - **运行带有`ON`子句的`SHOW TAG KEYS`查询**
+
+:::tabs
+
+@tab ts-cli
 
 ```sql
 > SHOW TAG KEYS ON "NOAA_water_database"
@@ -75,7 +76,52 @@ name: h2o_temperature
 
 ```
 
-该查询返回数据库`NOAA_water_database`中的tag key。查询结果按measurement的名字进行分组；它展示了每个measurement都有一个名为`location`的tag key，并且，measurement `h2o_quality`还具有另外一个tag key `randtag`。
+该查询返回数据库`NOAA_water_database`中的所有表的tag key。
+
+@tab HTTP API
+
+```sql
+> curl -G "http://localhost:8086/query?pretty=true" --data-urlencode "q=SHOW TAG KEYS on NOAA_water_database"
+{
+	"results": [{
+		"statement_id": 0,
+		"series": [{
+			"name": "average_temperature",
+			"columns": ["tagKey"],
+			"values": [
+				["location"]
+			]
+		}, {
+			"name": "h2o_feet",
+			"columns": ["tagKey"],
+			"values": [
+				["location"]
+			]
+		}, {
+			"name": "h2o_pH",
+			"columns": ["tagKey"],
+			"values": [
+				["location"]
+			]
+		}, {
+			"name": "h2o_quality",
+			"columns": ["tagKey"],
+			"values": [
+				["location"],
+				["randtag"]
+			]
+		}, {
+			"name": "h2o_temperature",
+			"columns": ["tagKey"],
+			"values": [
+				["location"]
+			]
+		}]
+	}]
+}
+```
+
+:::
 
 - **运行不带有`ON`子句的`SHOW TAG KEYS`查询**
 
@@ -138,71 +184,68 @@ name: h2o_temperature
 ```bash
 > curl -G "http://localhost:8086/query?db=NOAA_water_database&pretty=true" --data-urlencode "q=SHOW TAG KEYS"
 {
-    "results": [
-        {
-            "statement_id": 0,
-            "series": [
-                {
-                    "name": "average_temperature",
-                    "columns": [
-                        "tagKey"
-                    ],
-                    "values": [
-                        [
-                            "location"
-                        ]
-                    ]
-                },
-                {
-                    "name": "h2o_feet",
-                    "columns": [
-                        "tagKey"
-                    ],
-                    "values": [
-                        [
-                            "location"
-                        ]
-                    ]
-                },
-                {
-                    "name": "h2o_pH",
-                    "columns": [
-                        "tagKey"
-                    ],
-                    "values": [
-                        [
-                            "location"
-                        ]
-                    ]
-                },
-                {
-                    "name": "h2o_quality",
-                    "columns": [
-                        "tagKey"
-                    ],
-                    "values": [
-                        [
-                            "location"
-                        ],
-                        [
-                            "randtag"
-                        ]
-                    ]
-                },
-                {
-                    "name": "h2o_temperature",
-                    "columns": [
-                        "tagKey"
-                    ],
-                    "values": [
-                        [
-                            "location"
-                        ]
-                    ]
-                }
-            ]
-        }
-    ]
+	"results": [{
+		"statement_id": 0,
+		"series": [{
+				"name": "average_temperature",
+				"columns": [
+					"tagKey"
+				],
+				"values": [
+					[
+						"location"
+					]
+				]
+			},
+			{
+				"name": "h2o_feet",
+				"columns": [
+					"tagKey"
+				],
+				"values": [
+					[
+						"location"
+					]
+				]
+			},
+			{
+				"name": "h2o_pH",
+				"columns": [
+					"tagKey"
+				],
+				"values": [
+					[
+						"location"
+					]
+				]
+			},
+			{
+				"name": "h2o_quality",
+				"columns": [
+					"tagKey"
+				],
+				"values": [
+					[
+						"location"
+					],
+					[
+						"randtag"
+					]
+				]
+			},
+			{
+				"name": "h2o_temperature",
+				"columns": [
+					"tagKey"
+				],
+				"values": [
+					[
+						"location"
+					]
+				]
+			}
+		]
+	}]
 }
 ```
 
@@ -224,14 +267,86 @@ name: h2o_quality
 该查询返回数据库`NOAA_water_database`中名为`h2o_quality`的measurement里的tag key。`LIMIT`子句将返回的tag key的个数限制为1，`OFFSET`子句将输出结果偏移一个。
 
 - **查看TAG的统计数量**
+
 在某些场景下，仅需要了解TAG数量，不关心具体的TAG，可以使用SHOW TAG KEY CARDINALITY命令，使用方式如下：
+
 ``` 
 SHOW TAG KEY CARDINALITY [ON <database_name>] [FROM_CLAUSE]
 ```
 例如：
 ```sql
 > SHOW TAG KEY CARDINALITY
-#TODO
+name: average_temperature
++-------+
+| count |
++-------+
+| 1     |
++-------+
+1 columns, 1 rows in set
+
+name: h2o_feet
++-------+
+| count |
++-------+
+| 1     |
++-------+
+1 columns, 1 rows in set
+
+name: h2o_pH
++-------+
+| count |
++-------+
+| 1     |
++-------+
+1 columns, 1 rows in set
+
+name: h2o_quality
++-------+
+| count |
++-------+
+| 2     |
++-------+
+1 columns, 1 rows in set
+
+name: h2o_temperature
++-------+
+| count |
++-------+
+| 1     |
++-------+
+1 columns, 1 rows in set
+
+> SHOW TAG KEY CARDINALITY FROM h2o_temperature
+name: h2o_temperature
++-------+
+| count |
++-------+
+| 1     |
++-------+
+1 columns, 1 rows in set
+```
+
+- **运行带条件的`SHOW TAG KEYS`查询**
+
+```sql
+> SHOW TAG KEYS FROM h2o_quality WHERE location=coyote_creek
+name: h2o_quality
++----------+
+| tagKey   |
++----------+
+| location |
+| randtag  |
++----------+
+1 columns, 2 rows in set
+
+> SHOW TAG KEYS FROM h2o_quality WHERE location=coyote_creek LIMIT 1
+name: h2o_quality
++----------+
+| tagKey   |
++----------+
+| location |
++----------+
+1 columns, 1 rows in set
 ```
 
 ## SHOW TAG VALUES
@@ -307,36 +422,31 @@ randtag   3
 
 ```bash
 > curl -G "http://localhost:8086/query?db=NOAA_water_database&pretty=true" --data-urlencode 'q=SHOW TAG VALUES WITH KEY = "randtag"'
-
 {
-    "results": [
-        {
-            "statement_id": 0,
-            "series": [
-                {
-                    "name": "h2o_quality",
-                    "columns": [
-                        "key",
-                        "value"
-                    ],
-                    "values": [
-                        [
-                            "randtag",
-                            "1"
-                        ],
-                        [
-                            "randtag",
-                            "2"
-                        ],
-                        [
-                            "randtag",
-                            "3"
-                        ]
-                    ]
-                }
-            ]
-        }
-    ]
+	"results": [{
+		"statement_id": 0,
+		"series": [{
+			"name": "h2o_quality",
+			"columns": [
+				"key",
+				"value"
+			],
+			"values": [
+				[
+					"randtag",
+					"1"
+				],
+				[
+					"randtag",
+					"2"
+				],
+				[
+					"randtag",
+					"3"
+				]
+			]
+		}]
+	}]
 }
 ```
 
@@ -453,84 +563,80 @@ degrees             float
 
 ```bash
 > curl -G "http://localhost:8086/query?db=NOAA_water_database&pretty=true" --data-urlencode 'q=SHOW FIELD KEYS'
-
 {
-    "results": [
-        {
-            "statement_id": 0,
-            "series": [
-                {
-                    "name": "average_temperature",
-                    "columns": [
-                        "fieldKey",
-                        "fieldType"
-                    ],
-                    "values": [
-                        [
-                            "degrees",
-                            "float"
-                        ]
-                    ]
-                },
-                {
-                    "name": "h2o_feet",
-                    "columns": [
-                        "fieldKey",
-                        "fieldType"
-                    ],
-                    "values": [
-                        [
-                            "level description",
-                            "string"
-                        ],
-                        [
-                            "water_level",
-                            "float"
-                        ]
-                    ]
-                },
-                {
-                    "name": "h2o_pH",
-                    "columns": [
-                        "fieldKey",
-                        "fieldType"
-                    ],
-                    "values": [
-                        [
-                            "pH",
-                            "float"
-                        ]
-                    ]
-                },
-                {
-                    "name": "h2o_quality",
-                    "columns": [
-                        "fieldKey",
-                        "fieldType"
-                    ],
-                    "values": [
-                        [
-                            "index",
-                            "float"
-                        ]
-                    ]
-                },
-                {
-                    "name": "h2o_temperature",
-                    "columns": [
-                        "fieldKey",
-                        "fieldType"
-                    ],
-                    "values": [
-                        [
-                            "degrees",
-                            "float"
-                        ]
-                    ]
-                }
-            ]
-        }
-    ]
+	"results": [{
+		"statement_id": 0,
+		"series": [{
+				"name": "average_temperature",
+				"columns": [
+					"fieldKey",
+					"fieldType"
+				],
+				"values": [
+					[
+						"degrees",
+						"float"
+					]
+				]
+			},
+			{
+				"name": "h2o_feet",
+				"columns": [
+					"fieldKey",
+					"fieldType"
+				],
+				"values": [
+					[
+						"level description",
+						"string"
+					],
+					[
+						"water_level",
+						"float"
+					]
+				]
+			},
+			{
+				"name": "h2o_pH",
+				"columns": [
+					"fieldKey",
+					"fieldType"
+				],
+				"values": [
+					[
+						"pH",
+						"float"
+					]
+				]
+			},
+			{
+				"name": "h2o_quality",
+				"columns": [
+					"fieldKey",
+					"fieldType"
+				],
+				"values": [
+					[
+						"index",
+						"float"
+					]
+				]
+			},
+			{
+				"name": "h2o_temperature",
+				"columns": [
+					"fieldKey",
+					"fieldType"
+				],
+				"values": [
+					[
+						"degrees",
+						"float"
+					]
+				]
+			}
+		]
+	}]
 }
 ```
 
@@ -552,7 +658,7 @@ water_level         float
 
 ## SHOW SERIES
 
-返回指定数据库的系列。
+返回指定数据库的时间线。
 
 ### 语法
 
@@ -645,62 +751,58 @@ Elapsed: 561ns
 ```bash
 > curl -G "http://localhost:8086/query?db=NOAA_water_database&pretty=true" --data-urlencode "q=SHOW SERIES"
 {
-    "results": [
-        {
-            "statement_id": 0,
-            "series": [
-                {
-                    "columns": [
-                        "key"
-                    ],
-                    "values": [
-                        [
-                            "average_temperature,location=coyote_creek"
-                        ],
-                        [
-                            "average_temperature,location=santa_monica"
-                        ],
-                        [
-                            "h2o_feet,location=coyote_creek"
-                        ],
-                        [
-                            "h2o_feet,location=santa_monica"
-                        ],
-                        [
-                            "h2o_pH,location=coyote_creek"
-                        ],
-                        [
-                            "h2o_pH,location=santa_monica"
-                        ],
-                        [
-                            "h2o_quality,location=coyote_creek,randtag=1"
-                        ],
-                        [
-                            "h2o_quality,location=coyote_creek,randtag=2"
-                        ],
-                        [
-                            "h2o_quality,location=coyote_creek,randtag=3"
-                        ],
-                        [
-                            "h2o_quality,location=santa_monica,randtag=1"
-                        ],
-                        [
-                            "h2o_quality,location=santa_monica,randtag=2"
-                        ],
-                        [
-                            "h2o_quality,location=santa_monica,randtag=3"
-                        ],
-                        [
-                            "h2o_temperature,location=coyote_creek"
-                        ],
-                        [
-                            "h2o_temperature,location=santa_monica"
-                        ]
-                    ]
-                }
-            ]
-        }
-    ]
+	"results": [{
+		"statement_id": 0,
+		"series": [{
+			"columns": [
+				"key"
+			],
+			"values": [
+				[
+					"average_temperature,location=coyote_creek"
+				],
+				[
+					"average_temperature,location=santa_monica"
+				],
+				[
+					"h2o_feet,location=coyote_creek"
+				],
+				[
+					"h2o_feet,location=santa_monica"
+				],
+				[
+					"h2o_pH,location=coyote_creek"
+				],
+				[
+					"h2o_pH,location=santa_monica"
+				],
+				[
+					"h2o_quality,location=coyote_creek,randtag=1"
+				],
+				[
+					"h2o_quality,location=coyote_creek,randtag=2"
+				],
+				[
+					"h2o_quality,location=coyote_creek,randtag=3"
+				],
+				[
+					"h2o_quality,location=santa_monica,randtag=1"
+				],
+				[
+					"h2o_quality,location=santa_monica,randtag=2"
+				],
+				[
+					"h2o_quality,location=santa_monica,randtag=3"
+				],
+				[
+					"h2o_temperature,location=coyote_creek"
+				],
+				[
+					"h2o_temperature,location=santa_monica"
+				]
+			]
+		}]
+	}]
 }
 ```
 
@@ -721,11 +823,153 @@ Elapsed: 561ns
 
 该查询返回数据库`NOAA_water_database`中，与measurement `h2o_quality`和tag `location = coyote_creek`相关联的所有系列。`LIMIT`子句将返回的系列个数限制为2。
 
+::: danger
+
+`SHOW SERIES`返回表中所有时间线，对内存资源占用较大，慎用！
+
+如需使用，一定要使用条件过滤
+
+:::
+
 ## SHOW SERIES CARDINALITY
-##TODO
+返回指定数据库的时间线数量，结果按时间分组
+
+```
+SHOW SERIES CARDINALITY [ON <database_name>] [FROM_clause]
+```
+
+### 示例
+
+```sql
+> SHOW SERIES CARDINALITY ON NOAA_water_database
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-08-12T00:00:00Z | 2019-08-19T00:00:00Z | 14    |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-08-19T00:00:00Z | 2019-08-26T00:00:00Z | 14    |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-08-26T00:00:00Z | 2019-09-02T00:00:00Z | 14    |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-09-02T00:00:00Z | 2019-09-09T00:00:00Z | 14    |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-09-09T00:00:00Z | 2019-09-16T00:00:00Z | 14    |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-09-16T00:00:00Z | 2019-09-23T00:00:00Z | 14    |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
+> SHOW SERIES CARDINALITY ON NOAA_water_database FROM h2o_quality
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-08-12T00:00:00Z | 2019-08-19T00:00:00Z | 6     |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-08-19T00:00:00Z | 2019-08-26T00:00:00Z | 6     |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-08-26T00:00:00Z | 2019-09-02T00:00:00Z | 6     |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-09-02T00:00:00Z | 2019-09-09T00:00:00Z | 6     |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-09-09T00:00:00Z | 2019-09-16T00:00:00Z | 6     |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-09-16T00:00:00Z | 2019-09-23T00:00:00Z | 6     |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+```
 
 ## SHOW SHARDS
-##TODO
+返回指定数据库的分片信息
+
+### 示例
+
+```sql
+> SHOW SHARDS
+name: NOAA_water_database
++----+---------------------+------------------+-------------+----------------------+----------------------+----------------------+--------+------+------------------+
+| id | database            | retention_policy | shard_group | start_time           | end_time             | expiry_time          | owners | tier | downSample_level |
++----+---------------------+------------------+-------------+----------------------+----------------------+----------------------+--------+------+------------------+
+| 19 | NOAA_water_database | autogen          | 19          | 2019-08-12T00:00:00Z | 2019-08-19T00:00:00Z | 2019-08-19T00:00:00Z | 2      | warm | 0                |
+| 20 | NOAA_water_database | autogen          | 20          | 2019-08-19T00:00:00Z | 2019-08-26T00:00:00Z | 2019-08-26T00:00:00Z | 2      | warm | 0                |
+| 21 | NOAA_water_database | autogen          | 21          | 2019-08-26T00:00:00Z | 2019-09-02T00:00:00Z | 2019-09-02T00:00:00Z | 2      | warm | 0                |
+| 18 | NOAA_water_database | autogen          | 18          | 2019-09-02T00:00:00Z | 2019-09-09T00:00:00Z | 2019-09-09T00:00:00Z | 2      | warm | 0                |
+| 22 | NOAA_water_database | autogen          | 22          | 2019-09-09T00:00:00Z | 2019-09-16T00:00:00Z | 2019-09-16T00:00:00Z | 2      | warm | 0                |
+| 23 | NOAA_water_database | autogen          | 23          | 2019-09-16T00:00:00Z | 2019-09-23T00:00:00Z | 2019-09-23T00:00:00Z | 2      | warm | 0                |
++----+---------------------+------------------+-------------+----------------------+----------------------+----------------------+--------+------+------------------+
+10 columns, 6 rows in set
+```
+
+每一条数据表示一个数据库的分片信息，每个分片包含所使用的数据保留策略、分片起始时间等。相关阅读 [数据保留策略](./retention_policy.md)
 
 ## SHOW SHARD GROUPS
-##TODO
+返回指定数据库的分片组信息
+
+### 示例
+
+```sql
+> SHOW SHARD GROUPS
+name: shard groups
++----+---------------------+------------------+----------------------+----------------------+----------------------+
+| id | database            | retention_policy | start_time           | end_time             | expiry_time          |
++----+---------------------+------------------+----------------------+----------------------+----------------------+
+| 19 | NOAA_water_database | autogen          | 2019-08-12T00:00:00Z | 2019-08-19T00:00:00Z | 2019-08-19T00:00:00Z |
+| 20 | NOAA_water_database | autogen          | 2019-08-19T00:00:00Z | 2019-08-26T00:00:00Z | 2019-08-26T00:00:00Z |
+| 21 | NOAA_water_database | autogen          | 2019-08-26T00:00:00Z | 2019-09-02T00:00:00Z | 2019-09-02T00:00:00Z |
+| 18 | NOAA_water_database | autogen          | 2019-09-02T00:00:00Z | 2019-09-09T00:00:00Z | 2019-09-09T00:00:00Z |
+| 22 | NOAA_water_database | autogen          | 2019-09-09T00:00:00Z | 2019-09-16T00:00:00Z | 2019-09-16T00:00:00Z |
+| 23 | NOAA_water_database | autogen          | 2019-09-16T00:00:00Z | 2019-09-23T00:00:00Z | 2019-09-23T00:00:00Z |
++----+---------------------+------------------+----------------------+----------------------+----------------------+
+6 columns, 6 rows in set
+```
+
+这里有6个分片组，结合`SHOW SHARDS`命令可以看出，每个分片组包含一个分片(SHARD)。openGemini单机默认初始化一个分片(SHARD)，如果是三节点的集群，则初始化为三个分片（每个节点一个）。当一个SHARD GROUP到期后，系统会创建新的SHARD GROUP，并分配新的分片 (SHARD)。相关阅读[SHARD GROUP DURATION](./retention_policy.md#shard-duration)

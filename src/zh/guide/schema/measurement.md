@@ -287,6 +287,3 @@ DROP MEASUREMENT <measurement_name>
 2. 成功执行`DROP MEASUREMENT`不返回任何结果
 
 :::
-
-## ALTER MEASUREMENT(修改表)
-##TODO
