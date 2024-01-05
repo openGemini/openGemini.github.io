@@ -43,14 +43,6 @@ order: 10
 > gemix cluster template > topology.yaml
 ```
 
-国内用户可能会因为网络原因执行不成功，请不要泄气，可以多尝试几次，若还是不成功，还可以访问如下目录：
-
-```bash
-# 如下路径是安装gemix时下载的源码，‘gemix@v0.0.0-20231228064944-577a453b6b53’可能会不一样，可根据实际目录名称填写
-> cd $GOPATH/pkg/mod/github.com/open!gemini/gemix@v0.0.0-20231228064944-577a453b6b53/embed/examples/cluster
-> cp topology.example.yaml $GOPATH/bin/topology.yaml
-```
-
 ### 2. 配置集群拓扑文件
 
 打开配置文件
