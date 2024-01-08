@@ -28,7 +28,7 @@ order: 1
 
 ::: tip
 
-列表中加粗部分为openGemini特有的方法，除此之外，其余方法均兼容InfluxDB的用法，可参考InfluxDB对应的[函数用法](https://docs.influxdata.com/influxdb/v1/query_language/functions)。
+openGemini提供的函数兼容InfluxDB的用法，可参考InfluxDB对应的[函数用法](https://docs.influxdata.com/influxdb/v1/query_language/functions)。
 :::
 
 ## COUNT()
