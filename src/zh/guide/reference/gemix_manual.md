@@ -384,11 +384,10 @@ grafana_servers:
 	- host: 10.0.1.14
 server_configs:
 	ts-sql:
-	  # 开启鉴权和https
-		http.auth-enabled: true
-	  http.https-enabled: true
+	  # 修改鉴权配置
+		http.auth-enabled: false
 	ts-store:
-	  # 指定ts-store的wal文件目录
+	  # 修改ts-store的wal文件目录
 		data.store-wal-dir: "/var/openGemini/data/wal"
 	ts-monitor:
 	  # 修改存储监控数据的库名，默认为集群名
@@ -397,3 +396,12 @@ server_configs:
     report.address: "11.0.1.14:8086"
 ```
 
+修改ts-sql、ts-store等其他组件启动的配置文件，可以参考示例中的server_configs的文件格式进行配置。
+
+::: danger
+
+deploy_dir, data_dir, log_dir **不支持使用共享目录**，否则会出现不可预料的问题。
+
+<img src="../../../../static/img/guide/reference/share_dir.png" style="zoom:50%;" />
+
+:::
