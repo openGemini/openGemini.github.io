@@ -1,0 +1,1 @@
+import{_ as e,X as n,Y as c,$ as t}from"./framework-1e2d737a.js";const s={},o=t("div",{class:"hint-container tip"},[t("p",{class:"hint-container-title"},"Tips"),t("p",null,"该驱动正在开发中...")],-1),_=[o];function i(l,a){return n(),c("div",null,_)}const p=e(s,[["render",i],["__file","client_python.html.vue"]]);export{p as default};

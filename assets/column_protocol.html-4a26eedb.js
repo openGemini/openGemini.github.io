@@ -1,0 +1,1 @@
+import{_ as o,X as e,Y as t,$ as c}from"./framework-1e2d737a.js";const _={},n=c("p",null,"##TODO",-1),l=[n];function s(r,a){return e(),t("div",null,l)}const u=o(_,[["render",s],["__file","column_protocol.html.vue"]]);export{u as default};

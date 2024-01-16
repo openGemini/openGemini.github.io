@@ -1,0 +1,1 @@
+import{_ as e,X as o,Y as n,$ as t}from"./framework-1e2d737a.js";const c={},s=t("div",{class:"hint-container tip"},[t("p",{class:"hint-container-title"},"提示"),t("p",null,"待完善")],-1),_=[s];function l(r,i){return o(),n("div",null,_)}const p=e(c,[["render",l],["__file","insert_column_protocol.html.vue"]]);export{p as default};

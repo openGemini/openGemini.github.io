@@ -1,0 +1,1 @@
+import{_ as a,X as s,Y as t,$ as e,a1 as c}from"./framework-1e2d737a.js";const r={},o=e("h1",{id:"常见问题-faqs",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#常见问题-faqs","aria-hidden":"true"},"#"),c(" 常见问题（FAQs）")],-1),n=[o];function _(d,f){return s(),t("div",null,n)}const h=a(r,[["render",_],["__file","faqs.html.vue"]]);export{h as default};

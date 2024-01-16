@@ -1,0 +1,1 @@
+import{_ as n,X as o,Y as t,Z as a,a2 as c,C as r}from"./framework-1e2d737a.js";const s={};function _(l,m){const e=r("TCPage");return o(),t("div",null,[a(e,{lang:"en"}),c(" <AutoCatalog /> ")])}const f=n(s,[["render",_],["__file","index.html.vue"]]);export{f as default};

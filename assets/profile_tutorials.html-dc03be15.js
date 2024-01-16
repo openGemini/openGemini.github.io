@@ -1,0 +1,1 @@
+import{_ as t,X as a,Y as r,$ as e,a1 as o}from"./framework-1e2d737a.js";const s={},c=e("h1",{id:"性能分析教程",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#性能分析教程","aria-hidden":"true"},"#"),o(" 性能分析教程")],-1),_=[c];function n(i,l){return a(),r("div",null,_)}const f=t(s,[["render",n],["__file","profile_tutorials.html.vue"]]);export{f as default};

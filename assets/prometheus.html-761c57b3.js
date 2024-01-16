@@ -1,0 +1,1 @@
+import{_ as e,X as t,Y as o,$ as s}from"./framework-1e2d737a.js";const _={},c=s("p",null,"##TODO",-1),n=[c];function r(a,l){return t(),o("div",null,n)}const u=e(_,[["render",r],["__file","prometheus.html.vue"]]);export{u as default};

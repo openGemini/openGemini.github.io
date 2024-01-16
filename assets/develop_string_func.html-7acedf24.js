@@ -1,0 +1,1 @@
+import{_ as e,X as t,Y as _,$ as n}from"./framework-1e2d737a.js";const c={},o=n("p",null,"##TODO",-1),s=[o];function r(l,a){return t(),_("div",null,s)}const f=e(c,[["render",r],["__file","develop_string_func.html.vue"]]);export{f as default};

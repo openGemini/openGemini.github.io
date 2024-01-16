@@ -1,0 +1,1 @@
+import{_ as t,X as s,Y as n,$ as e}from"./framework-1e2d737a.js";const c={},o=e("div",{class:"hint-container tip"},[e("p",{class:"hint-container-title"},"提示"),e("p",null,"文档补充中...，有需求请联系社区")],-1),_=[o];function a(i,l){return s(),n("div",null,_)}const d=t(c,[["render",a],["__file","k8s.html.vue"]]);export{d as default};

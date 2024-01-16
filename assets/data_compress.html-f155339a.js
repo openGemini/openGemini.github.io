@@ -1,0 +1,1 @@
+import{_ as t,X as s,Y as c,$ as e}from"./framework-1e2d737a.js";const n={},a=e("div",{class:"hint-container tip"},[e("p",{class:"hint-container-title"},"Tips"),e("p",null,"本文档内容快马加鞭补充中..，如需了解可以向社区咨询。")],-1),o=[a];function _(r,i){return s(),c("div",null,o)}const d=t(n,[["render",_],["__file","data_compress.html.vue"]]);export{d as default};
