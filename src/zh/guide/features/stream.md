@@ -17,11 +17,9 @@ Window模块，负责时间窗口过滤，计算，以及数据下盘。
 可以通过如下方式向时间线中加入一条流计算来实现前聚合，加入流计算后，数据就可以一边写入，一边聚合。
 
 ```sql
-CREATE STREAM test INTO db0.autogen.cpu1 AS SELECT sum("usage_user") AS "sum_usage_user" FROM "telegraf"."autogen"."cpu" group by time(1m),"cpu","host" delay 20s
+CREATE STREAM test INTO db0.autogen.cpu1 ON SELECT sum("usage_user") AS "sum_usage_user" FROM "telegraf"."autogen"."cpu" group by time(1m),"cpu","host" delay 20s
 ```
-其中，test是流的名字，db0为database，autogen为RP，cpu1为measurement。这条命令添加了一条流计算，流计算的聚合函数为sum，delay 20s表示容忍的时间延迟。
-
-该语句的含义是，把写入"telegraf"."autogen"."cpu"（db为Telegraf，RP为autogen，表为cpu）的数据进行流式计算，结果写入表cpu1中，聚合方法为sum("usage_user")，如果数据由于网络中断，导致在当前时间窗 1m + 20s的时间内未到达，这个数据将被丢弃，不再当前时间窗内被计算，新的其他数据会在下一个时间窗内计算。
+该语句的含义是，创建一个流式聚合的任务“test”，把写入"telegraf"."autogen"."cpu"（db为Telegraf，RP为autogen，表为cpu）的数据进行计算，结果写入表cpu1中，聚合方法为sum("usage_user")。其中，delay 20s表示容忍的时间延迟，如果数据由于网络中断，导致在当前时间窗 1m + 20s的时间内未到达，这个数据将被丢弃，不再当前时间窗内被计算，新的其他数据会在下一个时间窗内计算。
 
 ## 查看Stream
 

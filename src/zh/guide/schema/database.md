@@ -39,6 +39,14 @@ CREATE DATABASE <database_name> [WITH [DURATION <duration>] [REPLICATION <n>] [S
 
 该操作创建一个名称为`NOAA_water_database`的数据库。还为`NOAA_water_database`创建一个保留策略，名称为`rp3d`，其`DURATION`为3d，复制因子为1，分片组持续时间为1h，索引组持续时间为7h。
 
+- **特例**
+
+使用[tag array](../features/tag_array.md)功能时，创建数据库的语句如下：
+
+```sql
+> create database NOAA_water_database tag attribute array
+```
+
 ## SHOW DATABASES (查看数据库)
 
 返回实例上所有数据库的列表。

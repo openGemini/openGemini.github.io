@@ -129,7 +129,7 @@ openGemini开源相关地址：
 
 ### **编译环境信息**
 
-- [GO](https://go.dev/dl/) version v1.18+
+- [GO](https://go.dev/dl/) version v1.19+
 - [Python](https://www.python.org/downloads/) version v3.7+
 - [Git](https://git-scm.com/downloads)
 - [Gcc(windows上编译需安装)](https://www.cnblogs.com/kala00k/p/16364116.html)
@@ -275,7 +275,7 @@ Elapsed: 2.178147ms
 **写数据**
 
 ```sql
-> insert cpu_load,host="server-01",region="west_cn" value=75.3
+> insert cpu_load,host=server-01,region=west_cn value=75.3
 ```
 
 **查看表**
@@ -295,7 +295,7 @@ Elapsed: 2.178147ms
 ```sql
 > use db0
 Elapsed: 251ns
-> insert cpu_load,host="server-01",region="west_cn" value=75.3
+> insert cpu_load,host=server-01,region=west_cn value=75.3
 Elapsed: 162.328339ms
 > show measurements
 name: measurements
@@ -313,7 +313,7 @@ name: cpu_load
 +---------------------+-------------+-----------+-------+
 | time                | host        | region    | value |
 +---------------------+-------------+-----------+-------+
-| 1681483835745490423 | "server-01" | "west_cn" | 75.3  |
+| 1681483835745490423 | server-01   | west_cn   | 75.3  |
 +---------------------+-------------+-----------+-------+
 4 columns, 1 rows in set
 

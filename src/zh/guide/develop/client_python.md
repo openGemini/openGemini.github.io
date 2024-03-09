@@ -1,8 +1,16 @@
 ---
 title: client-python
-order: 2
+order: 4
 ---
 
+### **项目地址**
+
+https://github.com/openGemini/opengemini-client-python
+
+
+
 :::tip
-该驱动正在开发中...
+
+开发中，敬请关注
+
 :::
