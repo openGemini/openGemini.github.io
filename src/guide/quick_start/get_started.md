@@ -3,15 +3,39 @@ title: Install & Deployment
 order: 1
 ---
 
-This section introduces how to quickly get started with the openGemini temporal database. For non-production environments, you can choose to deploy the openGemini temporal database by one of the following ways.
-
-This guide takes standalone deployment as an example. To learn about cluster deployment, please click on [production_deployment_using_gemix](../deploy_cluster/production_deployment_using_gemix) to view the details.
+This section introduces how to quickly get started with the openGemini. 
 
 ## Installation
 
 ::: tabs
 
-@tab Linux-x86
+@tab CPU platforms
+
+| Platform | Support or not | Note                                                         |
+| -------- | -------------- | ------------------------------------------------------------ |
+| X86-64   | &#10004;       | -                                                            |
+| X86-32   | &#10006;       | 32-bit is not currently supported, but since the openGemini kernel is developed by Golang.<br/>you can try to compile it on a 32-bit system. |
+| ARM-64   | &#10004;       | -                                                            |
+| ARM-32   | &#10006;       | 32-bit is not currently supported, but since the openGemini kernel is developed by Golang.<br/> you can try to compile it on a 32-bit system. |
+| others   | &#10006;       | not support                                                  |
+
+@tab OS
+
+Since the vast majority of applications are developed on Windows and Mac, openGemini has started to support the [Mac](coco://sendMessage?ext={"s%24wiki_link"%3A"https%3A%2F%2Fm.baike.com%2Fwikiid%2F8792875024474215202"}&msg=Mac)OS and Windows operating systems since version v1.1.0 in order to facilitate the development and debugging of applications. 
+
+| OS      | Support or not | Note                                                         |
+| ------- | -------------- | ------------------------------------------------------------ |
+| Linux   | &#10004;       | Supports mainstream Linux OS such as openEuler, Ubuntu, [CentOS](coco://sendMessage?ext={"s%24wiki_link"%3A"https%3A%2F%2Fm.baike.com%2Fwikiid%2F5155123603410411334"}&msg=CentOS), [RedHat](coco://sendMessage?ext={"s%24wiki_link"%3A"https%3A%2F%2Fm.baike.com%2Fwikiid%2F10396951337429436"}&msg=RedHat), etc.<br>Validated version：<br>- CentOS v7.3 or later versions<br>- openEuler v22.03 LTS or later versions<br>- Red Hat v8.4 or later versions & v7.3 or later v7.x versions |
+| Darwin  | &#10004;       | Supports MacOS, and it is recommended for project development and debugging. |
+| Windows | &#10004;       | Supports Windows, and it is recommended for project development and debugging. <br>Validated version is win11 |
+
+@tab fast installation
+
+Use the Gemix tool for one-click installation and deployment, which can currently only be used for clusters, and supports deploying the openGemini cluster on one or more virtual machines or physical machines. For specific usage, refer to the [Gemix usage guide]().
+
+Use the openGemini-operator for one-click containerized deployment, which can currently only be used for clusters, and supports K8s containerized deployment. For specific usage, refer to the [openGemini-operator usage guide]().
+
+@tab install by binaries
 
 1. Go to [GitHub Release](https://github.com/openGemini/openGemini/releases) to copy the link of the latest version.
 
@@ -33,44 +57,64 @@ This guide takes standalone deployment as an example. To learn about cluster dep
    `ts-server` is the the standalone version of binary system. 
    `openGemini.singlenode.conf` is the configuration file which adapts to `ts-server`.
 
-@tab Linux-arm
+3. run openGemini
 
-1. Go to [GitHub Release](https://github.com/openGemini/openGemini/releases) to copy the link of the latest version.
+   **single-node**
 
-   > Please replace **`<version>`** with the version of downloaded installation package.
+   Start openGemini on the local machine, which defaults to listening on 127.0.0.1:8086. Authentication and https are not enabled by default, and the default path for data and logs is /tmp/openGemini. 
 
-   ```bash
-   > wget https://github.com/openGemini/openGemini/releases/download/v<version>/openGemini-<version>-linux-arm64.tar.gz
+   ```
+   > cd openGemini
+   > ./usr/bin/ts-server
    ```
 
-    Manually downloading the corresponding installation package is also OK.
+   If you need to modify the listening address, modify the configuration file openGemini.singlenode.conf and replace all 127.0.0.1
 
-2. Move to the directory of the installation package, use `tar` to unzip.
+   ```tex
+   [common]
+     meta-join = ["127.0.0.1:8092"]
+   	...
+   
+   [meta]
+     bind-address = "127.0.0.1:8088"
+     http-bind-address = "127.0.0.1:8091"
+     rpc-bind-address = "127.0.0.1:8092"
+     ...
+   
+   [http]
+     bind-address = "127.0.0.1:8086"
+     flight-address = "127.0.0.1:8087"
+     ...
+   
+   [data]
+     store-ingest-addr = "127.0.0.1:8400"
+     store-select-addr = "127.0.0.1:8401"
+     ...
+   ```
+
+   > Configuration file path: openGemini/etc/, where "openGemini" is the directory after decompressing the binary version. 
 
    ```shell
-   > mkdir openGemini
-   > tar -zxvf openGemini-<version>-linux-arm64.tar.gz -C openGemini
+   > ./usr/bin/ts-server --config ./etc/openGemini.singlenode.conf
+   
+   # run in the background
+   > nohup ./usr/bin/ts-server --config ./etc/openGemini.singlenode.conf > server_extra.log 2>&1 &
    ```
 
-   `ts-server` is the the standalone version of binary system. 
-   `openGemini.singlenode.conf` is the configuration file which adapts to `ts-server`.
+   > **The openGemini.singlenode.conf configuration file is more concise than openGemini.conf, and some missing configuration items (such as authentication, https, etc.) can be found in openGemini.conf and copied to the corresponding location.**
 
-@tab openEuler
-Currently, the openGemini installation package is only added to the openEuler image source. Other Linux operating systems are further improving.
+   **cluster**
 
-```bash
-> yum install openGemini
-```
+   Refer to the [cluster deployment]()
 
-After the automatic installation is successful, all binary files of openGemini are stored in /usr/bin, and configuration files are stored in /etc/openGemini
-
-@tab Source code compilation
+@tab source code compilation
 
 **Information of compiling environments**
 
-- [GO](https://go.dev/dl/) version v1.18+
+- [GO](https://go.dev/dl/) version v1.19+
 - [Python](https://www.python.org/downloads/) version v3.7+
 - [Git](https://git-scm.com/downloads)
+- [Gcc (for windows)](https://www.cnblogs.com/kala00k/p/16364116.html)
 
 **GO environmental variable settings**
 
@@ -113,22 +157,10 @@ After successfully compiled, binary files are saved in the `build` directory。
 > bash ./scripts/install.sh
 ```
 
-:::
-
-## Run
-
-**Move to the directory where ts-server is saved, run**
+**OR Move to the directory where ts-server is saved, and manual running**
 
 ```shell
 ./ts-server
-```
-
-::: warning
-
-If `v1.0.1` and version before, running `ts-server` equires specifying a configuration file to start:
-
-```shell
-./ts-server -config /path/to/openGemini.singlenode.conf
 ```
 
 To start in the background:
@@ -136,6 +168,35 @@ To start in the background:
 ```shell
 nohup ./ts-server > server_extra.log 2>&1 &
 ```
+
+:::warning
+
+If `v1.0.1` and version before, running `ts-server` equires specifying a configuration file to start:
+
+```shell
+./ts-server -config /path/to/openGemini.singlenode.conf
+```
+
+
+
+@tab specification selection
+
+In terms of specification selection, it is difficult for the community to give accurate opinions. Specifications often relate to business volume. It is hoped that users can share in the community for reference by others in specification selection.
+
+**Specific reference information:**
+
+1. Compared with InfluxDB, openGemini has significantly optimized the occupation of resources, and has better memory control. Under the same specification, the openGemini ts-server can support a larger business volume.
+
+2. After openGemini is started and the business is idling, the memory usage is about 100-200MB. Edge or embedded devices can refer to it.
+
+3. Several query scenarios that use a large amount of memory:
+   - When grouping and aggregating, the number of groups is large (such as hundreds of thousands or even millions)
+   - When batch querying, the number of target time lines is large (such as hundreds of thousands)
+   - When streaming computing, the single-node write traffic is relatively large
+   - When the time-scale is large, the use of the `show series` command (such as millions or even larger)
+   - When aggregating queries, the given time range is large, resulting in a large amount of target data to be computed (such as querying data within the past three months, with data volumes reaching billions or even tens of billions of rows)
+
+If there are similar businesses as above, it is recommended to have more memory.
 
 :::
 
@@ -152,7 +213,7 @@ To facilitate the execution of various queries in the database, openGemini provi
 Connect to 127.0.0.1:8086 in default. Connect to other host by the following command:
 
 ```shell
-> ./ts-cli -host 192.168.0.1 -port 8086
+> ./ts-cli --host 192.168.0.1 --port 8086
 ```
 
 For more usage, please use the following command to explore on your own:
@@ -204,7 +265,7 @@ Elapsed: 2.178147ms
 **Write in data**
 
 ```sql
-> insert cpu_load,host="server-01",region="west_cn" value=75.3
+> insert cpu_load,host=server-01,region=west_cn value=75.3
 ```
 
 **Look up table**
@@ -224,7 +285,7 @@ Effects
 ```sql
 > use db0
 Elapsed: 251ns
-> insert cpu_load,host="server-01",region="west_cn" value=75.3
+> insert cpu_load,host=server-01,region=west_cn value=75.3
 Elapsed: 162.328339ms
 > show measurements
 name: measurements
@@ -242,7 +303,7 @@ name: cpu_load
 +---------------------+-------------+-----------+-------+
 | time                | host        | region    | value |
 +---------------------+-------------+-----------+-------+
-| 1681483835745490423 | "server-01" | "west_cn" | 75.3  |
+| 1681483835745490423 | server-01   | west_cn   | 75.3  |
 +---------------------+-------------+-----------+-------+
 4 columns, 1 rows in set
 

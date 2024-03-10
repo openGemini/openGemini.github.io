@@ -2,8 +2,10 @@
 title: Cluster architecture
 order: 2
 ---
-openGemini use MPP massively parallel processing architecture.  
-![structure](https://foruda.gitee.com/images/1682675209590994535/58ceef69_1024705.png)
+openGemini use MPP (Massively Parallel Processing) architecture.  
+
+![structure](../../../static/img/guide/introduction/archtecture-en.png)
+
 As shown in the figure, openGemini as a whole consists of three components: ts-sql, ts-meta, and ts-stores.
 
 - **ts-sql**
