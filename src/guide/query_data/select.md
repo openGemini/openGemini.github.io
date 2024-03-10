@@ -19,4 +19,3 @@ Please use `quit`, `exit` or `Ctrl-D` to exit this program.
 ```
 ## Syntax
 openGemini is compatible with InfluxQL. For detail InfluxQL’s SELECT statement and useful query syntax for exploring your data, see [InfluxQL’s SELECT statement](https://docs.influxdata.com/influxdb/v1.8/query_language/explore-data/#the-where-clause)
-

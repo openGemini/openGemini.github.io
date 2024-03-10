@@ -171,8 +171,8 @@ ORDER BY默认升序ASC，可按照排序字段分别指定升序ASC或降序DES
 
 ### 行协议
 
-行协议写入参考[openGemini数据行协议写入](../write_data/line_protocol.md)
+行协议写入参考[openGemini数据行协议写入](../write_data/insert_line_protocol.md)
 
 ### 列协议
 
-列协议写入参考[openGemini数据列协议写入](../write_data/column_protocol_tutorials.md)
+列协议写入参考[openGemini数据列协议写入](../write_data/insert_column_protocol.md)

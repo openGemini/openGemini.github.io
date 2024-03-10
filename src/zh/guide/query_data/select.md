@@ -22,10 +22,11 @@ Please use `quit`, `exit` or `Ctrl-D` to exit this program.
 
 ## SELECT
 `SELECT` 语句执行数据检索。 默认情况下，请求的数据将返回给客户端，同时结合 [SELECT INTO]() 可以被转发到不同的表。
+
 ### 语法
 
 ```sql
-SELECT COLUMN_CLAUSES FROM_CLAUSE
+SELECT <field_key>[,<field_key>,<tag_key>] FROM <measurement_name>[,<measurement_name>]
 ```
 
 ### SELECT子句

@@ -11,16 +11,20 @@ order: 1
 CREATE DATABASE <database_name> [WITH [DURATION <duration>] [REPLICATION <n>] [SHARD DURATION <duration>] [INDEX DURATION <duration>] [NAME <retention-policy-name>]]
 ```
 
-#### \<database_name\>   
+**\<database_name\>**   
+
 represents the db name
 
-#### DURATION \<duration\>
+**DURATION \<duration\>**
+
 represents how long the data keeps in openGemini, which is one of the attributes of the data retention policy
 
-#### SHARD DURATION \<duration\>
+**SHARD DURATION \<duration\>**
+
 represents the time range of each shard in a shardGroup
 
-#### INDEX DURATION \<duration\>
+**INDEX DURATION \<duration\>**
+
 represents the time range of indexGroup
 
 There does not return any information when execute the command ```create database``` or repeated execute the command.
