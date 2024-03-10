@@ -7,7 +7,7 @@ order: 1
 
 请参考 [Gemix使用指南](../reference/gemix_manual.md) 部署openGemini集群
 
-## 最小拓扑架构
+## 参考拓扑架构
 
 ### 拓扑信息
 
@@ -20,3 +20,4 @@ order: 1
 ### 拓扑文件配置
 
 参考 [配置示例](../reference/gemix_manual.md#配置示例)
+
