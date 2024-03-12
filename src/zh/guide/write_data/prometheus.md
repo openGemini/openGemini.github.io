@@ -31,9 +31,8 @@ openGemini支持分布式集群部署以及单机部署，可支撑多个Prometh
 
 openGemini兼容Prometheus对InfluxDB的远端读写配置，主要使用接口为：/api/v1/prom/read，/api/v1/prom/read/write。
 
-> 参考文档：https://docs.influxdat
+> 参考文档：https://docs.influxdata.com/influxdb/v1.7/supported_protocols/prometheus/
 >
-> a.com/influxdb/v1.7/supported_protocols/prometheus/
 
 openGemini需要在Prometheus启动之前手动创建对应的数据库。
 
@@ -74,11 +73,11 @@ db=prometheus&u=username&p=password""
 **创建数据库**
 
 ```
->>> create database prometheus
->>> use prometheus
+> create database prometheus
+> use prometheus
 Using database prometheus
-### 检查prometheus数据是否正常写入：
->>> show measurements
+### 检查prometheus数据是否正常写入
+> show measurements
 name: measurements
 name
 ----

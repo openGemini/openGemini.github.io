@@ -1,11 +1,35 @@
 ---
-title: Line Protocol
+title: Line Protocol Insert
 order: 1
 ---
 
-Line protocol is a text-based format proposed by InfluxDB, and openGemini support the same line protocol to write data.
+Line Protocol is a text-based data format proposed by InfluxDB, and openGemini uses the same Line Protocol to write points to openGemini. To learn more about the detailed definition, usage, special characters, etc. of the Line Protocol, you can refer to the [InfluxDB Line Protocol](https://docs.influxdata.com/influxdb/cloud/reference/syntax/line-protocol) or the [openGemini data line protocol](../reference/line_protocol.md).
 
-> About line protocol, please see [InfluxDB Line Protocol](https://docs.influxdata.com/influxdb/cloud/reference/syntax/line-protocol/)
+## Data format of Line Protocol
+
+A single line of text in the Line protocol format represents a point, that is to say, a point is composed of a measurement (table name), a tag set (one or more tag), a field set (one or more field), and a timestamp.
+
+**For Example**
+
+<img src="../../../static/img/guide/write_data/line_protocol_one.png" style="zoom: 30%;" />
+
+It means that this Point belongs to the Weather table, and Location indicates that the temperature sensor is in the us-midwest. At this time (1465839830100400200) the temperature is 82 °F.
+
+**For Another Example**
+
+<img src="../../../static/img/guide/write_data/line_protocol_two.png" style="zoom: 50%;" />
+
+This means that the Point belongs to the "monitor" table, and the "region" and "host" identify the machine with the IP address 10.0.1.11 in the Beijing area. At this time (1465839830100400200), the CPU usage is 43% and memory usage is 1465839KB.
+
+:::tip
+
+Remember the following tips:
+
+- Use a **" , "** to separate `Measurement` and `Tag`
+- Use **" , "** to separate` Tags` and `Fields`, and **there should be no spaces after the " , "**
+- Use "space"  to separate `Tags` and `Fields`, as well as `Fields` and the `Timestamp`
+
+:::
 
 ## Write data
 
@@ -21,7 +45,10 @@ Use the ts-cli command to write data into the openGemini database, and place the
 
 Import Line protocol data from a file using the CLI，suppose the data is saved in the file data.txt in line protocol format
 ```
-// data.txt
+# DDL
+CREATE DATABASE NOAA_water_database
+# DML
+# CONTEXT-DATABASE: NOAA_water_database
 h2o_feet,location=coyote_creek water_level=2.927,description="below 3 feet" 1566102600
 h2o_feet,location=coyote_creek water_level=2.831,description="below 3 feet" 1566102960
 h2o_feet,location=coyote_creek water_level=2.743,description="below 3 feet" 1566103320
