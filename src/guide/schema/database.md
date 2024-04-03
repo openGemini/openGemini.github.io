@@ -27,6 +27,8 @@ represents the time range of each shard in a shardGroup
 
 represents the time range of indexGroup
 
+```WITH```, ```DURATION```, ```REPLICATION```, ```SHARD DURATION```, ```INDEX DURATION```, ```NAME``` clauses and creating a single retention policy associated with the database are optional. If no clause is specified after ```WITH```, a retention policy named autogen is created by default.
+
 There does not return any information when execute the command ```create database``` or repeated execute the command.
 
 ### Examples
@@ -47,6 +49,13 @@ By default, openGemini also creates the default retention policy `autogen` and a
 ```
 
 This operation creates a database with the name `NOAA_water_database`. It also creates a default retention policy for `NOAA_water_database` with the name `rp3d`, data is kept in the database for 3 days, data replication is 1, and the time range for each shard is 1 hour, and the time range for index group is 7 hours.
+
+#### Special case
+When using the [tag array](../features/tag_array.md) function, the statement to create the database is as follows:
+
+```sql
+>create database NOAA_water_database tag attribute array
+```
 
 **related entries** [Retention policy](./retention_policy.md)
 
