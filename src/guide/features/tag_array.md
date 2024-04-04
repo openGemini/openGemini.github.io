@@ -7,7 +7,7 @@ This chapter mainly introduces the ```tag array``` function.
 
 ## BACKGROUND
 
-In the joint scenario, in order to save bandwidth, the uploader will package and report the various component indicators of the same machine. In this case, the public fields will be merged and reported. If the database supports the ```TAG array``` function, it will greatly save bandwidth in this case.
+If there are multiple services in a machine, in order to save bandwidth, the uploader will package and report the various component indicators of the same machine. In this case, the public fields will be merged and reported. If the database supports the ```TAG array``` function, it will greatly save bandwidth in this case.
 :::tip
 
 ```ts-cli``` currently does not support ```tag array``` syntax and can be used using the ```Influx``` client.
