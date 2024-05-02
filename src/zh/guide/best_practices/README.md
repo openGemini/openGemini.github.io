@@ -1,8 +1,9 @@
 ---
-title: 版本发布历史
+title: 最佳实践
 index: false
 dir:
-    order: 16
+    order: 15
 ---
 
 <AutoCatalog />
+
