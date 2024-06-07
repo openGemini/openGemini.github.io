@@ -311,7 +311,7 @@ server_configs 用于配置具体的openGemini内核组件，生成各组件的�
 使用以下命令会将所有实例节点的相关进程启动。
 
 ```bash
-> gemix cluster start gemini-test
+> gemix cluster start gemini_test
 ```
 
 预期结果输出 `Started cluster gemini-test successfully`，表示启动成功。
@@ -321,10 +321,10 @@ server_configs 用于配置具体的openGemini内核组件，生成各组件的�
 使用以下命令会将所有实例节点的相关进程退出。
 
 ```bash
-> gemix cluster stop gemini-test
+> gemix cluster stop gemini_test
 ```
 
-预期结果输出 `Stop cluster gemini-test successfully`，表示下线成功。
+预期结果输出 `Stop cluster gemini_test successfully`，表示下线成功。
 
 ::: tip
 
