@@ -1,8 +1,16 @@
 ---
 title: Client-java
-order: 3
+order: 5
 ---
 
+### **Project Url**
+
+https://github.com/openGemini/opengemini-client-java
+
+
+
 :::tip
-该驱动正在开发中...
+
+Under development, please stay tuned.
+
 :::

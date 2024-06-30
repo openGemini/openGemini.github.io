@@ -1,11 +1,11 @@
 ---
-title: Client-go
-order: 4
+title: client-ts
+order: 8
 ---
 
 ### **Project Url**
 
-https://github.com/openGemini/opengemini-client-go
+https://github.com/openGemini/opengemini-client-ts
 
 
 
