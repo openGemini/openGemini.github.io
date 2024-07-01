@@ -1,11 +1,11 @@
 ---
-title: Client-go
-order: 4
+title: client-rust
+order: 7
 ---
 
 ### **Project Url**
 
-https://github.com/openGemini/opengemini-client-go
+https://github.com/openGemini/opengemini-client-rust
 
 
 
