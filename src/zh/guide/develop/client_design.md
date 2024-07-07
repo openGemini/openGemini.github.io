@@ -82,7 +82,9 @@ classDiagram
 classDiagram
     class OpenGeminiClient {
         + WritePoint(String database, Point point)
+        + WritePointWithRp(String database, String rp, Point point)
         + WriteBatchPoints(String database, BatchPoints batchPoints)
+        + WriteBatchPointsWithRp(String database, String rp, BatchPoints batchPoints)
     }
     class BatchPoints {
         + List~Point~ points
