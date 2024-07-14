@@ -9,11 +9,13 @@ https://github.com/openGemini/opengemini-client-go
 
 ### **最新版本**
 
-v0.1.0，欢迎使用和反馈
+v0.3.0，欢迎使用和反馈
+
+版本链接：https://github.com/openGemini/opengemini-client-go/releases/tag/v0.3.0
 
 ### 接口参考文档
 
-https://pkg.go.dev/github.com/openGemini/opengemini-client-go@v0.1.0/opengemini
+https://pkg.go.dev/github.com/openGemini/opengemini-client-go@v0.3.0/opengemini
 
 ### 用法
 
@@ -62,7 +64,7 @@ point.SetMeasurement(exampleMeasurement)
 point.AddTag("Weather", "foggy")
 point.AddField("Humidity", 87)
 point.AddField("Temperature", 25)
-err = client.WritePoint(exampleDatabase, point, func(err error) {
+err = client.WritePoint(context.Background(),exampleDatabase, point, func(err error) {
 	if err != nil {
 		fmt.Printf("write point failed for %s", err)
 	}
