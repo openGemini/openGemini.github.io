@@ -5,7 +5,7 @@ order: 1
 
 ## 兼容SDK
 
-openemini兼容InfluxDB，因此可以使用InfluxDB的SDK开发openGemini相关应用，安装和用法Demo可以点击下方连接，在对应github仓库中可以找到。  
+openGemini兼容InfluxDB，因此可以使用InfluxDB的SDK开发openGemini相关应用，安装和用法Demo可以点击下方连接，在对应github仓库中可以找到。  
 - [C/C++](https://github.com/openGemini/openGemini/blob/main)
 - [Java](https://github.com/influxdata/influxdb-java)
 - [Java(支持集群负载均衡)](https://github.com/xiangyu5632/influxdb-java)
