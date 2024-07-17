@@ -22,13 +22,13 @@ order: 4
 **语法：**
 
 ```sql
-Create DownSample [on <rp_name>| on <dbname>.<rp_name>|  ]((dataType(aggregators)...)) With Duration <timeDuration> SampleInterval(time Durations) TimeInterval(time Durations) WaterMark(time Durations)
+Create DownSample [on <rp_name>| on <dbname>.<rp_name>|  ]((dataType(aggregators)...)) With Duration <timeDuration> SampleInterval(time Durations) TimeInterval(time Durations)
 ```
 **参数说明：**
 
-|  Duration |SampleInterval   |TimeInterval   |WaterMark   |
-| ------------ | ------------ | ------------ | ------------ |
-| 数据保留时间  |执行下一级降采样时间  |采样Interval   | 采样滞后时间  |
+|  Duration |SampleInterval   |TimeInterval   |
+| ------------ | ------------ | ------------ |
+| 降采样后数据的保留时间 |执行下一级降采样时间  |采样Interval   |
 
 **聚合方法定义格式：**
 
@@ -38,31 +38,50 @@ dataType(aggfunctions...)
 **聚合方法举例：**
 
  ```sql
-int(first,sum,count,last,min,max)
+integer(first,sum,count,last,min,max)
  ```
 ```sql
-int(min,max),float(sum)
+integer(min,max),float(sum)
 ```
 **限制说明：**
 
-- SampleInterval，TimeInterval，WaterMark指定的采样策略数量必须相同，比如其中有一项的数量是3，其他两项的数量也必须是3；
-- SampleInterval、 TimeInterval、WaterMark为一一对应关系、每个数组内为倍数关系；
+- SampleInterval, TimeInterval 指定的采样策略数量必须相同，比如其中有一项的数量是3，其他项的数量也必须是3；
+- SampleInterval, TimeInterval 为一一对应关系、每个数组内为倍数关系；
 
 **举例说明：**
 
+首先，创建一个保留策略rp1，数据保留时长为7天，每天1个shard
+
 ```sql
- Create DownSample 
+ > create retention policy rp1 on mydb duration 7d replication 1 shard duration 1d
+```
+其次，假设需要在刚新增的rp1之上创建一个降采样任务，采样后的数据的保留时长设为7天，过去1天内的数据保持数据明细，过去1天-2天内的数据按1分钟粒度对数据进行采样，2天以后的数据，按3分钟的粒度对数据进行降采样。
+
+```sql
+> Create DownSample on rp1
  (float(sum,last),integer(max,min))
  With Duration 7d 
  sampleinterval(1d,2d)
  timeinterval(1m,3m)
- watermark(1s,10s)
 ```
-Duration是7d,说明这个降采样数据保存最长是7d，这里的Duration需要小于指定的RP的Duration。
 
-1d内的数据采样间隔为1m，1d至2d内的数据采样为3m，采样滞后分别为1s和10s。这里(1d,1m,1s)和(2d,3m,10s)两个元组相对应，同时2d是1d的倍数，3m是1m的倍数，10s是1s的倍数，符合限制条件。
+需要⚠️注意的是：
 
-采样聚合数据为sum，last，max，min。float(sum,last)代表sum和last聚合数据是float格式，integer(max,min)代表max和min聚合数据是integer格式。
+这里的Duration控制降采样后的数据的保留时长，会同步更新rp1的Duration。可以设置为和rp的duration相同值。仅支持first，last，sum，max，min，mean，count 7种。float(sum,last)代表表内所有float类型的字段都使用sum()和last()聚合函数对数据进行降采样，integer(max,min)同理。
+
+**约束条件：**
+
+sampleinterval(1d,2d)，后一个时间是前一个时间的整数倍关系。这种写法是不正确的: sampleinterval(2d,3d) ❌ 
+
+同样，timeinterval(1m,3m) ✅，timeinterval(5m,6m) ❌
+
+sampleinterval 和 timeinterval括号内的值的数量也要一一对应。
+
+sampleinterval(1d,2d)   timeinterval(1m,3m) ✅
+
+sampleinterval(1d,2d)   timeinterval(3m)  ❌
+
+sampleinterval(1d)   timeinterval(1m,3m) ❌
 
 
 ## 显示降采样
