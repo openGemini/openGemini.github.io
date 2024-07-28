@@ -7,10 +7,6 @@ order: 4
 
 https://github.com/openGemini/opengemini-client-go
 
+### Document
 
-
-:::tip
-
-Under development, please stay tuned.
-
-:::
+find more information [here](https://pkg.go.dev/github.com/openGemini/opengemini-client-go)
