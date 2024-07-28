@@ -1,16 +1,12 @@
 ---
-title: Client-go
+title: client-go
 order: 4
 ---
 
-### **Project Url**
+### Project Repository
 
 https://github.com/openGemini/opengemini-client-go
 
+### Document
 
-
-:::tip
-
-Under development, please stay tuned.
-
-:::
+find more information [here](https://pkg.go.dev/github.com/openGemini/opengemini-client-go)

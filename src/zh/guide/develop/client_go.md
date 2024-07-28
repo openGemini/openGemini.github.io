@@ -7,15 +7,9 @@ order: 4
 
 https://github.com/openGemini/opengemini-client-go
 
-### **最新版本**
-
-v0.3.0，欢迎使用和反馈
-
-版本链接：https://github.com/openGemini/opengemini-client-go/releases/tag/v0.3.0
-
 ### 接口参考文档
 
-https://pkg.go.dev/github.com/openGemini/opengemini-client-go@v0.3.0/opengemini
+https://pkg.go.dev/github.com/openGemini/opengemini-client-go
 
 ### 用法
 
@@ -118,5 +112,78 @@ for _, r := range res.Results {
 			fmt.Println()
 		}
 	}
+}
+```
+
+#### 查询Measurement的Tag键列表
+
+```go
+> show tag keys from cpu;
+name: cpu
++--------+
+| tagKey |
++--------+
+| host   |
+| region |
++--------+
+
+// cmd := "show tag keys"
+// cmd := "show tag keys from MEASUREMENT_NAME"
+// cmd := "show tag keys from MEASUREMENT_NAME limit N offset M"
+cmd := fmt.Sprintf("SHOW TAG KEYS FROM %s", "cpu")
+value, err := client.ShowTagKeys("db0", cmd)
+if err != nil {
+	fmt.Println(err)
+}
+for _, result := range value {
+	fmt.Printf("measurement: %+v\n", result.Measurement) // cpu
+	fmt.Printf("tags: %v", result.Values) // ["host", "region"]
+}
+```
+
+#### 查询Measurement的Tag键值列表
+
+```go
+> show tag values from cpu with key = "host";
+name: cpu
++------+----------+
+| key  |  value   |
++------+----------+
+| host | server01 |
+| host | server02 |
++------+----------+
+
+cmd := fmt.Sprintf("show tag values from %s with key = \"%s\"", "cpu", "host")
+value, err := client.ShowTagValues("db0", cmd)
+if err != nil {
+	fmt.Println(err)
+}
+for _, result := range values {
+	fmt.Printf("measurement: %s\n", result.Measurement) // cpu
+	fmt.Printf("kv: %+v\n", result.Values) // [{Name:host Value:server01},{Name:host Value:server02}]
+}
+```
+
+#### 查询Measurement的Field Schema
+
+```go
+> show field keys
+name: cpu
++----------+-----------+
+| fieldKey | fieldType |
++----------+-----------+
+| value    | float     |
++----------+-----------+
+
+// cmd := "show field keys"
+// cmd := "show field keys from MEASUREMENT_NAME"
+cmd := fmt.Sprintf("show field keys")
+value, err := client.ShowFieldKeys("db0", cmd)
+if err != nil {
+	fmt.Println(err)
+}
+for _, result := range values {
+	fmt.Printf("measurement: %s\n", result.Measurement) // cpu
+	fmt.Printf("kv: %+v\n", result.Values) // [{Name:value Value:float}]
 }
 ```

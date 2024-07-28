@@ -76,7 +76,7 @@ classDiagram
     }
 ```
 
-# Write point design
+# 写设计
 
 ```mermaid
 classDiagram

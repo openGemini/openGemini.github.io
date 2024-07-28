@@ -46,7 +46,7 @@ classDiagram
 
     class BatchConfig {
         + Duration batchInterval // must be greater than 0
-        + int batchSize // must be greater than 0
+        + int batchSize // must be greater than 0, if set too large, may cause client overflow or server-side rejected the request.
     }
 
     OpenGeminiClient "1" *-- "many" Address: contains
