@@ -250,15 +250,6 @@ name: measurements
 
 该查询返回数据库`NOAA_water_database`中名字以`h2o`开头的measurement。
 
-- **查看表数量**
-```sql
-> SHOW MEASUREMENTS CARDINALITY
-TODO
-
-> SHOW MEASUREMENTS CARDINALITY ON NOAA_water_database
-TODO
-```
-
 ## DROP MEASUREMENT(删除表)
 
 使用`DROP MEASUREMENT`删除measurement
