@@ -250,6 +250,15 @@ name: measurements
 
 该查询返回数据库`NOAA_water_database`中名字以`h2o`开头的measurement。
 
+- **查看表数量**
+```sql
+> SHOW MEASUREMENTS CARDINALITY
+TODO
+
+> SHOW MEASUREMENTS CARDINALITY ON NOAA_water_database
+TODO
+```
+
 ## DROP MEASUREMENT(删除表)
 
 使用`DROP MEASUREMENT`删除measurement
@@ -259,17 +268,23 @@ name: measurements
 ### 语法
 
 ```sql
-DROP MEASUREMENT <measurement_name>
+DROP MEASUREMENT <retention_policy_name>.<measurement_name>
 ```
 
 **<font size=5 color=green>示例</font>**
 
 ---
 
-删除名称为`h2o_feet`的measurement
+删除默认retention policy下面名称为`h2o_feet`的measurement
 
 ```sql
 > DROP MEASUREMENT "h2o_feet"
+```
+
+删除指定retention policy `rp0`下面名称为`h2o_feet`的measurement
+
+```sql
+> DROP MEASUREMENT "rp0"."h2o_feet"
 ```
 
 ::: warning

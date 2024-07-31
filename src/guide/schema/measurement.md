@@ -254,6 +254,3 @@ Delete the measurement `h2o_feet` in retention policy `rp0`
 There has no results return when the command 'DROP MEASUREMENT' excute success.
 
 :::
-
-## ALTER MEASUREMENT
-##TODO
