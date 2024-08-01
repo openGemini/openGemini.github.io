@@ -84,3 +84,28 @@ export const getFooter = (lang = 'en') => {
 			</div>
 		</footer>`;
 };
+
+export const getCNCFFooter = (lang = 'en') => {
+    return `
+    <footer class="cncf">
+        <div class="container">
+            <div class="content">
+                openGemini is a
+                <a href="https://www.cncf.io/" target="_blank">Cloud Native Computing Foundation</a>
+                sandbox project.
+            </div>
+            <div class="logo">
+                <img src="/images/cncf-color.png" alt="" />
+            </div>
+            <p class="copyright">
+                The Linux Foundation has registered trademarks and uses trademarks. For a list of
+                trademarks of The Linux Foundation, please see our
+                <a href="https://www.linuxfoundation.org/legal/trademark-usage" target="_blank"
+                    >Trademark Usage</a
+                >
+                page. 2024 © openGemini Project Authors. All rights reserved.
+            </p>
+        </div>
+    </footer>
+    `;
+};

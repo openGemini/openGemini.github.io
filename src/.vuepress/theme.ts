@@ -2,7 +2,7 @@ import { hopeTheme } from 'vuepress-theme-hope';
 import { enNavbar, zhNavbar } from './navbar/index.js';
 import { enSidebar, zhSidebar } from './sidebar/index.js';
 // import { getDirname, path } from '@vuepress/utils';
-import { getFooter } from './utils/getFooter.js';
+import { getCNCFFooter } from './utils/getFooter.js';
 
 // 获取当前文件目录
 // const __dirname = getDirname(import.meta.url);
@@ -35,8 +35,8 @@ export default hopeTheme({
             // sidebar
             sidebar: enSidebar,
 
-            copyright: 'Copyright @2023 openGemini-All Rights Reserved.',
-            footer: getFooter('en'),
+            copyright: '',
+            footer: getCNCFFooter(),
 
             displayFooter: true,
 
@@ -55,8 +55,8 @@ export default hopeTheme({
             // sidebar
             sidebar: zhSidebar,
 
-            copyright: 'Copyright @2023 openGemini-All Rights Reserved.',
-            footer: getFooter('zh'),
+            copyright: '',
+            footer: getCNCFFooter('zh'),
 
             displayFooter: true,
 
