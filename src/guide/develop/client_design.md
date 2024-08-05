@@ -38,7 +38,7 @@ classDiagram
     }
 
     class AuthConfig {
-        + AuthType authType // enum None, Password, Token
+        + AuthType authType // enum Password, Token. The server currently does not support the Token type, and the SDK implementation for Token is incomplete.
         + String username
         + String password
         + String token
