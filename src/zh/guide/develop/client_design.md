@@ -64,9 +64,12 @@ classDiagram
         + void CreateDatabaseWithRp(String database, rpConfig RpConfig)
         + String[] ShowDatabases()
         + void DropDatabase(String database)
-        + void CreateRetentionPolicy(database string, rpConfig RpConfig, isDefault bool)
-        + RetentionPolicy[] ShowRetentionPolicies(database string)
-        + void DropRetentionPolicy(database, retentionPolicy string)
+        + void CreateRetentionPolicy(String database, RpConfig rpConfig, bool isDefault)
+        + RetentionPolicy[] ShowRetentionPolicies(String database)
+        + void DropRetentionPolicy(String database, String retentionPolicy)
+        + RetentionPolicy[] ShowRetentionPolicies(String database)
+        + String[] ShowMeasurements(String database, String retentionPolicy)
+        + void DropMeasurement(String database, String retentionPolicy, String measurement)
     }
     class RpConfig {
         + String Name
