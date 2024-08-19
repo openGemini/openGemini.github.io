@@ -143,6 +143,108 @@ classDiagram
     SeriesResult "1" *-- "0..*" Series: contains
 ```
 
+# QueryBuilder design
+
+```mermaid
+classDiagram
+    class QueryBuilder {
+        + static Create() QueryBuilder
+        + Select(Expression[] selectExprs) QueryBuilder
+        + From(String[] from) QueryBuilder
+        + Where(Condition where) QueryBuilder
+        + GroupBy(Expression[] groupByExpressions) QueryBuilder
+        + OrderBy(order: SortOrder) QueryBuilder
+        + Limit(limit: int64) QueryBuilder
+        + Offset(offset: int64) QueryBuilder
+        + Timezone(timezone: *time.Location) QueryBuilder
+        + Build() Query
+    }
+
+    class Expression {
+        <<interface>>
+    }
+
+    class ConstantExpression {
+        - Object value
+    }
+
+    class StarExpression {
+    }
+
+    class FunctionExpression {
+        - FunctionEnum function
+        - Expression[] arguments
+    }
+
+    class ArithmeticExpression {
+        - Expression Left
+        - Expression Right
+        - Operator   ArithmeticOperator
+    }
+
+    class Condition {
+        <<interface>>
+    }
+
+    class ComparisonCondition {
+        - String column
+        - ComparisonOperator operator
+        - Object value
+    }
+
+    class CompositeCondition {
+        - LogicalOperator logicalOperator
+        - Condition[] conditions
+    }
+
+    class SortOrder {
+        <<enum>>
+        Asc
+        Desc
+    }
+
+    class ComparisonOperator {
+        <<enum>>
+        Equals
+        NotEquals
+        GreaterThan
+        LessThan
+        GreaterThanOrEquals
+        LessThanOrEquals
+    }
+
+    class LogicalOperator {
+        <<enum>>
+        And
+        Or
+    }
+
+    class FunctionEnum {
+        <<enum>>
+        Mean
+        Count
+        Sum
+        Min
+        Max
+        Time
+    }
+
+    Expression <|-- FieldExpression
+    Expression <|-- StarExpression
+    Expression <|-- ConstantExpression
+    Expression <|-- FunctionExpression
+    Expression <|-- ArithmeticExpression
+    FunctionExpression --> FunctionEnum
+    Condition <|-- ComparisonCondition
+    Condition <|-- CompositeCondition
+    ComparisonCondition --> ComparisonOperator
+    CompositeCondition --> LogicalOperator
+    QueryBuilder --> Expression
+    QueryBuilder --> Condition
+    QueryBuilder --> SortOrder
+    QueryBuilder --> Query
+```
+
 # Ping design
 
 ```mermaid
