@@ -71,10 +71,10 @@ classDiagram
         + void DropMeasurement(String database, String retentionPolicy, String measurement)
     }
     class RpConfig {
-        + String Name
-        + String Duration
-        + String ShardGroupDuration
-        + String IndexDuration
+        + String Name // non-null
+        + String Duration // non-null
+        + String ShardGroupDuration // nullable
+        + String IndexDuration // nullable
     }
 ```
 
