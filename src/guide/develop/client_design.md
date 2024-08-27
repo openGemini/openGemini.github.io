@@ -175,6 +175,11 @@ classDiagram
         - FunctionEnum function
         - Expression[] arguments
     }
+    
+    class AsExpression {
+        - String alias
+        - Expression expression
+    }
 
     class ArithmeticExpression {
         - Expression Left
@@ -233,6 +238,7 @@ classDiagram
     Expression <|-- StarExpression
     Expression <|-- ConstantExpression
     Expression <|-- FunctionExpression
+    Expression <|-- AsExpression
     Expression <|-- ArithmeticExpression
     FunctionExpression --> FunctionEnum
     Condition <|-- ComparisonCondition
