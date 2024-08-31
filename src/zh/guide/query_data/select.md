@@ -1,5 +1,5 @@
 ---
-title: 数据查询
+title: InfluxQL查询
 order: 1
 ---
 
@@ -21,7 +21,7 @@ Please use `quit`, `exit` or `Ctrl-D` to exit this program.
 ```
 
 ## SELECT
-`SELECT` 语句执行数据检索。 默认情况下，请求的数据将返回给客户端，同时结合 [SELECT INTO]() 可以被转发到不同的表。
+`SELECT` 语句执行数据检索。 默认情况下，请求的数据将返回给客户端，同时结合 [SELECT INTO](#into) 可以被转发到不同的表。
 
 ### 语法
 
@@ -382,7 +382,7 @@ SELECT COLUMN_CLAUSES FROM_CLAUSE [WHERE_CLAUSE] [GROUP_BY_CLAUSE] [ORDER_BY_CLA
 - **同时指定数据点返回的位置和数据量**
 
 ```sql
->>> SELECT "water_level","location" FROM "h2o_feet" LIMIT 3 OFFSET 3
+> SELECT "water_level","location" FROM "h2o_feet" LIMIT 3 OFFSET 3
 name: h2o_feet
 +---------------------+-------------+--------------+
 | time                | water_level | location     |
@@ -414,7 +414,7 @@ openGemini 默认以UTC格式存储和返回时间戳。
 - **返回America/Chicago时区的UTC偏移量**
 
 ```sql
->>> SELECT "water_level" FROM "h2o_feet" WHERE "location" = 'santa_monica' AND time >= '2019-08-18T00:00:00Z' AND time <= '2019-08-18T00:18:00Z' tz('America/Chicago')
+> SELECT "water_level" FROM "h2o_feet" WHERE "location" = 'santa_monica' AND time >= '2019-08-18T00:00:00Z' AND time <= '2019-08-18T00:18:00Z' tz('America/Chicago')
 name: h2o_feet
 +---------------------+-------------+
 | time                | water_level |
@@ -427,4 +427,68 @@ name: h2o_feet
 2 columns, 4 rows in set
 ```
 
-该查询结果中，时间戳包含了美国/芝加哥（`America/Chicago`）的时区的UTC偏移量（`-05:00`）。
+该查询结果中，时间戳包含了美国/芝加哥（`America/Chicago`）的时区的UTC偏移量（`-05:00`）。亚洲北京时间为`Asia/Shanghai`
+
+## INTO
+
+将查询结果写入指定的measurement(表)中
+
+### 语法
+
+```
+SELECT_clause INTO <measurement_name> FROM_clause [WHERE_clause] [GROUP_BY_clause]
+```
+
+### 示例
+
+- 将查询的`water_level`数据写入当前数据库的`water_level`表中
+
+```sql
+> SELECT "water_level" INTO water_level FROM "h2o_feet" WHERE "location" = 'santa_monica' AND time >= '2019-08-18T00:00:00Z' AND time <= '2019-08-18T00:18:00Z'
+name: result
++------+---------+
+| time | written |
++------+---------+
+|    0 |       4 |
++------+---------+
+2 columns, 1 rows in set
+
+> SELECT * FROM water_level
+name: water_level
++---------------------+-------------+
+| time                | water_level |
++---------------------+-------------+
+| 1566086400000000000 | 2.352       |
+| 1566086760000000000 | 2.379       |
+| 1566087120000000000 | 2.343       |
+| 1566087480000000000 | 2.329       |
++---------------------+-------------+
+2 columns, 4 rows in set
+```
+
+- 将查询的`water_level`数据写入其他数据库的`water_level`表中
+
+```sql
+> SELECT "water_level" INTO "db"."autogen"."water_level" FROM "h2o_feet" WHERE "location" = 'santa_monica' AND time >= '2019-08-18T00:00:00Z' AND time <= '2019-08-18T00:18:00Z'
+name: result
++------+---------+
+| time | written |
++------+---------+
+|    0 |       4 |
++------+---------+
+2 columns, 1 rows in set
+
+> use db
+> SELECT * FROM water_level
+name: water_level
++---------------------+-------------+
+| time                | water_level |
++---------------------+-------------+
+| 1566086400000000000 | 2.352       |
+| 1566086760000000000 | 2.379       |
+| 1566087120000000000 | 2.343       |
+| 1566087480000000000 | 2.329       |
++---------------------+-------------+
+2 columns, 4 rows in set
+```
+
