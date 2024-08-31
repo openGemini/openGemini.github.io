@@ -1,5 +1,5 @@
 ---
-title: Explore data
+title: Use InfluxQL
 order: 1
 ---
 
