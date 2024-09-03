@@ -10,6 +10,7 @@ This chapter mainly includes the following contents:
 - [SHOW SERIES CARDINALITY](#show-series-cardinality)
 - [SHOW SHARDS ](#show-shards)
 - [SHOW SHARD GROUPS](#show-shard-groups)
+- [SHOW CLUSTER](#show-cluster)
 
 ## SHOW TAG KEYS
 
@@ -722,10 +723,174 @@ Use the parameter `db` to specify the database
 This query returns all series associated with measurement `h2o_quality` and tag `location = coyote_creek` in database `NOAA_water_database`. The `LIMIT` clause limits the number of series returned to 2.
 
 ## SHOW SERIES CARDINALITY
-##TODO
+
+Return the database time series cardinality
+
+```
+SHOW SERIES CARDINALITY [ON <database_name>] [FROM_clause]
+```
+
+### Example 
+
+```sql
+> SHOW SERIES CARDINALITY ON NOAA_water_database
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-08-12T00:00:00Z | 2019-08-19T00:00:00Z | 14    |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-08-19T00:00:00Z | 2019-08-26T00:00:00Z | 14    |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-08-26T00:00:00Z | 2019-09-02T00:00:00Z | 14    |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-09-02T00:00:00Z | 2019-09-09T00:00:00Z | 14    |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-09-09T00:00:00Z | 2019-09-16T00:00:00Z | 14    |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-09-16T00:00:00Z | 2019-09-23T00:00:00Z | 14    |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
+> SHOW SERIES CARDINALITY ON NOAA_water_database FROM h2o_quality
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-08-12T00:00:00Z | 2019-08-19T00:00:00Z | 6     |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-08-19T00:00:00Z | 2019-08-26T00:00:00Z | 6     |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-08-26T00:00:00Z | 2019-09-02T00:00:00Z | 6     |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-09-02T00:00:00Z | 2019-09-09T00:00:00Z | 6     |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-09-09T00:00:00Z | 2019-09-16T00:00:00Z | 6     |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+
++----------------------+----------------------+-------+
+| startTime            | endTime              | count |
++----------------------+----------------------+-------+
+| 2019-09-16T00:00:00Z | 2019-09-23T00:00:00Z | 6     |
++----------------------+----------------------+-------+
+3 columns, 1 rows in set
+```
 
 ## SHOW SHARDS
-##TODO
+
+Return the shard information of a database
+
+### Example 
+
+```sql
+> SHOW SHARDS
+name: NOAA_water_database
++----+---------------------+------------------+-------------+----------------------+----------------------+----------------------+--------+------+------------------+
+| id | database            | retention_policy | shard_group | start_time           | end_time             | expiry_time          | owners | tier | downSample_level |
++----+---------------------+------------------+-------------+----------------------+----------------------+----------------------+--------+------+------------------+
+| 19 | NOAA_water_database | autogen          | 19          | 2019-08-12T00:00:00Z | 2019-08-19T00:00:00Z | 2019-08-19T00:00:00Z | 2      | warm | 0                |
+| 20 | NOAA_water_database | autogen          | 20          | 2019-08-19T00:00:00Z | 2019-08-26T00:00:00Z | 2019-08-26T00:00:00Z | 2      | warm | 0                |
+| 21 | NOAA_water_database | autogen          | 21          | 2019-08-26T00:00:00Z | 2019-09-02T00:00:00Z | 2019-09-02T00:00:00Z | 2      | warm | 0                |
+| 18 | NOAA_water_database | autogen          | 18          | 2019-09-02T00:00:00Z | 2019-09-09T00:00:00Z | 2019-09-09T00:00:00Z | 2      | warm | 0                |
+| 22 | NOAA_water_database | autogen          | 22          | 2019-09-09T00:00:00Z | 2019-09-16T00:00:00Z | 2019-09-16T00:00:00Z | 2      | warm | 0                |
+| 23 | NOAA_water_database | autogen          | 23          | 2019-09-16T00:00:00Z | 2019-09-23T00:00:00Z | 2019-09-23T00:00:00Z | 2      | warm | 0                |
++----+---------------------+------------------+-------------+----------------------+----------------------+----------------------+--------+------+------------------+
+10 columns, 6 rows in set
+```
+
+Each shard information includes the retention policy , shard time range, etc.  ref [RETENTION POLICY](./retention_policy.md)
 
 ## SHOW SHARD GROUPS
-##TODO
+
+Returns the shard group information of a database
+
+### Example 
+
+```sql
+> SHOW SHARD GROUPS
+name: shard groups
++----+---------------------+------------------+----------------------+----------------------+----------------------+
+| id | database            | retention_policy | start_time           | end_time             | expiry_time          |
++----+---------------------+------------------+----------------------+----------------------+----------------------+
+| 19 | NOAA_water_database | autogen          | 2019-08-12T00:00:00Z | 2019-08-19T00:00:00Z | 2019-08-19T00:00:00Z |
+| 20 | NOAA_water_database | autogen          | 2019-08-19T00:00:00Z | 2019-08-26T00:00:00Z | 2019-08-26T00:00:00Z |
+| 21 | NOAA_water_database | autogen          | 2019-08-26T00:00:00Z | 2019-09-02T00:00:00Z | 2019-09-02T00:00:00Z |
+| 18 | NOAA_water_database | autogen          | 2019-09-02T00:00:00Z | 2019-09-09T00:00:00Z | 2019-09-09T00:00:00Z |
+| 22 | NOAA_water_database | autogen          | 2019-09-09T00:00:00Z | 2019-09-16T00:00:00Z | 2019-09-16T00:00:00Z |
+| 23 | NOAA_water_database | autogen          | 2019-09-16T00:00:00Z | 2019-09-23T00:00:00Z | 2019-09-23T00:00:00Z |
++----+---------------------+------------------+----------------------+----------------------+----------------------+
+6 columns, 6 rows in set
+```
+
+There are 6 shard groups here. If relate to `SHOW SHARDS` command, we can see that each shard group contains one shard. By default, one shard for openGemini standalone, each node is assigned a shard for a three-node cluster. When a `SHARD GROUP` expires, the system will create a new `SHARD GROUP` and assign a new shard. ref [SHARD GROUP DURATION](./retention_policy.md#shard-duration)
+
+## SHOW CLUSTER
+
+List the status of all nodes in the cluster
+
+```sql
+> show cluster
++---------------------+--------+----------------+--------+----------+--------------+
+|        time         | status |    hostname    | nodeID | nodeType | availability |
++---------------------+--------+----------------+--------+----------+--------------+
+| 1725327597969790000 | none   | 127.0.0.3:8091 |      1 | meta     | available    |
+| 1725327597969790000 | none   | 127.0.0.1:8091 |      2 | meta     | available    |
+| 1725327597969790000 | none   | 127.0.0.2:8091 |      3 | meta     | available    |
+| 1725327597969790000 | alive  | 127.0.0.1:8400 |      4 | data     | available    |
+| 1725327597969790000 | alive  | 127.0.0.2:8400 |      5 | data     | available    |
+| 1725327597969790000 | alive  | 127.0.0.3:8400 |      6 | data     | available    |
++---------------------+--------+----------------+--------+----------+--------------+
+6 columns, 6 rows in set
+
++------+-----------+----+------+-----------+-----------+-----------+----------+
+| opId | eventType | db | ptId | srcNodeId | dstNodeId | currState | preState |
++------+-----------+----+------+-----------+-----------+-----------+----------+
++------+-----------+----+------+-----------+-----------+-----------+----------+
+8 columns, 0 rows in set
+```
+
+The returned results include: cluster node information and node failover information.
