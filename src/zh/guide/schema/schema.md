@@ -10,6 +10,7 @@ order: 4
 - [SHOW SERIES CARDINALITY (查询时间线统计数量)](#show-series-cardinality)
 - [SHOW SHARDS (查看数据分片信息)](#show-shards)
 - [SHOW SHARD GROUPS(查看分片组信息)](#show-shard-groups)
+- [SHOW CLUSTER (查看集群状态信息)](#show-cluster)
 
 ## SHOW TAG KEYS
 
@@ -973,3 +974,30 @@ name: shard groups
 ```
 
 这里有6个分片组，结合`SHOW SHARDS`命令可以看出，每个分片组包含一个分片(SHARD)。openGemini单机默认初始化一个分片(SHARD)，如果是三节点的集群，则初始化为三个分片（每个节点一个）。当一个SHARD GROUP到期后，系统会创建新的SHARD GROUP，并分配新的分片 (SHARD)。相关阅读[SHARD GROUP DURATION](./retention_policy.md#shard-duration)
+
+## SHOW CLUSTER
+
+列举出集群所有节点的健康状态信息
+
+```sql
+> show cluster
++---------------------+--------+----------------+--------+----------+--------------+
+|        time         | status |    hostname    | nodeID | nodeType | availability |
++---------------------+--------+----------------+--------+----------+--------------+
+| 1725327597969790000 | none   | 127.0.0.3:8091 |      1 | meta     | available    |
+| 1725327597969790000 | none   | 127.0.0.1:8091 |      2 | meta     | available    |
+| 1725327597969790000 | none   | 127.0.0.2:8091 |      3 | meta     | available    |
+| 1725327597969790000 | alive  | 127.0.0.1:8400 |      4 | data     | available    |
+| 1725327597969790000 | alive  | 127.0.0.2:8400 |      5 | data     | available    |
+| 1725327597969790000 | alive  | 127.0.0.3:8400 |      6 | data     | available    |
++---------------------+--------+----------------+--------+----------+--------------+
+6 columns, 6 rows in set
+
++------+-----------+----+------+-----------+-----------+-----------+----------+
+| opId | eventType | db | ptId | srcNodeId | dstNodeId | currState | preState |
++------+-----------+----+------+-----------+-----------+-----------+----------+
++------+-----------+----+------+-----------+-----------+-----------+----------+
+8 columns, 0 rows in set
+```
+
+ 返回结果包含两部分内容，分别是集群节点信息和节点故障接管信息。
