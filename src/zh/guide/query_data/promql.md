@@ -20,7 +20,7 @@ order: 2
 
 - Remote Read and Write
 
-与此同时，openGemini兼容了Prometheus功能函数，点击查看[兼容列表]()
+与此同时，openGemini兼容了Prometheus功能函数，点击查看[兼容列表](../reference/promql_functions.md)
 
 ## HTTP API概述
 
