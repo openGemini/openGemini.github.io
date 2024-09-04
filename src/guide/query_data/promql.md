@@ -23,7 +23,7 @@ openGemini has supported PromQL at v1.3.0 and provided HTTP API such as expressi
 
 - Remote Read and Write
 
-At the same time, openGemini is compatible with Prometheus functions. Click to view the [compatible list]().
+At the same time, openGemini is compatible with Prometheus functions. Click to view the [Functions & Operators](../reference/promql_functions.md).
 
 ## HTTP API Overview
 
