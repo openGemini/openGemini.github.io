@@ -91,8 +91,6 @@ order: 1
 
 2. **Data writing optimization**
 
-   针对TAG数量特别大，或者TAG Value特别长，或者TAG数组比较大的数据写入场景，通过优化WAL网络传输、Cache压缩、索引更新逻辑等，实现CPU开销降低20%。实际业务场景测试，写性能从37万rows/s提升到60万rows/s
-
    For data writing scenarios where the number of TAGs is huge, the TAG Value is particularly long, or the TAG array is relatively large, the CPU overhead can be reduced by 20% by optimizing WAL network transmission, Cache compression, and index update code logical, etc. In practical application, write performance increased from 370,000 rows/s to 600,000 rows/s
 
    Configuration
@@ -102,7 +100,7 @@ order: 1
      cache-compress-enable = true
      bloom-filter-enable = true
    ```
-
+   
 3. **Batch query optimization**
 
    For batch query scenarios, such as dashboard applications, most query conditions are the same. By caching the inverted index query results, In practical application, 10 million time series , the batch query performance is improved by nearly 100%.
