@@ -70,6 +70,10 @@ classDiagram
         + void CreateMeasurement(CreateMeasurementBuilder builder)
         + String[] ShowMeasurements(ShowMeasurementBuilder builder)
         + void DropMeasurement(String database, String retentionPolicy, String measurement)
+        + Map[String]String[] ShowTagKeys(ShowTagKeysBuilder builder)
+        + String[] ShowTagValues(ShowTagValuesBuilder builder)
+        + Map[String]Map[String]String ShowFieldKeys(String database, Option<String> measurement)
+        + String[] ShowSeries(ShowSeriesBuilder builder)
     }
     class RpConfig {
         + String Name // non-null
@@ -108,6 +112,30 @@ classDiagram
     class EngineType {
         <<enum>>
         ColumnStore // columnstore
+    }
+    class ShowTagKeysBuilder {
+        ShowTagKeysBuilder Database(String database)
+        ShowTagKeysBuilder Measurement(String measurement)
+        ShowTagKeysBuilder RetentionPolicy(String rp)
+        ShowTagKeysBuilder Limit(int limit)
+        ShowTagKeysBuilder Offset(int offset)
+    }
+    class ShowTagValuesBuilder {
+        ShowTagValuesBuilder Database(String database)
+        ShowTagValuesBuilder Measurement(String measurement)
+        ShowTagValuesBuilder RetentionPolicy(String rp)
+        ShowTagValuesBuilder Limit(int limit)
+        ShowTagValuesBuilder Offset(int offset)
+        ShowTagValuesBuilder With(String[] keys)
+        ShowTagValuesBuilder Where(String key, ComparisonOperator operator, String value)
+    }
+    class ShowSeriesBuilder {
+        ShowSeriesBuilder Database(String database)
+        ShowSeriesBuilder Measurement(String measurement)
+        ShowSeriesBuilder RetentionPolicy(String rp)
+        ShowSeriesBuilder Limit(int limit)
+        ShowSeriesBuilder Offset(int offset)
+        ShowTagValuesBuilder Where(String key, ComparisonOperator operator, String value)
     }
 ```
 
