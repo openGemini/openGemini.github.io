@@ -65,7 +65,7 @@ openGemini.conf主要配置[monitor]，必要配置项如下表所示
   store-enabled = true
   store-database = "monitor"
   store-interval = "10s"
-  store-path = "/tmp/openGemini/metric/metric.data"
+  store-path = "/tmp/openGemini/metric/"
   compress = false
   # http-endpoint = ""
   # username = ""
