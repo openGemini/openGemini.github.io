@@ -63,6 +63,7 @@ classDiagram
         + String[] ShowDatabases()
         + void DropDatabase(String database)
         + void CreateRetentionPolicy(String database, RpConfig rpConfig, bool isDefault)
+        + void UpdateRetentionPolicy(String database, RpConfig rpConfig, bool isDefault)
         + RetentionPolicy[] ShowRetentionPolicies(String database)
         + void DropRetentionPolicy(String database, String retentionPolicy)
         + void CreateMeasurement(CreateMeasurementBuilder builder)
