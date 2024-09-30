@@ -12,7 +12,7 @@ A：不支持，社区版本未做过相关兼容性测试。如果麒麟和Anol
 
 ### **Q2：可以在Windows上运行openGemini进行开发调试吗？**
 
-A：openGemini最新的版本已经支持Mac OS 和 Windows，可以用作系统开发调试。但不建议在非linux环境上生成使用。
+A：openGemini最新的版本已经支持Mac OS 和 Windows，可以用作系统开发调试。但不建议在非linux的生产环境上使用。
 
 ### **Q3：集群环境中，为什么有的节点上会没有数据？**
 
