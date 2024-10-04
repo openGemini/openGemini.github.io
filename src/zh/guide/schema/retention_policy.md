@@ -66,7 +66,7 @@ CREATE RETENTION POLICY "never_expire" ON "NOAA_water_database" DURATION 0s REPL
 该查询为数据库`NOAA_water_database`创建了一个名为`never_expire`的保留策略，该策略的下的数据是不会过期的。
 
 ::: tip
-成功的`CREATE RETENTION POLICY`查询不返回任何结果。
+成功的`CREATE RETENTION POLICY`命令不返回任何结果。
 
 如果尝试创建与现有策略相同的保留策略，则openGemini不会返回错误。
 如果尝试创建与现有保留策略相同名称的保留策略，但属性不同，则openGemini将返回错误。
@@ -196,7 +196,7 @@ ALTER RETENTION POLICY "what_is_time" ON "NOAA_water_database" DURATION 3w SHARD
 ```
 在最后一个示例中，` what_is_time`保留其原始复制因子`1`。
 
-成功的`ALTER RETENTION POLICY`查询不返回任何结果。
+成功的`ALTER RETENTION POLICY`命令不返回任何结果。
 
 ## DROP RETENTION POLICY(删除数据保留策略)
 

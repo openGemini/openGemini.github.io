@@ -15,7 +15,7 @@ CREATE DATABASE <database_name> [WITH [DURATION <duration>] [REPLICATION <n>] [S
 `WITH` ，`DURATION`，`REPLICATION`，`SHARD DURATION`，`INDEX DURATION`，`NAME` 子句以及创建与数据库相关联的单个保留策略是可选项。
 如果未在`WITH`之后指定子句，则会默认创建名称为`autogen`的保留策略。
 
-成功的`CREATE DATABASE`查询不返回任何结果。
+成功的`CREATE DATABASE`命令不返回任何结果。
 
 如果创建一个已经存在的数据库，openGemini 不执行任何操作，但也不会返回错误。
 
