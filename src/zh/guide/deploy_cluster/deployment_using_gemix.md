@@ -1,11 +1,13 @@
 ---
-title: 一键部署(推荐)
+title: 一键部署
 order: 1
 ---
 
 ## 集群部署
 
-请参考 [Gemix使用指南](../reference/gemix_manual.md) 部署openGemini集群
+请参考 [Gemix使用指南](../reference/gemix_manual.md) 部署openGemini集群。
+
+> Gemix通过远程调用shell命令来完成集群的安装部署，有时会不太稳定。
 
 ## 参考拓扑架构
 
