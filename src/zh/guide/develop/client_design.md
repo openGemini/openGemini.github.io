@@ -28,6 +28,7 @@ classDiagram
         + timeout
         + connectTimeout
         + bool gzipEnabled
+        + enum codec
         + TlsConfig tlsConfig // nullable, language specific
         + void close()
     }
