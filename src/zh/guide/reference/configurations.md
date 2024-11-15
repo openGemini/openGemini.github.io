@@ -917,3 +917,65 @@ diff = 20
 abs = 20000  
 max = 100000  
 cool-down = "30m"  
+
+## [record-write]
+
+用于配置基于record进行批量写入服务的相关配置项
+
+**enabled**
+
+  - 类型：`bool`
+  - 默认值：`true`
+  - 是否开启record write服务
+
+**auth-enabled**
+
+  - 类型：`bool`
+  - 默认值：`false`
+  - 是否进行写入身份校验
+
+**max-message-size**
+
+  - 类型：`int`
+  - 默认值：`4194304` 
+  - 单条RPC消息所包含的最大请求长度，用字节表示，默认为4MB
+
+**rpc-address**
+
+  - 类型：`string`
+  - 默认值：`127.0.0.1:8305`
+  - record write服务的监听地址及端口，若启用record write服务则必填
+
+## [record-write.TLS]
+
+record write服务中，RPC部分的TLS相关配置
+
+**enabled**
+
+  - 类型：`bool`
+  - 默认值：`false`
+  - 是否启用TLS。若启用TLS，则必须在下面的`key-file`和`cert-file`中提供对应的私钥和TLS证书文件
+
+**mTLS-enabled**
+ 
+  - 类型：`bool`
+  - 默认值：`false`
+  - 是否启用双向TLS。在启用双向TLS之前必须开启TLS，即`record-write.TLS.enabled`必须设置为`true`。同时，需要提供私钥，TLS证书，CA证书文件。
+
+**key-file**
+
+  - 类型：`string`
+  - 默认值：`无`
+  - TLS私钥文件路径
+
+**cert-file**
+
+  - 类型：`string`
+  - 默认值：`无`
+  - TLS证书文件路径
+
+**CA-root**
+
+  - 类型：`string`
+  - 默认值：`无`
+  - CA根证书文件路径
