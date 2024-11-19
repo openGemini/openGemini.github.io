@@ -223,6 +223,72 @@ TODO
 TODO
 ```
 
+## SHOW MEASUREMENTS DETAIL
+
+```sql
+SHOW MEASUREMENTS DETAIL WITH MEASUREMENT = '<measurement_name>'
+```
+
+Show the **INDEX**, **SHARDKEY**, **ENGINE TYPE**, **TAG KEYS**, **FIELD KEYS**, **RETENION POLICY** of measurement. Previously, at least 3 or 4 commands were required to query the above information.
+
+### Examples
+
+```sql
+> show measurements
+name: measurements
++-----------------------+
+|         name          |
++-----------------------+
+| compact               |
+| dbpt_tasks            |
+| downSample            |
+| executor              |
+| filestat              |
+| hitRatio              |
+| httpd                 |
+| io                    |
+| merge                 |
+| meta                  |
+| metaRaft              |
+| meta_dbpt_tasks       |
+| metadata              |
+| ooo_time_distribution |
+| performance           |
+| record                |
+| runtime               |
+| spdy                  |
+| store_query           |
+| stream                |
+| stream_window         |
++-----------------------+
+1 columns, 21 rows in set
+
+> show measurements detail with measurement = meta
+name: meta
++------------------------------------+
+|               Detail               |
++------------------------------------+
+| RETENTION POLICY: autogen          |
+| INDEX: <nil>                       |
+| SHARD KEY: <nil>                   |
+| ENGINE TYPE: tsstore               |
+| TAG KEYS: Host, NodeID, app,       |
+| hostname                           |
+| FIELD KEYS:                        |
+| GetFromDataMarshalLenTotal(float), |
+| GetFromDataMarshalTotal(float),    |
+| GetFromOpsMapLenTotal(float),      |
+| GetFromOpsMapTotal(float),         |
+| LTime(float),                      |
+| LeaderSwitchTotal(float),          |
+| SnapshotDataSize(float),           |
+| SnapshotTotal(float),              |
+| SnapshotUnmarshalDuration(float),  |
+| Status(float)...                   |
++------------------------------------+
+1 columns, 6 rows in set
+```
+
 ## DROP MEASUREMENT
 
 use command `DROP MEASUREMENT` to delete measurement.

@@ -259,6 +259,74 @@ TODO
 TODO
 ```
 
+## SHOW MEASUREMENTS DETAIL(查看表明细)
+
+### 语法
+
+```sql
+SHOW MEASUREMENTS DETAIL WITH MEASUREMENT = '<measurement_name>'
+```
+
+查看指定表的INDEX, SHARDKEY, ENGINE TYPE, TAG KEYS, FIELD KEYS, RETENION POLICY等信息，在之前，查询上述信息至少需要执行3-4条命令
+
+### 示例
+
+```sql
+> show measurements
+name: measurements
++-----------------------+
+|         name          |
++-----------------------+
+| compact               |
+| dbpt_tasks            |
+| downSample            |
+| executor              |
+| filestat              |
+| hitRatio              |
+| httpd                 |
+| io                    |
+| merge                 |
+| meta                  |
+| metaRaft              |
+| meta_dbpt_tasks       |
+| metadata              |
+| ooo_time_distribution |
+| performance           |
+| record                |
+| runtime               |
+| spdy                  |
+| store_query           |
+| stream                |
+| stream_window         |
++-----------------------+
+1 columns, 21 rows in set
+
+> show measurements detail with measurement = meta
+name: meta
++------------------------------------+
+|               Detail               |
++------------------------------------+
+| RETENTION POLICY: autogen          |
+| INDEX: <nil>                       |
+| SHARD KEY: <nil>                   |
+| ENGINE TYPE: tsstore               |
+| TAG KEYS: Host, NodeID, app,       |
+| hostname                           |
+| FIELD KEYS:                        |
+| GetFromDataMarshalLenTotal(float), |
+| GetFromDataMarshalTotal(float),    |
+| GetFromOpsMapLenTotal(float),      |
+| GetFromOpsMapTotal(float),         |
+| LTime(float),                      |
+| LeaderSwitchTotal(float),          |
+| SnapshotDataSize(float),           |
+| SnapshotTotal(float),              |
+| SnapshotUnmarshalDuration(float),  |
+| Status(float)...                   |
++------------------------------------+
+1 columns, 6 rows in set
+```
+
 ## DROP MEASUREMENT(删除表)
 
 使用`DROP MEASUREMENT`删除measurement
