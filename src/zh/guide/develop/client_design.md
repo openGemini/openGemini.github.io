@@ -27,8 +27,8 @@ classDiagram
         + BatchConfig batchConfig // nullable, if null, means batch is disabled
         + timeout
         + connectTimeout
-        + bool gzipEnabled
-        + enum codec
+        + enum contentType // json, csv, msgpack
+        + enum compressMethod // gzip, zstd, br
         + TlsConfig tlsConfig // nullable, language specific
         + void close()
     }
