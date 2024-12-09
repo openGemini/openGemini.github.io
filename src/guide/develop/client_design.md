@@ -30,6 +30,7 @@ classDiagram
         + enum compressMethod // gzip, zstd, br
         + TlsConfig tlsConfig // nullable, language specific
         + void close()
+        + GRPCConfig grpcConfig // if null, call WriteByGRPC will nothing to do, otherwise send write request by gRPC
     }
 
     class Address {
@@ -47,6 +48,15 @@ classDiagram
     class BatchConfig {
         + Duration batchInterval // must be greater than 0
         + int batchSize // must be greater than 0, if set too large, may cause client overflow or server-side rejected the request.
+    }
+    
+    class GRPCConfig {
+        + List~Address~ addresses
+        + AuthConfig authConfig
+        + BatchConfig batchConfig
+        + enum compressMethod // gzip, zstd, br
+        + TlsConfig tlsConfig
+        + timeout
     }
 
     OpenGeminiClient "1" *-- "many" Address: contains
@@ -148,6 +158,7 @@ classDiagram
         + WritePointWithRp(String database, String rp, Point point)
         + WriteBatchPoints(String database, BatchPoints batchPoints)
         + WriteBatchPointsWithRp(String database, String rp, BatchPoints batchPoints)
+        + WriteByGRPC(req WriteRequest) // WriteRequest build from RecordBuilder
     }
     class BatchPoints {
         + List~Point~ points
@@ -168,6 +179,20 @@ classDiagram
         + SetTime(timestamp)
         + SetPrecision(type)
         + SetMeasurement(name)
+    }
+    
+    class RecordBuilder {   // new from NewRecordBuilder with database and retention policy params
+        + RecordBuilder Authenticate(String username, String password)
+        + RecordBuilder AddRecord(RecordLine line) // RecordLine build from RecordLineBuilder
+        + WriteRequest Build()
+    }
+    
+    class RecordLineBuilder {   // new from NewRecordLineBuilder with measurement param
+        + RecordLineBuilder AddTag(String key, String value)
+        + RecordLineBuilder AddTags(map[String]String)
+        + RecordLineBuilder AddField(String key, Any value)
+        + RecordLineBuilder AddFields(map[String]Any)
+        + RecordLine Build(Time time)
     }
 
     BatchPoints "1" *-- "many" Point: contains
