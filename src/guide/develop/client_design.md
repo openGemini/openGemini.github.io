@@ -30,6 +30,7 @@ classDiagram
         + enum compressMethod // gzip, zstd, br
         + TlsConfig tlsConfig // nullable, language specific
         + void close()
+        + GRPCConfig grpcConfig // if null, call WriteByGRPC will nothing to do, otherwise send write request by gRPC
     }
 
     class Address {
@@ -47,6 +48,15 @@ classDiagram
     class BatchConfig {
         + Duration batchInterval // must be greater than 0
         + int batchSize // must be greater than 0, if set too large, may cause client overflow or server-side rejected the request.
+    }
+    
+    class GRPCConfig {
+        + List~Address~ addresses
+        + AuthConfig authConfig
+        + BatchConfig batchConfig
+        + enum compressMethod // gzip, zstd, br
+        + TlsConfig tlsConfig
+        + timeout
     }
 
     OpenGeminiClient "1" *-- "many" Address: contains
@@ -148,6 +158,7 @@ classDiagram
         + WritePointWithRp(String database, String rp, Point point)
         + WriteBatchPoints(String database, BatchPoints batchPoints)
         + WriteBatchPointsWithRp(String database, String rp, BatchPoints batchPoints)
+        + WriteByGRPC(RecordBuilder builder)
     }
     class BatchPoints {
         + List~Point~ points
@@ -168,6 +179,18 @@ classDiagram
         + SetTime(timestamp)
         + SetPrecision(type)
         + SetMeasurement(name)
+    }
+    
+    class RecordBuilder {
+        + RecordBuilder Database(String database)
+        + RecordBuilder RetentionPolicy(String retentionPolicy)
+        + RecordBuilder Measurement(String measurement)
+        + RecordBuilder AddTag(String key, String value)
+        + RecordBuilder AddTags(map[String]String)
+        + RecordBuilder AddField(String key, Any value)
+        + RecordBuilder AddFields(map[String]Any)
+        + RecordBuilder Time(Time time)
+        + RecordImpl Build()
     }
 
     BatchPoints "1" *-- "many" Point: contains
