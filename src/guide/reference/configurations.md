@@ -917,3 +917,65 @@ diff = 20
 abs = 20000  
 max = 100000  
 cool-down = "30m"  
+
+## [record-write]
+
+Controls how the record-write service are configured within openGemini.
+
+**enabled**
+
+  - Type: `bool`
+  - Default: `true`
+  - Determines whether the record write service is enabled.
+
+**auth-enabled**
+
+  - Type: `bool`
+  - Default: `false`
+  - Determines whether the username/password auth in record write service is enabled.
+
+**max-message-size**
+
+  - Type: `int`
+  - Default: `4194304` 
+  - The maximum message size of record write service counted in Bytes. By default, it is 4194304 Bytes.(4 MB)
+
+**rpc-address**
+
+  - Type: `string`
+  - Default: `127.0.0.1:8305`
+  - The rpc bind address of record write service.
+
+## [record-write.TLS]
+
+some TLS-releted configs in record-write service.
+
+**enabled**
+
+  - Type: `bool`
+  - Default: `false`
+  - Determines whether the TLS in record write service is enabled. If TLS is enabled, then key-file and cert-file MUST be provided.
+
+**mTLS-enabled**
+ 
+  - Type: `bool`
+  - Default: `false`
+  - Determines whether the mutal-TLS in record write service is enabled. If mutual-TLS is enabled, then the CA-root MUST be provided.
+
+**key-file**
+
+  - Type: `string`
+  - Default: `None`
+  - The path to TLS key file.
+
+**cert-file**
+
+  - Type: `string`
+  - Default: `None`
+  - The path to TLS cert file.
+
+**CA-root**
+
+  - Type: `string`
+  - Default: `None`
+  - The path to CA root file.
