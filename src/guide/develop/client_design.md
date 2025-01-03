@@ -206,6 +206,22 @@ classDiagram
         + String database
         + String retentionPolicy
         + String command
+        + TimeFormat timeFormat
+        + Precision precision
+    }
+    class Precision {
+        <<enum>>
+        PRECISIONMICROSECOND("u")
+        PRECISIONNANOSECOND("ns")
+        PRECISIONMILLISECOND("ms")
+        PRECISIONSECOND("s")
+        PRECISIONMINUTE("m")
+        PRECISIONHOUR("h")
+    }
+    class TimeFormat {
+        <<enum>>
+        RFC3339("rfc3339")
+        TIMESTAMP("timestamp")
     }
 ```
 
