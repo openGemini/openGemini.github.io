@@ -18,7 +18,7 @@ order: 2
    或者指定版本的容器镜像：
 
    ```shell
-   docker run -d --name opengemini opengeminidb/opengemini-server:v1.0.1
+   docker run -d --name opengemini opengeminidb/opengemini-server:1.0.1
    ```
 
 3. 使用openGemini cli 连接：
