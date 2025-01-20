@@ -18,7 +18,7 @@ This section introduces how to quickly experience openGemini through Docker at f
    Or specify a version of the container image:
 
    ```shell
-   > docker run -d --name opengemini opengeminidb/opengemini-server:v1.0.1
+   > docker run -d --name opengemini opengeminidb/opengemini-server:1.0.1
    ```
 
 3. Connect to openGemini cli:
