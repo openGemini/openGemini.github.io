@@ -95,7 +95,8 @@ export const getCNCFFooter = (lang = 'en') => {
                 sandbox project.
             </div>
             <div class="logo">
-                <img src="/images/cncf-color.png" alt="" />
+                <img src="/images/cncf-color.svg" alt="" data-mode="lightmode-only"/>
+                <img src="/images/cncf-white.svg" alt="" data-mode="darkmode-only"/>
             </div>
             <p class="copyright">
                 The Linux Foundation has registered trademarks and uses trademarks. For a list of
