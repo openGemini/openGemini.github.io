@@ -104,7 +104,7 @@ export const getCNCFFooter = (lang = 'en') => {
                 <a href="https://www.linuxfoundation.org/legal/trademark-usage" target="_blank"
                     >Trademark Usage</a
                 >
-                page. 2024 © openGemini Project Authors. All rights reserved.
+                page. 2025 © openGemini Project Authors. All rights reserved.
             </p>
         </div>
     </footer>
