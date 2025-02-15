@@ -31,7 +31,7 @@ classDiagram
         + enum compressMethod // gzip, zstd, br
         + TlsConfig tlsConfig // nullable, language specific
         + void close()
-        + GRPCConfig grpcConfig // if null, call WriteByGRPC will nothing to do, otherwise send write request by gRPC
+        + GrpcConfig grpcConfig // if null, call WriteByGrpc will nothing to do, otherwise send write request by gRPC
     }
 
     class Address {
@@ -51,7 +51,7 @@ classDiagram
         + int batchSize // must be greater than 0
     }
 
-    class GRPCConfig {
+    class GrpcConfig {
         + List~Address~ addresses
         + AuthConfig authConfig
         + BatchConfig batchConfig
@@ -159,7 +159,7 @@ classDiagram
         + WritePointWithRp(String database, String rp, Point point)
         + WriteBatchPoints(String database, BatchPoints batchPoints)
         + WriteBatchPointsWithRp(String database, String rp, BatchPoints batchPoints)
-        + WriteByGRPC(req WriteRequest) // WriteRequest build from RecordBuilder
+        + WriteByGrpc(req WriteRequest) // WriteRequest build from RecordBuilder
     }
     class BatchPoints {
         + List~Point~ points
