@@ -10,7 +10,7 @@ order: 1
 工具名称是 dataMigrate。 它用于将 InfluxDB 数据迁移到 openGemini。
 dataMigrate直接从InfluxDB的TSM文件中读取数据写入openGemini。
 :::tip
-如果源数据库的表存在上千字段时，该工具需要更大的内容，因为在内部要把所有列读取后再组装成行再写入openGemini，这部分比较耗内存资源
+如果源数据库的表存在上千字段时，该工具需要更大的内存，因为在内部要把所有列读取后再组装成行再写入openGemini，这部分比较耗内存资源
 :::
 
 ## 快速开始
