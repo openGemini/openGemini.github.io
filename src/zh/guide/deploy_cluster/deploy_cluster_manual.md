@@ -420,7 +420,7 @@ order: 2
 2. Devops测试数据生成（IoT测试场景类似）
 
    ```shell
-   > nohub tsbs_generate_data --use-case="cpu-only" --seed=123 --scale=300000 --timestamp-start="2024-11-11T00:00:00Z" --timestamp-end="2024-11-12T00:00:01Z" --log-interval="10s" --format="influx" | gzip > /path/to/openGemini-test-data.gz &
+   > nohub tsbs_generate_data --use-case="cpu-only" --seed=123 --scale=100000 --timestamp-start="2024-11-11T00:00:00Z" --timestamp-end="2024-11-12T00:00:01Z" --log-interval="10s" --format="influx" | gzip > /path/to/openGemini-test-data.gz &
    ```
 
    `scale=300000`表示生成的数据，时间线（可以理解为设备数）规模是30万，必填
@@ -445,21 +445,21 @@ order: 2
 4. 测试写性能
 
    ```shell
-   > cat /path/to/openGemini-test-data.gz | gunzip | tsbs_load_influx --dbname="dbname" --urls="http://192.168.0.38:8086,http://192.168.0.248:8086" --workers=8 --batchsize=1000 --do-create-db=false --do-load=true
+   > cat /path/to/openGemini-test-data.gz | gunzip | tsbs_load_influx --db-name="dbname" --urls="http://192.168.0.38:8086,http://192.168.0.248:8086" --workers=8 --batch-size=1000 --do-create-db=false --do-load=true
    ```
 
-   `--dbname="dbname"` 是上面创建的DB名称。
+   `--db-name="dbname"` 是上面创建的DB名称。
 
    `--urls` 是`ts-sql`地址，可以配置多个，用逗号隔开
 
    `--workers=8` 是配置写数据并发量
 
-   `--batchsize=1000` 配置单批写入的数据量，1000表示一批数据有1000条。可以是2000，甚至5000，不同的值，性能也不相同。
+   `--batch-size=1000` 配置单批写入的数据量，1000表示一批数据有1000条。可以是2000，甚至5000，不同的值，性能也不相同。
 
 5. 生成查询语句
 
    ```shell
-   > tsbs_generate_queries --use-case="cpu-only" --seed=123 --scale=300000 --timestamp-start="2024-11-11T00:00:00Z" --timestamp-end="2024-11-12T00:00:01Z" --queries=10 --queries-type="single-groupby-1-1-12" --format"influx" |gzip > /path/to/single-groupby-1-1-12.gz
+   > tsbs_generate_queries --use-case="cpu-only" --seed=123 --scale=100000 --timestamp-start="2024-11-11T00:00:00Z" --timestamp-end="2024-11-12T00:00:01Z" --queries=10 --query-type="single-groupby-1-1-12" --format="influx" |gzip > /path/to/single-groupby-1-1-12.gz
    ```
 
    上述命令会生成一个文件，包含10个query，每个query仅查询时间范围不一致。执行时会统计平均查询时延，最大值最小值等性能指标。
