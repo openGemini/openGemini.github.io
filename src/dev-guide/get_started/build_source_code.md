@@ -8,11 +8,11 @@ order: 2
 
 ### Compile environment information
 
-- [GO](https://go.dev/dl/) : version v1.18+
+- [Go](https://go.dev/dl/) : version v1.18+
 - [Python](https://www.python.org/downloads/) : version v3.7+
 - [Git](https://git-scm.com/downloads) : The openGemini source code is hosted on GitHub as a git repository. To work with the git repository, please [install Git](https://git-scm.com/downloads).
 
-### How to set GO environment variables
+### How to set Go environment variables
 
 Open ~/.profile configuration file and add the following configurations to the end of the file:
 
