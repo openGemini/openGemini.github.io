@@ -26,7 +26,7 @@ openGemini v1.4.0版本是一个多副本性能优化版本
 
 ### 集群配置
 
-数据3副本，每节点2PT，其余默认，集群拓扑见上图。
+数据3副本，每节点1或2PT，其余默认，集群拓扑见上图。
 
 ### 写入性能
 
@@ -36,19 +36,29 @@ openGemini v1.4.0版本是一个多副本性能优化版本
 
 :::
 
-- 8并发往2个ts-sql批量写，batchsize为1000，写性能 722819.92 rows/sec（平均 72万rows/s）
-  - 资源消耗情况：
-    - Node-1:  cpu 84%, mem  7.5%
-    - Node-2:  cpu 68%, mem  7%
-    - Node-3:  cpu 30%, mem  6.5%
-
-- 8并发往1个ts-sql批量写，batchsize为1000，写性能 521019.91 rows/sec（平均 52万rows/s）
+- 8并发往1个ts-sql批量写，1pt, batchsize为1000，写性能 90795.71 rows/sec（平均 9万rows/s）
   - 资源消耗
-    - Node-1:  cpu 92%, mem  7.5%
-    - Node-2:  cpu 26%, mem  6.6%
-    - Node-3:  cpu 24%, mem  6.7%
-
-当只有1个sql时，所有数据处理都在node-1上，因此CPU利用率比较高。如果有2个ts-sql时，由于负载均衡并非完全均衡，因此node-1的负载相对高一些，总体性能提升了 40%
+    - Node-1:  cpu 67%, mem  40%, 磁盘I/O利用率最大值 29%
+    - Node-2:  cpu 20%, mem  37%，磁盘I/O利用率最大 26%
+    - Node-3:  cpu 21%, mem  38%，磁盘I/O利用率 27%
+- 8并发往1个ts-sql批量写，2pt, batchsize为1000，写性能 108758.62 rows/sec（平均 10万rows/s）
+  - 资源消耗
+    - Node-1:  cpu 70%, mem  51%, 磁盘I/O利用率 最大值 32%
+    - Node-2:  cpu 30%, mem  47%，磁盘I/O利用率最大值 30%
+    - Node-3:  cpu 26%, mem  40%，磁盘I/O利用率最大值 25%
+- 8并发往2个ts-sql批量写，2pt, batchsize为1000，写性能 107886.40 rows/sec（平均 10万rows/s）
+  - 资源消耗
+    - Node-1:  cpu 71%, mem  47%, 磁盘I/O利用率 最大值 29%
+    - Node-2:  cpu 37%, mem  44%，磁盘I/O利用率最大值 28%
+    - Node-3:  cpu 26%, mem  43%，磁盘I/O利用率最大值 25%
+- 16并发往2个ts-sql批量写，2pt, batchsize为1000，写性能 112811.15 rows/sec（平均 11万rows/s）
+  - 资源消耗
+    - Node-1:  cpu 72%, mem  51%, 磁盘I/O利用率 最大值 30%
+    - Node-2:  cpu 37%, mem  44%，磁盘I/O利用率最大值 28%
+    - Node-3:  cpu 26%, mem  43%，磁盘I/O利用率最大值 25%
+- 8并发写单机，1pt，batchsize为1000，写性能 377977.89 rows/sec（平均 37万rows/s）
+  - 资源消耗
+    - Node-1:  cpu 90%, mem  10%, 磁盘I/O利用率 最大值 43%
 
 ### 查询性能
 
@@ -70,13 +80,7 @@ openGemini v1.4.0版本是一个多副本性能优化版本
 | lastpoint             | 4      | 89.24                  |
 | groupby-orderby-limit | 1      | 9,225.74               |
 
-由于内存只有16GB，因此并发数调整为4，high-cpu-all 和 groupby-orderby-limit这两个场景要消耗大量计算资源，因此并发数设置为1。从测试数据来看，openGemini查询性能依然具有竞争力领先优势。
-
-资源消耗情况：
-
-- Node-1:  high-cpu-all和groupby-oderby-limit场景最高超过85%，其他场景保持在 mem 30%左右，部分简单场景更低。
-- Node-2:  high-cpu-all和groupby-oderby-limit场景最高超过85%，其他场景保持在 mem 30%左右，部分简单场景更低。
-- Node-3:  high-cpu-all和groupby-oderby-limit场景最高超过85%，其他场景保持在 mem 30%左右，部分简单场景更低。
+由于内存只有16GB，因此并发数调整为4，high-cpu-all 和 groupby-orderby-limit这两个场景要消耗大量计算资源，因此并发数设置为1。
 
 ## 问题修复
 
