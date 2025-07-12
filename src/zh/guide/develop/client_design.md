@@ -230,6 +230,36 @@ classDiagram
     SeriesResult "1" *-- "0..*" Series: contains
 ```
 
+# OpenTelemetry 集成设计
+为提升OpenGemini Go客户端的可观测性，便于追踪查询与写入操作的性能、错误等信息，本方案采用拦截器模式集成OpenTelemetry，实现全链路追踪。该设计支持非侵入式扩展，可与其他拦截器（如日志、认证）共存，同时保持对原生客户端的最小修改。
+
+## 拦截器设计
+
+```mermaid
+interface Interceptor {
+    void QueryBefore(context.Context, string)
+    void QueryAfter(context.Context, string, error)
+    void WriteBefore(context.Context, []byte)
+    void WriteAfter(context.Context, []byte, error)
+}
+```
+
+## 定义基础客户端类，关联拦截器接口
+
+```mermaid
+class Client {
+- []Interceptor interceptors
+
+}
+```
+
+## 定义集成 OpenTelemetry 的拦截器实现类，实现 Interceptor 接口
+
+```mermaid
+class OtelClient {
+    Interceptor
+```
+
 # 查询构造器设计
 
 ```mermaid

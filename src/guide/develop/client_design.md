@@ -245,6 +245,37 @@ classDiagram
     SeriesResult "1" *-- "0..*" Series: contains
 ```
 
+# OpenTelemetry integration design
+To enhance the observability of the OpenGemini Go client and facilitate tracking of performance metrics, errors, and other information related to query and write operations, this solution adopts the interceptor pattern to integrate OpenTelemetry, enabling full-link tracing. The design supports non-intrusive extensions, allowing coexistence with other interceptors (such as logging and authentication interceptors) while minimizing modifications to the original client.
+
+## Interceptor design
+
+```mermaid
+interface Interceptor {
+    void QueryBefore(context.Context, string)
+    void QueryAfter(context.Context, string, error)
+    void WriteBefore(context.Context, []byte)
+    void WriteAfter(context.Context, []byte, error)
+}
+```
+
+## Define the base client class,associated with the Interceptor interface
+
+```mermaid
+class Client {
+- []Interceptor interceptors
+
+}
+```
+
+## Define the interceptor implementation class integrating OpenTelemetry,implementing the Interceptor interface
+
+```mermaid
+class OtelClient {
+    Interceptor
+}
+```
+
 # QueryBuilder design
 
 ```mermaid
