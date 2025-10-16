@@ -199,6 +199,128 @@ classDiagram
     BatchPoints "1" *-- "many" Point: contains
 ```
 
+# Execute 接口设计
+
+Execute 接口提供了一个统一的 SQL 执行接口，可以自动将不同类型的语句路由到相应的底层方法。该设计支持类 SQL 语句，包括 INSERT、SELECT、CREATE、DROP 和其他数据库操作，并提供参数支持和类型安全。
+
+```mermaid
+classDiagram
+    class OpenGeminiClient {
+        + ExecuteResult Execute(Statement statement)
+        + ExecuteResult ExecuteContext(Context ctx, Statement statement)
+    }
+    
+    class Statement {
+        + String database
+        + String command
+        + Map~String, Object~ params
+        + String retentionPolicy
+    }
+    
+    class ExecuteResult {
+        + QueryResult queryResult
+        + int64 affectedRows
+        + StatementType statementType
+        + Error error
+    }
+    
+    class StatementType {
+        <<enum>>
+        StatementTypeUnknown
+        StatementTypeQuery    // SELECT, SHOW, EXPLAIN → 路由到 Query()
+        StatementTypeCommand  // CREATE, DROP, ALTER → 路由到 Query()
+        StatementTypeInsert   // INSERT → 路由到 Write 方法
+        + String() String
+        + IsQueryLike() bool
+        + IsWriteLike() bool
+    }
+    
+    OpenGeminiClient --> Statement : 使用
+    OpenGeminiClient --> ExecuteResult : 返回
+    ExecuteResult --> StatementType : 包含
+    ExecuteResult --> QueryResult : 包含
+```
+
+## 语句路由逻辑
+
+```mermaid
+flowchart TD
+    A[执行语句] --> B{解析语句类型}
+    B -->|SELECT, SHOW, EXPLAIN, DESCRIBE, WITH| C[StatementTypeQuery]
+    B -->|CREATE, DROP, ALTER, UPDATE, DELETE| D[StatementTypeCommand]  
+    B -->|INSERT| E[StatementTypeInsert]
+    B -->|其他| F[StatementTypeUnknown]
+    
+    C --> G[路由到 Query 方法]
+    D --> G[路由到 Query 方法]
+    E --> H[路由到 Write 方法]
+    F --> I[返回错误]
+    
+    G --> J[返回 QueryResult + AffectedRows=0/1]
+    H --> K[返回 AffectedRows=数据点数量]
+    I --> L[返回错误结果]
+```
+
+## 参数支持
+
+Execute 接口支持参数化语句并自动进行类型转换：
+
+```mermaid
+classDiagram
+    class ParameterTypes {
+        <<enum>>
+        String    // "value" → value  
+        Integer   // 42 → 42i
+        UInteger  // 42 → 42u  
+        Float     // 3.14 → 3.14
+        Boolean   // true → true
+    }
+    
+    class ParameterProcessor {
+        + replaceParams(command String, params Map) String
+        + convertParamValue(value Object) String
+        + validateParams(command String, params Map) Error
+    }
+    
+    Statement --> ParameterProcessor : 使用
+    ParameterProcessor --> ParameterTypes : 转换
+```
+
+## 使用示例
+
+### 基本用法
+```go
+result, err := client.Execute(opengemini.Statement{
+    Database: "mydb",
+    Command:  "SELECT * FROM weather LIMIT 10",
+})
+```
+
+### 参数化查询
+```go
+result, err := client.Execute(opengemini.Statement{
+    Database: "mydb", 
+    Command:  "SELECT * FROM weather WHERE location=$loc AND temp>$temp",
+    Params: map[string]any{
+        "loc":  "beijing",
+        "temp": 25.0,
+    },
+})
+```
+
+### 参数化插入
+```go
+result, err := client.Execute(opengemini.Statement{
+    Database: "mydb",
+    Command:  "INSERT weather,location=$location temperature=$temp,humidity=$hum",
+    Params: map[string]any{
+        "location": "shanghai", 
+        "temp":     30.2,
+        "hum":      70,
+    },
+})
+```
+
 # 查询设计
 
 ```mermaid

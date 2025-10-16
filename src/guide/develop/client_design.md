@@ -198,6 +198,128 @@ classDiagram
     BatchPoints "1" *-- "many" Point: contains
 ```
 
+# Execute interface design
+
+The Execute interface provides a unified SQL execution interface that automatically routes different types of statements to appropriate underlying methods. This design supports SQL-like statements including INSERT, SELECT, CREATE, DROP, and other database operations with parameter support and type safety.
+
+```mermaid
+classDiagram
+    class OpenGeminiClient {
+        + ExecuteResult Execute(Statement statement)
+        + ExecuteResult ExecuteContext(Context ctx, Statement statement)
+    }
+    
+    class Statement {
+        + String database
+        + String command
+        + Map~String, Object~ params
+        + String retentionPolicy
+    }
+    
+    class ExecuteResult {
+        + QueryResult queryResult
+        + int64 affectedRows
+        + StatementType statementType
+        + Error error
+    }
+    
+    class StatementType {
+        <<enum>>
+        StatementTypeUnknown
+        StatementTypeQuery    // SELECT, SHOW, EXPLAIN → routed to Query()
+        StatementTypeCommand  // CREATE, DROP, ALTER → routed to Query()
+        StatementTypeInsert   // INSERT → routed to Write methods
+        + String() String
+        + IsQueryLike() bool
+        + IsWriteLike() bool
+    }
+    
+    OpenGeminiClient --> Statement : uses
+    OpenGeminiClient --> ExecuteResult : returns
+    ExecuteResult --> StatementType : contains
+    ExecuteResult --> QueryResult : contains
+```
+
+## Statement routing logic
+
+```mermaid
+flowchart TD
+    A[Execute Statement] --> B{Parse Statement Type}
+    B -->|SELECT, SHOW, EXPLAIN, DESCRIBE, WITH| C[StatementTypeQuery]
+    B -->|CREATE, DROP, ALTER, UPDATE, DELETE| D[StatementTypeCommand]  
+    B -->|INSERT| E[StatementTypeInsert]
+    B -->|Other| F[StatementTypeUnknown]
+    
+    C --> G[Route to Query method]
+    D --> G[Route to Query method]
+    E --> H[Route to Write methods]
+    F --> I[Return error]
+    
+    G --> J[Return QueryResult + AffectedRows=0/1]
+    H --> K[Return AffectedRows=point count]
+    I --> L[Return error result]
+```
+
+## Parameter support
+
+The Execute interface supports parameterized statements with automatic type conversion:
+
+```mermaid
+classDiagram
+    class ParameterTypes {
+        <<enum>>
+        String    // "value" → value  
+        Integer   // 42 → 42i
+        UInteger  // 42 → 42u  
+        Float     // 3.14 → 3.14
+        Boolean   // true → true
+    }
+    
+    class ParameterProcessor {
+        + replaceParams(command String, params Map) String
+        + convertParamValue(value Object) String
+        + validateParams(command String, params Map) Error
+    }
+    
+    Statement --> ParameterProcessor : uses
+    ParameterProcessor --> ParameterTypes : converts
+```
+
+## Usage examples
+
+### Basic usage
+```go
+result, err := client.Execute(opengemini.Statement{
+    Database: "mydb",
+    Command:  "SELECT * FROM weather LIMIT 10",
+})
+```
+
+### Parameterized query
+```go
+result, err := client.Execute(opengemini.Statement{
+    Database: "mydb", 
+    Command:  "SELECT * FROM weather WHERE location=$loc AND temp>$temp",
+    Params: map[string]any{
+        "loc":  "beijing",
+        "temp": 25.0,
+    },
+})
+```
+
+### Parameterized insert
+```go
+result, err := client.Execute(opengemini.Statement{
+    Database: "mydb",
+    Command:  "INSERT weather,location=$location temperature=$temp,humidity=$hum",
+    Params: map[string]any{
+        "location": "shanghai", 
+        "temp":     30.2,
+        "hum":      70,
+    },
+})
+```
+
 # Query design
 
 ```mermaid
