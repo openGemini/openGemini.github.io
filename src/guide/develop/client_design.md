@@ -375,28 +375,33 @@ The interceptor pattern defines a standardized interface to hook into client ope
 
 
 ```mermaid
-Interceptor interface {
-	Query(ctx context.Context, query *InterceptorQuery) InterceptorClosure
-	Write(ctx context.Context, write *InterceptorWrite) InterceptorClosure
-}
+classDiagram
+    class Interceptor {
+        <<interface>>
+        + Query(ctx context.Context, query *InterceptorQuery) InterceptorClosure
+        + Write(ctx context.Context, write *InterceptorWrite) InterceptorClosure
+    }
 ```
 
 ## Define the base client class,associated with the Interceptor interface
 The base  Client  class manages a collection of interceptors, allowing dynamic registration and execution of interceptor logic during client operations.
 
 ```mermaid
-class Client {
-- []Interceptor interceptors
-}
+classDiagram
+    class Client {
+        - interceptors: List~Interceptor~
+    }
 ```
 
 ## Define the interceptor implementation class integrating OpenTelemetry,implementing the Interceptor interface
 The OtelClient class implements the Interceptor interface, embedding OpenTelemetry logic to capture traces, metrics, and logs for client operations.
 
 ```mermaid
-class OtelClient {
-    Interceptor
-}
+classDiagram
+    class OtelClient {
+        <<implements Interceptor>>
+    }
+    OtelClient ..|> Interceptor : implements
 ```
 
 ## Tracing system core module
@@ -509,7 +514,7 @@ class OtelClient {
 
 ## Usage Example(Go language examples)
 
-```mermaid
+```go
 func main() {
     var ctx = context.Background()
     shutdown, err := setupOtelSDK(ctx)
